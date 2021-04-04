@@ -1,14 +1,15 @@
 import Link from "next/link";
 import fs from "fs";
+import { PropsWithRef } from "react";
 
-const Home = ({ slugs }) => (
+const Home = ({ heroes }: PropsWithRef<{heroes: string[]}>) => (
   <div>
-    slugs:
-    {slugs.map(slug => {
+    heroes:
+    {heroes.map(heroe => {
       return (
-        <div key={slug}>
-          <Link href={"/blog/" + slug}>
-            <a>{"/blog/" + slug}</a>
+        <div key={heroe}>
+          <Link href={"/heroes/" + heroe}>
+            <a>{"/heroes/" + heroe}</a>
           </Link>
         </div>
       );
@@ -17,10 +18,10 @@ const Home = ({ slugs }) => (
 );
 
 export const getStaticProps = async () => {
-  const files = fs.readdirSync("posts");
+  const files = fs.readdirSync("data/heroes");
   return {
     props: {
-      slugs: files.map(filename => filename.replace(".md", ""))
+      heroes: files.map(filename => filename.replace(".json", ""))
     }
   };
 };
