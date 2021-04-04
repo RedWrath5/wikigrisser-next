@@ -1,0 +1,15 @@
+{
+    "name": "Ainz Ooal Gown",
+    "talent": {
+      "name": "Overlord",
+      "descriptionUrl": "data/talents/ainzTalent.md"
+    },
+    "heroImageUrl": "/heroes/ainz.png",
+    "factions": ["dark", "time", "tensei"],
+    "threeCostSkill": {
+      "name": "Wish Upon A Star",
+      "descriptionUrl":"data/skills/ainz3c.md",
+      "cost": 3,
+      "iconUrls": ["ainz1.png", "ainz2.png", "ainz3.png", "ainz4.png"]
+    }
+}
