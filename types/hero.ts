@@ -1,10 +1,12 @@
 export interface Hero {
   name: string;
+  prettyName: string;
   talent: Talent;
   threeCostSkill?: Skill;
-  classTree: ClassTree;
+  SpClass?: Class;
+  classTree?: ClassTree;
   factions: Factions[];
-  heroImageUrl: string;
+  heroImageUrl?: string;
   //bondRequirments
   //SoliderBonus
   //3C: HeroSkill
@@ -18,8 +20,19 @@ export interface Talent {
 }
 
 export interface ClassTree {
-  classes: null
+  classes: Class[];
 }
+
+export interface Class {
+  name: string;
+  iconUrls: string;
+  heroType: UnitType;
+  skills: string[];
+  soldiers: string[];
+  children: Class[];
+}
+
+
 
 export interface Skill {
   name: string;
@@ -33,4 +46,6 @@ export interface Skill {
   iconUrls: string[];
 }
 
-export type Factions = 'dark' | 'time' | 'tensei';
+export type Factions =  'protagonist' | 'glory' | 'origin'| 'princess'| 'empire'| 'strategic'|  'dark' | 'meteor'| 'legends'| 'mythic'|   'tensei' | 'time';
+
+export type UnitType = 'Infantry' | 'Lancer' | 'Cavalry' | 'Flier' | 'Aquatic' | 'Archer' | 'Assassin' | 'Mage' | 'Holy' | 'Demon';

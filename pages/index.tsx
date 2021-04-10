@@ -1,6 +1,7 @@
 import Link from "next/link";
 import fs from "fs";
 import { PropsWithRef } from "react";
+import { DBSingleton } from "../util/databaseSingleton";
 
 const Home = ({ heroes }: PropsWithRef<{heroes: string[]}>) => (
   <div>
@@ -8,8 +9,8 @@ const Home = ({ heroes }: PropsWithRef<{heroes: string[]}>) => (
     {heroes.map(heroe => {
       return (
         <div key={heroe}>
-          <Link href={"/heroes/" + heroe}>
-            <a>{"/heroes/" + heroe}</a>
+          <Link href={"/heroes2/" + heroe}>
+            <a>{"/heroes2/" + heroe}</a>
           </Link>
         </div>
       );
@@ -18,10 +19,19 @@ const Home = ({ heroes }: PropsWithRef<{heroes: string[]}>) => (
 );
 
 export const getStaticProps = async () => {
-  const files = fs.readdirSync("data/heroes");
+  var workbook = DBSingleton.getInstance().getWorkBook();
+  const heroes = [];
+  let rowNumber = 3;
+  while(workbook.Sheets.Heroes["A" + rowNumber]?.v) {
+    let heroName:string = workbook.Sheets.Heroes["A" + rowNumber].v;
+    heroName = heroName.toLowerCase();
+    heroes.push(heroName);
+    rowNumber++
+  }
+  
   return {
     props: {
-      heroes: files.map(filename => filename.replace(".json", ""))
+      heroes
     }
   };
 };

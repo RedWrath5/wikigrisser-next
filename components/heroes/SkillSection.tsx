@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { Skill } from '../../types/hero';
-import { HeroComponent } from './HeroComponent';
 
 export function SkillSection({skill}: {skill: Skill}) {
   return (
