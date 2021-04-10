@@ -4,7 +4,7 @@ export interface Hero {
   talent?: Talent;
   threeCostSkill?: Skill;
   SpClass?: Class;
-  classTree?: ClassTree;
+  startingClass: Class;
   factions: Factions[];
   heroImageUrl?: string;
   //bondRequirments
@@ -19,33 +19,46 @@ export interface Talent {
   descriptionMarkdown?: string;
 }
 
-export interface ClassTree {
-  classes: Class[];
-}
-
 export interface Class {
   name: string;
-  iconUrls: string;
   heroType: UnitType;
-  skills: string[];
+  skills: Skill[];
   soldiers: string[];
   children: Class[];
 }
 
-
-
 export interface Skill {
   name: string;
   description?: string;
-  descriptionUrl?: string;
   descriptionMarkdown?: string;
   cost: 1 | 2 | 3;
   cd?: number;
   range?: number;
   span?: number;
-  iconUrls: string[];
 }
 
-export type Factions =  'protagonist' | 'glory' | 'origin'| 'princess'| 'empire'| 'strategic'|  'dark' | 'meteor'| 'legends'| 'mythic'|   'tensei' | 'time';
+export type Factions =
+  | "protagonist"
+  | "glory"
+  | "origin"
+  | "princess"
+  | "empire"
+  | "strategic"
+  | "dark"
+  | "meteor"
+  | "legends"
+  | "mythic"
+  | "tensei"
+  | "time";
 
-export type UnitType = 'Infantry' | 'Lancer' | 'Cavalry' | 'Flier' | 'Aquatic' | 'Archer' | 'Assassin' | 'Mage' | 'Holy' | 'Demon';
+export type UnitType =
+  | "Infantry"
+  | "Lancer"
+  | "Cavalry"
+  | "Flier"
+  | "Aquatic"
+  | "Archer"
+  | "Assassin"
+  | "Mage"
+  | "Holy"
+  | "Demon";
