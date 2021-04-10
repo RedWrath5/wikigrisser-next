@@ -42,12 +42,12 @@ export class DBSingleton {
 
     while (notDone) {
       const skill: Skill = {
-        name: skillsSheat["A" + rowCounter].v,
-        cost: skillsSheat["C" + rowCounter]?.v,
-        cd: skillsSheat["D" + rowCounter]?.v,
-        range: skillsSheat["E" + rowCounter]?.v,
-        span: skillsSheat["F" + rowCounter]?.v,
-        description: skillsSheat["G" + rowCounter]?.v,
+        name: skillsSheat["A" + rowCounter].v || null,
+        cost: skillsSheat["C" + rowCounter]?.v || null,
+        cd: skillsSheat["D" + rowCounter]?.v || null,
+        range: skillsSheat["E" + rowCounter]?.v || null,
+        span: skillsSheat["F" + rowCounter]?.v || null,
+        description: skillsSheat["G" + rowCounter]?.v || null,
       };
 
       skillsMap[skill.name] = skill;
