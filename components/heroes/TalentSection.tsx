@@ -17,12 +17,12 @@ export function TalentSection({hero: {factions, talent, name}}: {hero: Hero}) {
         <Image src={"/talents/" + name +".png"} width={150} height={150}></Image>
       </div>
       <div className="col-span-9">
-      <p>Talent: {talent.name}</p>
+      <p>Talent: {talent?.name}</p>
       {
-          talent.descriptionMarkdown ?  
+          talent?.descriptionMarkdown ?  
             <div dangerouslySetInnerHTML={{ __html: talent.descriptionMarkdown }} /> 
           :
-          <p>Talent: {talent.description}</p>
+          <p>Talent: {talent?.description}</p>
         }
 
         

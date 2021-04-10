@@ -9,8 +9,8 @@ const Home = ({ heroes }: PropsWithRef<{heroes: string[]}>) => (
     {heroes.map(heroe => {
       return (
         <div key={heroe}>
-          <Link href={"/heroes2/" + heroe}>
-            <a>{"/heroes2/" + heroe}</a>
+          <Link href={"/heroes1/" + heroe}>
+            <a>{"/heroes1/" + heroe}</a>
           </Link>
         </div>
       );

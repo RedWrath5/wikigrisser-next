@@ -1,7 +1,7 @@
 export interface Hero {
   name: string;
   prettyName: string;
-  talent: Talent;
+  talent?: Talent;
   threeCostSkill?: Skill;
   SpClass?: Class;
   classTree?: ClassTree;
