@@ -6,8 +6,11 @@ export function ClassSection({ heroClass }: { heroClass: Class }) {
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-row bg-gray-200 justify-center">
-        <div className="flex- flex-row w-full" style={{ maxWidth: "1280px" }}>
-          <div className="flex mt-2 mb-2 items-center">
+        <div
+          className="flex- flex-row w-full ml-2 mr-2"
+          style={{ maxWidth: "1280px" }}
+        >
+          <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
             <Image
               src={"/classes/" + heroClass.name + ".png"}
               width={70}

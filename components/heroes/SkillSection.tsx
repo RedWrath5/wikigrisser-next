@@ -10,8 +10,8 @@ export function SkillSection({
 }) {
   return (
     <>
-      <div className="grid grid-cols-12 items-center">
-        <div className="col-span-1">
+      <div className="grid grid-cols-12 items-center mb-2">
+        <div className="col-span-12 text-center sm:col-span-1">
           <div className="mb-3">
             <Image
               src={"/skills/" + skill.name + ".png"}
@@ -20,7 +20,7 @@ export function SkillSection({
             ></Image>
           </div>
         </div>
-        <div className="col-span-11">
+        <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
           <p className="text-2xl">
             {isAwakening && "Awakening: "}
             {skill.name}
