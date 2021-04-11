@@ -1,34 +1,35 @@
 import Image from "next/image";
 import { Skill } from "../../types/hero";
 
-export function SkillSection({ skill }: { skill: Skill }) {
+export function SkillSection({
+  skill,
+  isAwakening,
+}: {
+  skill: Skill;
+  isAwakening?: boolean;
+}) {
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 items-center">
         <div className="col-span-1">
           <div className="mb-3">
             <Image
               src={"/skills/" + skill.name + ".png"}
-              width={50}
-              height={50}
+              width={70}
+              height={70}
             ></Image>
           </div>
         </div>
         <div className="col-span-11">
-          <p>{skill.name}</p>
-          {skill.descriptionMarkdown ? (
-            <div
-              dangerouslySetInnerHTML={{ __html: skill.descriptionMarkdown }}
-            />
-          ) : (
-            <>
-              <p>
-                Cost: {skill.cost}/CD:{skill.cd}/Range:{skill.range}/Span:
-                {skill.span}
-              </p>
-              <p>{skill.description}</p>
-            </>
-          )}
+          <p className="text-2xl">
+            {isAwakening && "Awakening: "}
+            {skill.name}
+          </p>
+          <p>
+            Cost: {skill.cost} / CD:{skill.cd} / Range:{skill.range} / Span:
+            {skill.span}
+          </p>
+          <p>{skill.description}</p>
         </div>
       </div>
     </>

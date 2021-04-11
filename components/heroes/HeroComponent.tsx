@@ -15,19 +15,21 @@ export function HeroComponent({ hero }: { hero: Hero }) {
             src={"/heroes/" + hero.name + ".png"}
             width={550}
             height={770}
-            layout="responsive"
           ></Image>
         </div>
       </div>
-      <div className="flex bg-gray-900 text-white font-sans justify-center">
-        <div className="flex flex-col" style={{ maxWidth: "1200px" }}>
+      <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
+        <div className="flex flex-col" style={{ maxWidth: "1280px" }}>
           <TalentSection hero={hero}></TalentSection>
           {hero.threeCostSkill && (
-            <SkillSection skill={hero.threeCostSkill}></SkillSection>
+            <SkillSection
+              skill={hero.threeCostSkill}
+              isAwakening={true}
+            ></SkillSection>
           )}
         </div>
       </div>
-      <div className="flex" style={{ maxWidth: "1200px" }}>
+      <div className="flex flex-col">
         <ClassSection heroClass={hero.startingClass}></ClassSection>
       </div>
     </div>
