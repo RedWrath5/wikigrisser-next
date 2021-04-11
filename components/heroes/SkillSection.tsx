@@ -10,7 +10,7 @@ export function SkillSection({
 }) {
   return (
     <>
-      <div className="grid grid-cols-12 items-center mb-2">
+      <div className="grid grid-cols-12 items-center mt-2 mb-2">
         <div className="col-span-12 text-center sm:col-span-1">
           <div className="mb-3">
             <Image
