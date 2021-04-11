@@ -160,30 +160,35 @@ export class DBSingleton {
         this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "Z")] || null,
       ],
       children: [
-        this.getFirstClassPath(rowNumber),
-        this.getSecondClassPath(rowNumber),
-        this.getThirdClassPath(rowNumber),
+        this.getClassPath(rowNumber, "AB"),
+        this.getClassPath(rowNumber, "AP"),
+        this.getClassPath(rowNumber, "BD"),
       ],
       heroType: "Aquatic",
       soldiers: [],
     };
   }
 
-  private getFirstClassPath(rowNumber: number): Class {
+  private getClassPath(rowNumber: number, startingCol: string): Class {
+    const skill1 = this.getNextKey(startingCol);
+    const name2 = this.getNextKey(skill1);
+    const skill2 = this.getNextKey(name2);
+    const skill3 = this.getNextKey(skill2);
+
     return {
-      name: this.getWorkbookHeroRowValue(rowNumber, "AB"),
+      name: this.getWorkbookHeroRowValue(rowNumber, startingCol),
       skills: [
-        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "AC")] || null,
+        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1)] || null,
       ],
       heroType: "Aquatic",
       soldiers: [],
       children: [
         {
-          name: this.getWorkbookHeroRowValue(rowNumber, "AD"),
+          name: this.getWorkbookHeroRowValue(rowNumber, name2),
           skills: [
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "AE")] ||
+            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2)] ||
               null,
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "AF")] ||
+            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill3)] ||
               null,
           ],
           heroType: "Aquatic",
@@ -194,54 +199,29 @@ export class DBSingleton {
     };
   }
 
-  private getSecondClassPath(rowNumber: number): Class {
-    return {
-      name: this.getWorkbookHeroRowValue(rowNumber, "AP"),
-      skills: [
-        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "AQ")] || null,
-      ],
-      heroType: "Aquatic",
-      soldiers: [],
-      children: [
-        {
-          name: this.getWorkbookHeroRowValue(rowNumber, "AR"),
-          skills: [
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "AS")] ||
-              null,
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "AT")] ||
-              null,
-          ],
-          heroType: "Aquatic",
-          soldiers: [],
-          children: [],
-        },
-      ],
-    };
-  }
-
-  private getThirdClassPath(rowNumber: number): Class {
-    return {
-      name: this.getWorkbookHeroRowValue(rowNumber, "BD"),
-      skills: [
-        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "BE")] || null,
-      ],
-      heroType: "Aquatic",
-      soldiers: [],
-      children: [
-        {
-          name: this.getWorkbookHeroRowValue(rowNumber, "BF"),
-          skills: [
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "BG")] ||
-              null,
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "BH")] ||
-              null,
-          ],
-          heroType: "Aquatic",
-          soldiers: [],
-          children: [],
-        },
-      ],
-    };
+  private getNextKey(key: string): string {
+    // https://stackoverflow.com/questions/2256607/how-to-get-the-next-letter-of-the-alphabet-in-javascript
+    if (key === "Z" || key === "z") {
+      return (
+        String.fromCharCode(key.charCodeAt(0) - 25) +
+        String.fromCharCode(key.charCodeAt(0) - 25)
+      ); // AA or aa
+    } else {
+      var lastChar = key.slice(-1);
+      var sub = key.slice(0, -1);
+      if (lastChar === "Z" || lastChar === "z") {
+        // If a string of length > 1 ends in Z/z,
+        // increment the string (excluding the last Z/z) recursively,
+        // and append A/a (depending on casing) to it
+        return (
+          this.getNextKey(sub) +
+          String.fromCharCode(lastChar.charCodeAt(0) - 25)
+        );
+      } else {
+        // (take till last char) append with (increment last char)
+        return sub + String.fromCharCode(lastChar.charCodeAt(0) + 1);
+      }
+    }
   }
 }
 
