@@ -95,7 +95,7 @@ export class DBSingleton {
       range: this.getWorkbookHeroRowValue(rowNumber, "CO"),
       span: this.getWorkbookHeroRowValue(rowNumber, "CP"),
       description: this.getWorkbookHeroRowValue(rowNumber, "CQ"),
-      cost: 3,
+      cost: "•••",
     };
 
     return {
@@ -174,6 +174,21 @@ export class DBSingleton {
     const name2 = this.getNextKey(skill1);
     const skill2 = this.getNextKey(name2);
     const skill3 = this.getNextKey(skill2);
+    let children: Class[] = [
+      {
+        name: this.getWorkbookHeroRowValue(rowNumber, name2),
+        skills: [
+          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2)] ||
+            null,
+          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill3)] ||
+            null,
+        ],
+        heroType: "Aquatic",
+        soldiers: [],
+        children: [],
+      },
+    ];
+    if (children[0].name === null) children = [];
 
     return {
       name: this.getWorkbookHeroRowValue(rowNumber, startingCol),
@@ -182,20 +197,7 @@ export class DBSingleton {
       ],
       heroType: "Aquatic",
       soldiers: [],
-      children: [
-        {
-          name: this.getWorkbookHeroRowValue(rowNumber, name2),
-          skills: [
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2)] ||
-              null,
-            this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill3)] ||
-              null,
-          ],
-          heroType: "Aquatic",
-          soldiers: [],
-          children: [],
-        },
-      ],
+      children,
     };
   }
 

@@ -28,7 +28,7 @@ export function TalentSection({
       </div>
       <div className="col-span-12 sm:col-span-9 pt-2">
         <p className="text-2xl">Talent: {talent?.name}</p>
-        <p>{talent?.description}</p>
+        <p className="whitespace-pre-line">{talent?.description}</p>
       </div>
     </div>
   );

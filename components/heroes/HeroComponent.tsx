@@ -7,8 +7,10 @@ import { TalentSection } from "./TalentSection";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   return (
-    <div className="bg-white text-gray-600 font-thin flex flex-grow justify-center flex-col">
-      <h1 className="text-6xl text-center mb-10">{hero.prettyName}</h1>
+    <div className="bg-white flex flex-grow justify-center flex-col">
+      <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
+        {hero.prettyName}
+      </h1>
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4" style={{ maxWidth: "350px" }}>
           <Image

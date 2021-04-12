@@ -31,7 +31,7 @@ export interface Skill {
   name: string;
   description?: string;
   descriptionMarkdown?: string;
-  cost: 1 | 2 | 3;
+  cost: "•" | "••" | "•••";
   cd?: number;
   range?: number;
   span?: number;
