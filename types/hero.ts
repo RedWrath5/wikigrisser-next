@@ -2,7 +2,7 @@ export interface Hero {
   name: string;
   prettyName: string;
   talent?: Talent;
-  threeCostSkill?: Skill;
+  threeCostSkill: Skill | null;
   SpClass?: Class;
   startingClass: Class;
   factions: Factions[];

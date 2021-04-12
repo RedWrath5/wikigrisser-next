@@ -89,7 +89,7 @@ export class DBSingleton {
 
     const startingClass = this.getStartingClass(rowNumber);
 
-    const threeCostSkill: Skill = {
+    let threeCostSkill: Skill | null = {
       name: this.getWorkbookHeroRowValue(rowNumber, "CL"),
       cd: this.getWorkbookHeroRowValue(rowNumber, "CN"),
       range: this.getWorkbookHeroRowValue(rowNumber, "CO"),
@@ -97,6 +97,8 @@ export class DBSingleton {
       description: this.getWorkbookHeroRowValue(rowNumber, "CQ"),
       cost: "•••",
     };
+
+    if (threeCostSkill.name === null) threeCostSkill = null;
 
     return {
       name,
@@ -160,16 +162,16 @@ export class DBSingleton {
         this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "Z")] || null,
       ],
       children: [
-        this.getClassPath(rowNumber, "AB"),
-        this.getClassPath(rowNumber, "AP"),
-        this.getClassPath(rowNumber, "BD"),
+        ...this.getClassPath(rowNumber, "AB"),
+        ...this.getClassPath(rowNumber, "AP"),
+        ...this.getClassPath(rowNumber, "BD"),
       ],
       heroType: "Aquatic",
       soldiers: [],
     };
   }
 
-  private getClassPath(rowNumber: number, startingCol: string): Class {
+  private getClassPath(rowNumber: number, startingCol: string): Class[] {
     const skill1 = this.getNextKey(startingCol);
     const name2 = this.getNextKey(skill1);
     const skill2 = this.getNextKey(name2);
@@ -189,16 +191,21 @@ export class DBSingleton {
       },
     ];
     if (children[0].name === null) children = [];
+    let outerClass: Class[] = [
+      {
+        name: this.getWorkbookHeroRowValue(rowNumber, startingCol),
+        skills: [
+          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1)] ||
+            null,
+        ],
+        heroType: "Aquatic",
+        soldiers: [],
+        children,
+      },
+    ];
+    if (outerClass[0].name === null) outerClass = [];
 
-    return {
-      name: this.getWorkbookHeroRowValue(rowNumber, startingCol),
-      skills: [
-        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1)] || null,
-      ],
-      heroType: "Aquatic",
-      soldiers: [],
-      children,
-    };
+    return outerClass;
   }
 
   private getNextKey(key: string): string {
