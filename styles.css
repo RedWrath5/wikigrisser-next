@@ -43,15 +43,15 @@
   transform: rotate(-45deg) translateY(0px);
 }
 
-@media (max-width: 576px) {
+@media (max-width: 639px) {
   .content {
-    padding-top: 51px;
+    padding-top: 62px;
   }
 }
 
-@media (min-width: 577px) {
+@media (min-width: 640px) {
   .pt-scroll {
-    padding-top: 51px;
+    padding-top: 62px;
   }
 
   .nav-sticky {
