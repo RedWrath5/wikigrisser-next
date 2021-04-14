@@ -231,7 +231,7 @@ export class DBSingleton {
           this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1)] ||
             null,
         ],
-        heroType: this.classesMap[name].type,
+        heroType: this.classesMap[name]?.type || null,
         soldiers: [],
         children,
       },
@@ -259,7 +259,7 @@ export class DBSingleton {
           this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2Pos)] ||
             null,
         ],
-        heroType: this.classesMap[name].type,
+        heroType: this.classesMap[name]?.type || null,
         soldiers: [],
         children: [],
       },
