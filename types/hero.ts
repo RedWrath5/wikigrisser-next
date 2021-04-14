@@ -61,4 +61,5 @@ export type UnitType =
   | "Assassin"
   | "Mage"
   | "Holy"
-  | "Demon";
+  | "Demon"
+  | "Dragon";

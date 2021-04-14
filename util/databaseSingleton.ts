@@ -1,16 +1,19 @@
 import XLSX, { WorkBook } from "xlsx";
-import { Class, Factions, Hero, Skill, Talent } from "../types/hero";
+import { Class, Factions, Hero, Skill, Talent, UnitType } from "../types/hero";
+import { ClassWorkbookRow } from "../types/spreedsheet";
 
 export class DBSingleton {
   private static instance: DBSingleton;
 
   private workbook: WorkBook;
   private skillsMap: SkillsMap;
+  private classesMap: ClassesMap;
   private heroMap: HeroMap;
 
   private constructor() {
     this.workbook = XLSX.readFile("data/database.xlsx");
     this.skillsMap = this.generateSkillsMap();
+    this.classesMap = this.generateClassesMap();
     this.heroMap = this.generateHeroesMap();
   }
 
@@ -59,6 +62,46 @@ export class DBSingleton {
     }
 
     return skillsMap;
+  }
+
+  private generateClassesMap() {
+    const classesSheat = this.workbook.Sheets.Classes;
+    const classesMap: ClassesMap = {};
+    let rowCounter = 3;
+    let notDone = true;
+    const imageToClassMap: { [image: string]: UnitType } = {
+      "index(Images!$A$1:$K$1, 1, 1)": "Infantry",
+      "index(Images!$A$1:$K$1, 1, 2)": "Lancer",
+      "index(Images!$A$1:$K$1, 1, 3)": "Cavalry",
+      "index(Images!$A$1:$K$1, 1, 4)": "Flier",
+      "index(Images!$A$1:$K$1, 1, 5)": "Aquatic",
+      "index(Images!$A$1:$K$1, 1, 6)": "Archer",
+      "index(Images!$A$1:$K$1, 1, 7)": "Assassin",
+      "index(Images!$A$1:$K$1, 1, 8)": "Holy",
+      "index(Images!$A$1:$K$1, 1, 9)": "Mage",
+      "index(Images!$A$1:$K$1, 1, 10)": "Demon",
+      "index(Images!$A$1:$K$1, 1, 11)": "Dragon",
+    };
+
+    while (notDone) {
+      const heroClass: ClassWorkbookRow = {
+        name: classesSheat["A" + rowCounter].v || null,
+        tier: classesSheat["B" + rowCounter]?.v || null,
+        type: imageToClassMap[classesSheat["C" + rowCounter]?.f] || null,
+        damage: classesSheat["D" + rowCounter]?.v || null,
+        range: classesSheat["E" + rowCounter]?.v || null,
+        move: classesSheat["F" + rowCounter]?.v || null,
+      };
+
+      classesMap[heroClass.name] = heroClass;
+
+      rowCounter++;
+      if (!classesSheat["A" + rowCounter]?.v) {
+        notDone = false;
+      }
+    }
+
+    return classesMap;
   }
 
   private generateHeroesMap(): HeroMap {
@@ -162,43 +205,33 @@ export class DBSingleton {
         this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "Z")] || null,
       ],
       children: [
-        ...this.getClassPath(rowNumber, "AB"),
-        ...this.getClassPath(rowNumber, "AP"),
-        ...this.getClassPath(rowNumber, "BD"),
+        ...this.getTopLevelClassPath(rowNumber, "AB"),
+        ...this.getTopLevelClassPath(rowNumber, "AP"),
+        ...this.getTopLevelClassPath(rowNumber, "BD"),
       ],
       heroType: "Aquatic",
       soldiers: [],
     };
   }
 
-  private getClassPath(rowNumber: number, startingCol: string): Class[] {
+  private getTopLevelClassPath(
+    rowNumber: number,
+    startingCol: string
+  ): Class[] {
     const skill1 = this.getNextKey(startingCol);
-    const name2 = this.getNextKey(skill1);
-    const skill2 = this.getNextKey(name2);
-    const skill3 = this.getNextKey(skill2);
-    let children: Class[] = [
-      {
-        name: this.getWorkbookHeroRowValue(rowNumber, name2),
-        skills: [
-          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2)] ||
-            null,
-          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill3)] ||
-            null,
-        ],
-        heroType: "Aquatic",
-        soldiers: [],
-        children: [],
-      },
-    ];
-    if (children[0].name === null) children = [];
+    const children = this.getSecondLevelClassPath(
+      rowNumber,
+      this.getNextKey(skill1)
+    );
+    const name = this.getWorkbookHeroRowValue(rowNumber, startingCol);
     let outerClass: Class[] = [
       {
-        name: this.getWorkbookHeroRowValue(rowNumber, startingCol),
+        name,
         skills: [
           this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1)] ||
             null,
         ],
-        heroType: "Aquatic",
+        heroType: this.classesMap[name].type,
         soldiers: [],
         children,
       },
@@ -206,6 +239,33 @@ export class DBSingleton {
     if (outerClass[0].name === null) outerClass = [];
 
     return outerClass;
+  }
+
+  private getSecondLevelClassPath(
+    rowNumber: number,
+    startingCol: string
+  ): Class[] {
+    const skill1Pos = this.getNextKey(startingCol);
+    const soldier1Pos = this.getNextKey(skill1Pos);
+    const skill2Pos = this.getNextKey(soldier1Pos);
+    const soldier2Pos = this.getNextKey(skill2Pos);
+    const name = this.getWorkbookHeroRowValue(rowNumber, startingCol);
+    let classes: Class[] = [
+      {
+        name,
+        skills: [
+          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1Pos)] ||
+            null,
+          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2Pos)] ||
+            null,
+        ],
+        heroType: this.classesMap[name].type,
+        soldiers: [],
+        children: [],
+      },
+    ];
+    if (classes[0].name === null) classes = [];
+    return classes;
   }
 
   private getNextKey(key: string): string {
@@ -240,4 +300,8 @@ export interface SkillsMap {
 
 export interface HeroMap {
   [name: string]: Hero;
+}
+
+export interface ClassesMap {
+  [name: string]: ClassWorkbookRow;
 }
