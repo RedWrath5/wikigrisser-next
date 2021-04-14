@@ -19,7 +19,7 @@ export function TalentSection({
           </span>
         ))}
       </div>
-      <div className="col-span-12 sm:col-span-1 text-center align-middle">
+      <div className="col-span-12 sm:col-span-2 text-center align-middle">
         <Image
           src={"/talents/" + name + ".png"}
           width={150}
