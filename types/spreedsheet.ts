@@ -1,4 +1,4 @@
-import { UnitType } from "./hero";
+import { HeroStats, UnitType } from "./hero";
 
 export interface ClassWorkbookRow {
   name: string;
@@ -7,4 +7,10 @@ export interface ClassWorkbookRow {
   damage: "Physical" | "Magic";
   range: number;
   move: number;
+}
+
+export interface MaxStatsWorkbookRow {
+  name: string;
+  class: string;
+  stats: HeroStats;
 }

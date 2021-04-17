@@ -1,18 +1,30 @@
 import XLSX, { WorkBook } from "xlsx";
-import { Class, Factions, Hero, Skill, Talent, UnitType } from "../types/hero";
-import { ClassWorkbookRow } from "../types/spreedsheet";
+import {
+  BondRequirements,
+  Class,
+  Equipment,
+  Factions,
+  Hero,
+  Skill,
+  SoldierBonus,
+  Talent,
+  UnitType,
+} from "../types/hero";
+import { ClassWorkbookRow, MaxStatsWorkbookRow } from "../types/spreedsheet";
 
 export class DBSingleton {
   private static instance: DBSingleton;
 
   private workbook: WorkBook;
   private skillsMap: SkillsMap;
+  private maxStats: MaxStatsWorkbookRow[];
   private classesMap: ClassesMap;
   private heroMap: HeroMap;
 
   private constructor() {
     this.workbook = XLSX.readFile("data/database.xlsx");
     this.skillsMap = this.generateSkillsMap();
+    this.maxStats = this.getMaxStats();
     this.classesMap = this.generateClassesMap();
     this.heroMap = this.generateHeroesMap();
   }
@@ -62,6 +74,35 @@ export class DBSingleton {
     }
 
     return skillsMap;
+  }
+
+  getMaxStats(): MaxStatsWorkbookRow[] {
+    const maxStatsSheet = this.workbook.Sheets["Max Stats"];
+    let notDone = true;
+    let rowCounter = 2;
+    let maxStatsArr: MaxStatsWorkbookRow[] = [];
+
+    while (notDone) {
+      const maxStats = {
+        name: maxStatsSheet["A" + rowCounter].v || null,
+        class: maxStatsSheet["B" + rowCounter].v || null,
+        stats: {
+          hp: maxStatsSheet["C" + rowCounter].w || null,
+          atk: maxStatsSheet["D" + rowCounter].w || null,
+          int: maxStatsSheet["E" + rowCounter].w || null,
+          def: maxStatsSheet["F" + rowCounter].w || null,
+          mdef: maxStatsSheet["G" + rowCounter].w || null,
+          skill: maxStatsSheet["H" + rowCounter].w || null,
+        },
+      };
+      maxStatsArr.push(maxStats);
+      rowCounter++;
+      if (!maxStatsSheet["A" + rowCounter]?.v) {
+        notDone = false;
+      }
+    }
+
+    return maxStatsArr;
   }
 
   private generateClassesMap() {
@@ -143,6 +184,32 @@ export class DBSingleton {
 
     if (threeCostSkill.name === null) threeCostSkill = null;
 
+    let bondRequirments: BondRequirements | null = {
+      bond2: this.getWorkbookHeroRowValue(rowNumber, "BW"),
+      bond3: this.getWorkbookHeroRowValue(rowNumber, "BX"),
+      bond4: this.getWorkbookHeroRowValue(rowNumber, "BY"),
+      bond5: this.getWorkbookHeroRowValue(rowNumber, "BZ"),
+    };
+
+    if (bondRequirments.bond2 === undefined) bondRequirments = null;
+
+    let soldierBonus: SoldierBonus | null = {
+      hp: this.getWorkbookHeroRowValue(rowNumber, "BR"),
+      atk: this.getWorkbookHeroRowValue(rowNumber, "BS"),
+      def: this.getWorkbookHeroRowValue(rowNumber, "BT"),
+      mdef: this.getWorkbookHeroRowValue(rowNumber, "BU"),
+    };
+
+    if (soldierBonus.hp === undefined) soldierBonus = null;
+
+    let exclusiveEquipment: Equipment | null = {
+      name: this.getWorkbookHeroRowValue(rowNumber, "CI"),
+      type: this.getWorkbookHeroRowValue(rowNumber, "CJ"),
+      effect: this.getWorkbookHeroRowValue(rowNumber, "CK"),
+    };
+
+    if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
+
     return {
       name,
       prettyName: this.getWorkbookHeroRowValue(rowNumber, "A"),
@@ -150,6 +217,9 @@ export class DBSingleton {
       factions,
       startingClass,
       threeCostSkill,
+      bondRequirments,
+      soldierBonus,
+      exclusiveEquipment,
     };
   }
 
@@ -211,6 +281,7 @@ export class DBSingleton {
       ],
       heroType: "Aquatic",
       soldiers: [],
+      maxStats: null,
     };
   }
 
@@ -234,6 +305,7 @@ export class DBSingleton {
         heroType: this.classesMap[name]?.type || null,
         soldiers: [],
         children,
+        maxStats: null,
       },
     ];
     if (outerClass[0].name === null) outerClass = [];
@@ -250,6 +322,11 @@ export class DBSingleton {
     const skill2Pos = this.getNextKey(soldier1Pos);
     const soldier2Pos = this.getNextKey(skill2Pos);
     const name = this.getWorkbookHeroRowValue(rowNumber, startingCol);
+    const heroName = this.getWorkbookHeroRowValue(rowNumber, "A");
+    const maxStats =
+      this.maxStats.find(
+        (stats) => stats.class === name && stats.name === heroName
+      )?.stats || null;
     let classes: Class[] = [
       {
         name,
@@ -262,6 +339,7 @@ export class DBSingleton {
         heroType: this.classesMap[name]?.type || null,
         soldiers: [],
         children: [],
+        maxStats,
       },
     ];
     if (classes[0].name === null) classes = [];
@@ -294,14 +372,14 @@ export class DBSingleton {
   }
 }
 
-export interface SkillsMap {
+interface SkillsMap {
   [name: string]: Skill;
 }
 
-export interface HeroMap {
+interface HeroMap {
   [name: string]: Hero;
 }
 
-export interface ClassesMap {
+interface ClassesMap {
   [name: string]: ClassWorkbookRow;
 }

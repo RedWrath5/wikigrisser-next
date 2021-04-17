@@ -16,7 +16,9 @@ export function ClassSection({ heroClass }: { heroClass: Class }) {
               width={70}
               height={75}
             ></Image>
-            <div className="ml-2 text-2xl">{heroClass.name}</div>
+            <div>
+              <div className="ml-2 text-2xl">{heroClass.name}</div>
+            </div>
           </div>
         </div>
       </div>

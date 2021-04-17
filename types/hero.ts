@@ -7,9 +7,9 @@ export interface Hero {
   startingClass: Class;
   factions: Factions[];
   heroImageUrl?: string;
-  //bondRequirments
-  //SoliderBonus
-  //3C: HeroSkill
+  bondRequirments: BondRequirements | null;
+  soldierBonus: SoldierBonus | null;
+  exclusiveEquipment: Equipment | null;
 }
 
 export interface Talent {
@@ -25,6 +25,7 @@ export interface Class {
   skills: Skill[];
   soldiers: string[];
   children: Class[];
+  maxStats: HeroStats | null;
 }
 
 export interface Skill {
@@ -35,6 +36,35 @@ export interface Skill {
   cd?: number;
   range?: number;
   span?: number;
+}
+
+export interface HeroStats {
+  hp: string;
+  atk: string;
+  int: string;
+  def: string;
+  mdef: string;
+  skill: string;
+}
+
+export interface BondRequirements {
+  bond2: string;
+  bond3: string;
+  bond4: string;
+  bond5: string;
+}
+
+export interface SoldierBonus {
+  hp: number;
+  atk: number;
+  def: number;
+  mdef: number;
+}
+
+export interface Equipment {
+  name: string;
+  type: "Helmet" | "Armor" | "Weapon" | "Accessory";
+  effect: string;
 }
 
 export type Factions =
