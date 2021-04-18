@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import { EquipmentSection } from "./EquipmentSection";
 import { Class, Hero, HeroStats } from "../../types/hero";
 
 export function TalentSection({
@@ -8,10 +7,10 @@ export function TalentSection({
     factions,
     talent,
     name,
+    prettyName,
     startingClass,
     bondRequirments,
     soldierBonus,
-    exclusiveEquipment,
   },
 }: {
   hero: Hero;
@@ -32,7 +31,7 @@ export function TalentSection({
       </div>
       <div className="col-span-12 sm:col-span-2 text-center align-middle">
         <Image
-          src={"/talents/" + name + ".png"}
+          src={"/talents/" + prettyName + ".png"}
           width={150}
           height={150}
         ></Image>

@@ -4,6 +4,7 @@ import { Hero } from "../../types/hero";
 import { ClassSection } from "./ClassSection";
 import { EquipmentSection } from "./EquipmentSection";
 import { SkillSection } from "./SkillSection";
+import { SoldiersSection } from "./SoldiersSection";
 import { TalentSection } from "./TalentSection";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
@@ -13,11 +14,11 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         {hero.prettyName}
       </h1>
       <div className="flex flex-wrap justify-center">
-        <div className="w-full px-4" style={{ maxWidth: "350px" }}>
+        <div className="w-full px-4" style={{ maxWidth: "500px" }}>
           <Image
-            src={"/heroes/" + hero.name + ".png"}
-            width={550}
-            height={770}
+            src={"/heroes/" + hero.prettyName + ".png"}
+            width={1280}
+            height={1280}
           ></Image>
         </div>
       </div>
@@ -39,6 +40,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         </div>
       </div>
       <div className="flex flex-col">
+        {/* <SoldiersSection startingClass={hero.startingClass}></SoldiersSection> */}
         <ClassSection heroClass={hero.startingClass}></ClassSection>
       </div>
     </div>
