@@ -244,18 +244,18 @@ export class DBSingleton {
 
   private getFactionsForHero(rowNumber: number): Factions[] {
     const FACTION_TO_COL_MAP: { [key: string]: Factions } = {
-      K: "protagonist",
-      L: "glory",
-      M: "origin",
-      N: "princess",
-      O: "empire",
-      P: "strategic",
-      Q: "dark",
-      R: "meteor",
-      S: "legends",
-      T: "mythic",
-      U: "tensei",
-      V: "time",
+      K: Factions.Protagonist,
+      L: Factions.Glory,
+      M: Factions.Origin,
+      N: Factions.Princess,
+      O: Factions.Empire,
+      P: Factions.Strategic,
+      Q: Factions.Dark,
+      R: Factions.Meteor,
+      S: Factions.Legends,
+      T: Factions.Mythic,
+      U: Factions.Tensei,
+      V: Factions.Time,
     };
     const factions: Factions[] = [];
 
@@ -376,7 +376,7 @@ interface SkillsMap {
   [name: string]: Skill;
 }
 
-interface HeroMap {
+export interface HeroMap {
   [name: string]: Hero;
 }
 

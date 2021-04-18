@@ -67,19 +67,34 @@ export interface Equipment {
   effect: string;
 }
 
-export type Factions =
-  | "protagonist"
-  | "glory"
-  | "origin"
-  | "princess"
-  | "empire"
-  | "strategic"
-  | "dark"
-  | "meteor"
-  | "legends"
-  | "mythic"
-  | "tensei"
-  | "time";
+// export type Factions =
+//   | "protagonist"
+//   | "glory"
+//   | "origin"
+//   | "princess"
+//   | "empire"
+//   | "strategic"
+//   | "dark"
+//   | "meteor"
+//   | "legends"
+//   | "mythic"
+//   | "tensei"
+//   | "time";
+
+export enum Factions {
+  Protagonist = "protagonist",
+  Glory = "glory",
+  Origin = "origin",
+  Princess = "princess",
+  Empire = "empire",
+  Strategic = "strategic",
+  Dark = "dark",
+  Meteor = "meteor",
+  Legends = "legends",
+  Mythic = "mythic",
+  Tensei = "tensei",
+  Time = "time",
+}
 
 export type UnitType =
   | "Infantry"
