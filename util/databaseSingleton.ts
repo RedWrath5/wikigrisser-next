@@ -174,11 +174,11 @@ export class DBSingleton {
     const startingClass = this.getStartingClass(rowNumber);
 
     let threeCostSkill: Skill | null = {
-      name: this.getWorkbookHeroRowValue(rowNumber, "CL"),
-      cd: this.getWorkbookHeroRowValue(rowNumber, "CN"),
-      range: this.getWorkbookHeroRowValue(rowNumber, "CO"),
-      span: this.getWorkbookHeroRowValue(rowNumber, "CP"),
-      description: this.getWorkbookHeroRowValue(rowNumber, "CQ"),
+      name: this.getWorkbookHeroRowValue(rowNumber, "CM"),
+      cd: this.getWorkbookHeroRowValue(rowNumber, "CO"),
+      range: this.getWorkbookHeroRowValue(rowNumber, "CP"),
+      span: this.getWorkbookHeroRowValue(rowNumber, "CQ"),
+      description: this.getWorkbookHeroRowValue(rowNumber, "CR"),
       cost: "•••",
     };
 
@@ -203,9 +203,9 @@ export class DBSingleton {
     if (soldierBonus.hp === undefined) soldierBonus = null;
 
     let exclusiveEquipment: Equipment | null = {
-      name: this.getWorkbookHeroRowValue(rowNumber, "CI"),
-      type: this.getWorkbookHeroRowValue(rowNumber, "CJ"),
-      effect: this.getWorkbookHeroRowValue(rowNumber, "CK"),
+      name: this.getWorkbookHeroRowValue(rowNumber, "CJ"),
+      type: this.getWorkbookHeroRowValue(rowNumber, "CK"),
+      effect: this.getWorkbookHeroRowValue(rowNumber, "CL"),
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
