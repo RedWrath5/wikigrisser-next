@@ -185,10 +185,10 @@ export class DBSingleton {
     if (threeCostSkill.name === null) threeCostSkill = null;
 
     let bondRequirments: BondRequirements | null = {
-      bond2: this.getWorkbookHeroRowValue(rowNumber, "BW"),
-      bond3: this.getWorkbookHeroRowValue(rowNumber, "BX"),
-      bond4: this.getWorkbookHeroRowValue(rowNumber, "BY"),
-      bond5: this.getWorkbookHeroRowValue(rowNumber, "BZ"),
+      bond2: this.getWorkbookHeroRowValue(rowNumber, "BX"),
+      bond3: this.getWorkbookHeroRowValue(rowNumber, "BY"),
+      bond4: this.getWorkbookHeroRowValue(rowNumber, "BZ"),
+      bond5: this.getWorkbookHeroRowValue(rowNumber, "CA"),
     };
 
     if (bondRequirments.bond2 === undefined) bondRequirments = null;
