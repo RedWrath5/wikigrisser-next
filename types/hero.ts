@@ -21,7 +21,7 @@ export interface Talent {
 
 export interface Class {
   name: string;
-  heroType: UnitType;
+  heroType: UnitType | null;
   skills: Skill[];
   soldiers: string[];
   children: Class[];

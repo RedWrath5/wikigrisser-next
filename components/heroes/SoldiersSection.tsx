@@ -17,7 +17,16 @@ export function SoldiersSection({ startingClass }: { startingClass: Class }) {
       <div className="flex flex-row justify-center">
         <div className="flex flex-col w-full" style={{ maxWidth: "1280px" }}>
           <div className="flex flex-col mt-2 mb-2">
-            <SoldiersSubSection heroClass={startingClass}></SoldiersSubSection>
+            {startingClass.children.map((child) => (
+              <SoldiersSubSection
+                key={child.name}
+                heroClass={child}
+              ></SoldiersSubSection>
+            ))}
+            <SoldiersSubSection
+              heroClass={startingClass}
+              isStarting={true}
+            ></SoldiersSubSection>
           </div>
         </div>
       </div>

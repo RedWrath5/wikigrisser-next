@@ -25,7 +25,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
         <div className="flex flex-col" style={{ maxWidth: "1280px" }}>
           <TalentSection hero={hero}></TalentSection>
-          {hero.exclusiveEquipment && (
+          {hero.exclusiveEquipment?.name && (
             <EquipmentSection
               equipment={hero.exclusiveEquipment}
               isExclusive={true}
@@ -40,7 +40,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         </div>
       </div>
       <div className="flex flex-col">
-        {/* <SoldiersSection startingClass={hero.startingClass}></SoldiersSection> */}
+        <SoldiersSection startingClass={hero.startingClass}></SoldiersSection>
         <ClassSection heroClass={hero.startingClass}></ClassSection>
       </div>
     </div>

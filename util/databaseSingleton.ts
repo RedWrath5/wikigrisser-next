@@ -111,17 +111,17 @@ export class DBSingleton {
     let rowCounter = 3;
     let notDone = true;
     const imageToClassMap: { [image: string]: UnitType } = {
-      "index(Images!$A$1:$K$1, 1, 1)": "Infantry",
-      "index(Images!$A$1:$K$1, 1, 2)": "Lancer",
-      "index(Images!$A$1:$K$1, 1, 3)": "Cavalry",
-      "index(Images!$A$1:$K$1, 1, 4)": "Flier",
-      "index(Images!$A$1:$K$1, 1, 5)": "Aquatic",
-      "index(Images!$A$1:$K$1, 1, 6)": "Archer",
-      "index(Images!$A$1:$K$1, 1, 7)": "Assassin",
-      "index(Images!$A$1:$K$1, 1, 8)": "Holy",
-      "index(Images!$A$1:$K$1, 1, 9)": "Mage",
-      "index(Images!$A$1:$K$1, 1, 10)": "Demon",
-      "index(Images!$A$1:$K$1, 1, 11)": "Dragon",
+      "INDEX(Images!$A$1:$K$1, 1, 1)": "Infantry",
+      "INDEX(Images!$A$1:$K$1, 1, 2)": "Lancer",
+      "INDEX(Images!$A$1:$K$1, 1, 3)": "Cavalry",
+      "INDEX(Images!$A$1:$K$1, 1, 4)": "Flier",
+      "INDEX(Images!$A$1:$K$1, 1, 5)": "Aquatic",
+      "INDEX(Images!$A$1:$K$1, 1, 6)": "Archer",
+      "INDEX(Images!$A$1:$K$1, 1, 7)": "Assassin",
+      "INDEX(Images!$A$1:$K$1, 1, 8)": "Holy",
+      "INDEX(Images!$A$1:$K$1, 1, 9)": "Mage",
+      "INDEX(Images!$A$1:$K$1, 1, 10)": "Demon",
+      "INDEX(Images!$A$1:$K$1, 1, 11)": "Dragon",
     };
 
     while (notDone) {
@@ -268,6 +268,8 @@ export class DBSingleton {
   }
 
   private getStartingClass(rowNumber: number): Class {
+    const soldiers =
+      this.getWorkbookHeroRowValue(rowNumber, "BV")?.split(",") || [];
     return {
       name: this.getWorkbookHeroRowValue(rowNumber, "X"),
       skills: [
@@ -280,7 +282,7 @@ export class DBSingleton {
         ...this.getTopLevelClassPath(rowNumber, "BD"),
       ],
       heroType: "Aquatic",
-      soldiers: [],
+      soldiers: soldiers,
       maxStats: null,
     };
   }
@@ -327,6 +329,10 @@ export class DBSingleton {
       this.maxStats.find(
         (stats) => stats.class === name && stats.name === heroName
       )?.stats || null;
+    const classInstance = Object.entries(this.classesMap).find(
+      (entry) => entry[0].indexOf(name) > -1
+    )?.[1];
+
     let classes: Class[] = [
       {
         name,
@@ -336,8 +342,11 @@ export class DBSingleton {
           this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2Pos)] ||
             null,
         ],
-        heroType: this.classesMap[name]?.type || null,
-        soldiers: [],
+        heroType: classInstance?.type || null,
+        soldiers: [
+          this.getWorkbookHeroRowValue(rowNumber, soldier1Pos),
+          this.getWorkbookHeroRowValue(rowNumber, soldier2Pos),
+        ],
         children: [],
         maxStats,
       },
