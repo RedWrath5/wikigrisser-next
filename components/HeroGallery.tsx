@@ -38,7 +38,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
         Heroes
       </h1>
-      <div className="flex flex-wrap justify-center text-center w-100 mb-5">
+      <div className="flex flex-wrap justify-center text-center mb-5">
         <div className="flex" style={{ maxWidth: "1280px" }}>
           {Object.values(Factions).map((faction) => (
             <div key={faction} className="flex mr-1 cursor-pointer">
