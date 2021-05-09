@@ -63,3 +63,7 @@
     z-index: 1;
   }
 }
+
+#page-container {
+  min-height: 100vh;
+}
