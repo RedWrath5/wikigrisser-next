@@ -17,8 +17,8 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         <div className="w-full px-4" style={{ maxWidth: "500px" }}>
           <Image
             src={"/heroes/" + hero.prettyName + ".png"}
-            width={1280}
-            height={1280}
+            width={500}
+            height={500}
           ></Image>
         </div>
       </div>
