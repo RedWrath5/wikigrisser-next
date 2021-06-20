@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Factions, Hero } from "../types/hero";
@@ -42,7 +41,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
         <div className="flex" style={{ maxWidth: "1280px" }}>
           {Object.values(Factions).map((faction) => (
             <div key={faction} className="flex mr-1 cursor-pointer">
-              <Image
+              <img
                 className={
                   filters.find(
                     (filter) =>
@@ -55,7 +54,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
                 src={"/factions/" + faction + ".png"}
                 width={50}
                 height={50}
-              ></Image>
+              ></img>
             </div>
           ))}
         </div>
@@ -69,11 +68,11 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
             return (
               <div className="cursor-pointer" key={hero.name}>
                 <Link href={"/heroes/" + hero.name}>
-                  <Image
+                  <img
                     src={"/hero cards/Card_" + hero.prettyName + ".png"}
                     width={100}
                     height={100}
-                  ></Image>
+                  ></img>
                 </Link>
                 <Link href={"/heroes/" + hero.name}>
                   <p className="text-center" style={{ width: "100px" }}>

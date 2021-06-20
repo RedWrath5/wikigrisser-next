@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Class } from "../../types/hero";
 import { SkillSection } from "./SkillSection";
 
@@ -11,11 +10,11 @@ export function ClassSection({ heroClass }: { heroClass: Class }) {
           style={{ maxWidth: "1280px" }}
         >
           <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
-            <Image
+            <img
               src={"/classes/" + heroClass.name + ".png"}
               width={70}
               height={75}
-            ></Image>
+            ></img>
             <div>
               <div className="ml-2 text-2xl">{heroClass.name}</div>
             </div>

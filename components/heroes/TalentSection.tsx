@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
 
@@ -21,20 +20,20 @@ export function TalentSection({
       <div className="col-span-12 sm:col-span-1 text-center align-middle">
         {factions.map((faction) => (
           <span key={faction}>
-            <Image
+            <img
               src={"/factions/" + faction + ".png"}
               width={50}
               height={50}
-            ></Image>
+            ></img>
           </span>
         ))}
       </div>
       <div className="col-span-12 sm:col-span-2 text-center align-middle">
-        <Image
+        <img
           src={"/talents/" + prettyName + ".png"}
           width={175}
           height={158}
-        ></Image>
+        ></img>
       </div>
       <div className="col-span-12 sm:col-span-9 pt-2">
         <p className="text-2xl">Talent: {talent?.name}</p>

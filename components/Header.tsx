@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -38,7 +37,7 @@ export function Header() {
         className="flex flex-col sm:flex-row w-full justify-between items-center px-4 sm:px-6 py-1 bg-black shadow sm:shadow-none border-t-4 border-red-900"
       >
         <div className="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
-          <Image src="/logo-big.jpg" width={50} height={50}></Image>
+          <img src="/logo-big.jpg" width={50} height={50}></img>
           <div className="ml-2">
             <Link href="/">Wikigrisser Next</Link>
           </div>

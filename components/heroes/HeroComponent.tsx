@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import { Hero } from "../../types/hero";
 import { ClassSection } from "./ClassSection";
@@ -15,11 +14,11 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       </h1>
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4" style={{ maxWidth: "500px" }}>
-          <Image
+          <img
             src={"/heroes/" + hero.prettyName + ".png"}
             width={500}
             height={500}
-          ></Image>
+          ></img>
         </div>
       </div>
       <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
