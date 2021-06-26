@@ -1,6 +1,7 @@
 export interface Hero {
   name: string;
   prettyName: string;
+  rarity: "SSR" | "SR" | "R" | "N→SSR" | "SR→SSR";
   talent?: Talent;
   threeCostSkill: Skill | null;
   SpClass?: Class;
