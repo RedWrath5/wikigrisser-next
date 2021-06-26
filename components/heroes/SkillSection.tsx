@@ -13,6 +13,7 @@ export function SkillSection({
         <div className="mb-3">
           <img
             src={"/skills/" + skill.name + ".png"}
+            className="inline"
             width={70}
             height={70}
           ></img>

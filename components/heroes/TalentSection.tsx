@@ -22,6 +22,7 @@ export function TalentSection({
           <span key={faction}>
             <img
               src={"/factions/" + faction + ".png"}
+              className="inline"
               width={50}
               height={50}
             ></img>
@@ -31,6 +32,7 @@ export function TalentSection({
       <div className="col-span-12 sm:col-span-2 text-center align-middle">
         <img
           src={"/talents/" + prettyName + ".png"}
+          className="inline"
           width={175}
           height={158}
         ></img>

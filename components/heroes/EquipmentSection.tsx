@@ -15,6 +15,7 @@ export function EquipmentSection({
           <div className="mb-3">
             <img
               src={"/equipment/" + equipment.name + ".png"}
+              className="inline"
               width={70}
               height={70}
             ></img>

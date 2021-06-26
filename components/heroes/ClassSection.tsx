@@ -12,6 +12,7 @@ export function ClassSection({ heroClass }: { heroClass: Class }) {
           <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
             <img
               src={"/classes/" + heroClass.name + ".png"}
+              className="inline"
               width={70}
               height={75}
             ></img>
