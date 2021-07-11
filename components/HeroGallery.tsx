@@ -21,7 +21,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
     );
     if (index === -1) filters.push({ type: "faction", value: faction });
     else filters.splice(index, 1);
-    setFilters(filters);
+    setFilters(filters.slice());
   }
 
   function filterAndSort(filters: Filter[], sort: Sort) {
@@ -72,7 +72,10 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
       <div className="flex flex-wrap justify-center text-center mb-5">
         <FormControl>
           <InputLabel>Sort</InputLabel>
-          <Select value={sort.value} onChange={(sortValue)=>handleSortChange(sortValue)}>
+          <Select
+            value={sort.value}
+            onChange={(sortValue) => handleSortChange(sortValue)}
+          >
             {SORTS.map((sort) => (
               <MenuItem key={sort.value} value={sort.value}>
                 {sort.prettyValue}
