@@ -20,6 +20,7 @@ export class DBSingleton {
   private maxStats: MaxStatsWorkbookRow[];
   private classesMap: ClassesMap;
   private heroMap: HeroMap;
+  private skillToHeroMap: SkillToHeroMap;
 
   private constructor() {
     this.workbook = XLSX.readFile("data/database.xlsx");
@@ -27,6 +28,7 @@ export class DBSingleton {
     this.maxStats = this.getMaxStats();
     this.classesMap = this.generateClassesMap();
     this.heroMap = this.generateHeroesMap();
+    this.skillToHeroMap = this.generateSkillToHeroMap();
   }
 
   static getInstance(): DBSingleton {
@@ -47,6 +49,10 @@ export class DBSingleton {
 
   getHeroesMap() {
     return this.heroMap;
+  }
+
+  getSkillsToHeroMap() {
+    return this.skillToHeroMap;
   }
 
   private generateSkillsMap() {
@@ -157,15 +163,17 @@ export class DBSingleton {
 
     return heroes.reduce((accumulator, heroName) => {
       accumulator[heroName] = this.getHeroData(heroName);
-      accumulator[heroName] = this.fixMatthew(accumulator[heroName], accumulator);
+      accumulator[heroName] = this.fixMatthew(
+        accumulator[heroName],
+        accumulator
+      );
       return accumulator;
     }, {} as HeroMap);
   }
 
   private fixMatthew(hero: Hero, heroMap: HeroMap): Hero {
-
-    if(hero.name.includes('matthew')){
-      const masterMatthew = heroMap['matthew (cavalry)'];
+    if (hero.name.includes("matthew")) {
+      const masterMatthew = heroMap["matthew (cavalry)"];
       return {
         ...hero,
         bondRequirments: masterMatthew.bondRequirments,
@@ -174,7 +182,7 @@ export class DBSingleton {
         threeCostSkill: masterMatthew.threeCostSkill,
         soldierBonus: masterMatthew.soldierBonus,
         exclusiveEquipment: masterMatthew.exclusiveEquipment,
-      }
+      };
     }
     return hero;
   }
@@ -374,6 +382,44 @@ export class DBSingleton {
     return classes;
   }
 
+  private generateSkillToHeroMap(): SkillToHeroMap {
+    return Object.values(this.heroMap)
+      .map((hero) => this.getSkillsPerHero(hero))
+      .reduce(this.reduceHeroSkillsTouplesToSkillMap, {} as SkillToHeroMap);
+  }
+
+  private getSkillsPerHero(hero: Hero): HeroSkillsTouple {
+    return [
+      hero.prettyName,
+      [
+        ...(hero.SpClass?.skills || []),
+        ...this.getSkillsPerClass(hero.startingClass),
+      ],
+    ];
+  }
+
+  private getSkillsPerClass(classVar: Class): Skill[] {
+    return [
+      ...classVar.skills,
+      ...classVar.children.flatMap((child) => this.getSkillsPerClass(child)),
+    ];
+  }
+
+  private reduceHeroSkillsTouplesToSkillMap(
+    accumulator: SkillToHeroMap,
+    [heroName, skills]: HeroSkillsTouple
+  ) {
+    skills.forEach((skill) => {
+      if (skill) {
+        accumulator[skill.name] = [
+          ...(accumulator[skill.name] || []),
+          heroName,
+        ];
+      }
+    });
+    return accumulator;
+  }
+
   private getNextKey(key: string): string {
     // https://stackoverflow.com/questions/2256607/how-to-get-the-next-letter-of-the-alphabet-in-javascript
     if (key === "Z" || key === "z") {
@@ -411,3 +457,9 @@ export interface HeroMap {
 interface ClassesMap {
   [name: string]: ClassWorkbookRow;
 }
+
+export interface SkillToHeroMap {
+  [name: string]: string[];
+}
+
+type HeroSkillsTouple = [string, Skill[]];

@@ -54,7 +54,7 @@ export function TalentSection({
           <p className="pt-5 font-bold">Level 70 Max Stats:</p>
         )}
         {maxStats.map((maxStats) => (
-          <li key={name}>
+          <li key={'maxStats'}>
             <span>{maxStats.className}: </span>
             <span>
               HP: {maxStats.stats.hp} | ATK: {maxStats.stats.atk} | INT:{" "}

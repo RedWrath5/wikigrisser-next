@@ -1,4 +1,6 @@
+import React from "react";
 import { Skill } from "../../types/hero";
+import { SkillIcon } from "./SkillIcon";
 
 export function SkillSection({
   skill,
@@ -10,14 +12,7 @@ export function SkillSection({
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2">
       <div className="col-span-12 text-center sm:col-span-1">
-        <div className="mb-3">
-          <img
-            src={"/skills/" + skill.name + ".png"}
-            className="inline"
-            width={70}
-            height={70}
-          ></img>
-        </div>
+        <SkillIcon skill={skill}></SkillIcon>
       </div>
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
         <p className="text-2xl">
