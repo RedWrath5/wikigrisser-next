@@ -1,7 +1,11 @@
-import { Class } from "../../types/hero";
+import { Class, Hero } from "../../types/hero";
 import { SoldiersSubSection } from "./SoldiersSubSection";
 
-export function SoldiersSection({ startingClass }: { startingClass: Class }) {
+export function SoldiersSection({
+  hero: { startingClass, spClass },
+}: {
+  hero: Hero;
+}) {
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-row bg-gray-200 justify-center">
@@ -27,6 +31,12 @@ export function SoldiersSection({ startingClass }: { startingClass: Class }) {
               heroClass={startingClass}
               isStarting={true}
             ></SoldiersSubSection>
+            {spClass && (
+              <SoldiersSubSection
+                heroClass={spClass}
+                isSpClass={true}
+              ></SoldiersSubSection>
+            )}
           </div>
         </div>
       </div>

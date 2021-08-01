@@ -4,7 +4,7 @@ export interface Hero {
   rarity: "SSR" | "SR" | "R" | "N→SSR" | "SR→SSR";
   talent?: Talent;
   threeCostSkill: Skill | null;
-  SpClass?: Class;
+  spClass: SPClass | null;
   startingClass: Class;
   factions: Factions[];
   heroImageUrl?: string;
@@ -27,6 +27,10 @@ export interface Class {
   soldiers: string[];
   children: Class[];
   maxStats: HeroStats | null;
+}
+
+export interface SPClass extends Class {
+  talent?: Talent;
 }
 
 export interface Skill {

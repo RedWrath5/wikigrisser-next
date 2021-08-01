@@ -7,6 +7,7 @@ import {
   Hero,
   Skill,
   SoldierBonus,
+  SPClass as SpClass,
   Talent,
   UnitType,
 } from "../types/hero";
@@ -188,7 +189,7 @@ export class DBSingleton {
   }
 
   private getHeroData(name: string): Hero {
-    let rowNumber = this.findHeroRow(name);
+    let rowNumber = this.findMatchingRow(name, "Heroes", "A");
 
     const talent: Talent = {
       name: this.getWorkbookHeroRowValue(rowNumber, "C"),
@@ -236,6 +237,8 @@ export class DBSingleton {
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
 
+    let spClass = this.getSpClass(name) || null;
+
     return {
       name,
       prettyName: this.getWorkbookHeroRowValue(rowNumber, "A"),
@@ -247,18 +250,30 @@ export class DBSingleton {
       bondRequirments,
       soldierBonus,
       exclusiveEquipment,
+      spClass,
     };
   }
 
-  private findHeroRow = (heroName: string): number => {
+  private findMatchingRow = (
+    matchingString: string,
+    sheetName: string,
+    columnToMatch: string
+  ): number => {
     let rowNumber = 3;
     let matchNotFound = true;
 
     while (matchNotFound) {
-      let heroNameInner = this.workbook.Sheets.Heroes["A" + rowNumber].v;
-      heroNameInner = heroNameInner.toLowerCase();
-      rowNumber++;
-      matchNotFound = heroName !== heroNameInner;
+      let heroNameInner: string | undefined =
+        this.workbook.Sheets[sheetName][columnToMatch + rowNumber]?.v;
+
+      if (heroNameInner) {
+        heroNameInner = heroNameInner.toLowerCase();
+        rowNumber++;
+        matchNotFound = matchingString !== heroNameInner;
+      } else {
+        rowNumber = 1;
+        matchNotFound = false;
+      }
     }
     rowNumber--;
 
@@ -267,6 +282,10 @@ export class DBSingleton {
 
   private getWorkbookHeroRowValue(rowNumber: number, column: string) {
     return this.workbook.Sheets.Heroes[column + rowNumber]?.v || null;
+  }
+
+  private getWorkbookSpClassRowValue(rowNumber: number, column: string) {
+    return this.workbook.Sheets["SP Heroes"][column + rowNumber]?.v || null;
   }
 
   private getFactionsForHero(rowNumber: number): Factions[] {
@@ -382,6 +401,40 @@ export class DBSingleton {
     return classes;
   }
 
+  private getSpClass(heroName: string): SpClass | undefined {
+    const rowNumber = this.findMatchingRow(heroName, "SP Heroes", "A");
+
+    if (rowNumber === 0) {
+      return undefined;
+    }
+
+    const name = this.getWorkbookSpClassRowValue(rowNumber, "S");
+
+    const talent: Talent = {
+      name: this.getWorkbookSpClassRowValue(rowNumber, "C"),
+      description: this.getWorkbookSpClassRowValue(rowNumber, "D"),
+    };
+
+    const maxStats =
+      this.maxStats.find(
+        (stats) =>
+          stats.class === name && stats.name.toLocaleLowerCase() === heroName
+      )?.stats || null;
+
+    return {
+      name,
+      talent,
+      heroType: this.classesMap[name]?.type || null,
+      skills: [
+        this.skillsMap[this.getWorkbookSpClassRowValue(rowNumber, "T")] || null,
+        this.skillsMap[this.getWorkbookSpClassRowValue(rowNumber, "U")] || null,
+      ],
+      soldiers: [this.getWorkbookSpClassRowValue(rowNumber, "V")],
+      children: [],
+      maxStats,
+    };
+  }
+
   private generateSkillToHeroMap(): SkillToHeroMap {
     return Object.values(this.heroMap)
       .map((hero) => this.getSkillsPerHero(hero))
@@ -392,7 +445,7 @@ export class DBSingleton {
     return [
       hero.prettyName,
       [
-        ...(hero.SpClass?.skills || []),
+        ...(hero.spClass?.skills || []),
         ...this.getSkillsPerClass(hero.startingClass),
       ],
     ];

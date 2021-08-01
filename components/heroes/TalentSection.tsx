@@ -10,11 +10,17 @@ export function TalentSection({
     startingClass,
     bondRequirments,
     soldierBonus,
+    spClass,
   },
 }: {
   hero: Hero;
 }) {
-  const maxStats = findMaxStats(startingClass);
+  let maxStats = findMaxStats(startingClass);
+  if (spClass)
+    maxStats = maxStats.concat({
+      className: spClass.name,
+      stats: spClass.maxStats || STATSTEMP,
+    });
   return (
     <div className="mb-2 p-4 grid grid-cols-12 gap-2">
       <div className="col-span-12 sm:col-span-1 text-center align-middle">
@@ -36,10 +42,24 @@ export function TalentSection({
           width={175}
           height={158}
         ></img>
+        {spClass && (
+          <img
+            src={"/talents/" + prettyName + " SP.png"}
+            className="inline ml-3 sm:ml-0 sm:mt-3"
+            width={175}
+            height={158}
+          ></img>
+        )}
       </div>
       <div className="col-span-12 sm:col-span-9 pt-2">
         <p className="text-2xl">Talent: {talent?.name}</p>
         <p className="whitespace-pre-line">{talent?.description}</p>
+        {spClass && (
+          <>
+            <p className="text-2xl mt-3">SP Talent: {spClass.talent?.name}</p>
+            <p className="whitespace-pre-line">{spClass.talent?.description}</p>
+          </>
+        )}
         {bondRequirments && (
           <>
             <p className="pt-5 font-bold">Bond Requirement:</p>
@@ -54,7 +74,7 @@ export function TalentSection({
           <p className="pt-5 font-bold">Level 70 Max Stats:</p>
         )}
         {maxStats.map((maxStats) => (
-          <li key={'maxStats'}>
+          <li key={maxStats.className}>
             <span>{maxStats.className}: </span>
             <span>
               HP: {maxStats.stats.hp} | ATK: {maxStats.stats.atk} | INT:{" "}
@@ -97,3 +117,12 @@ interface ClassWithMaxStats {
   className: string;
   stats: HeroStats;
 }
+
+const STATSTEMP: HeroStats = {
+  atk: "0",
+  def: "0",
+  hp: "0",
+  int: "0",
+  mdef: "0",
+  skill: "0",
+};

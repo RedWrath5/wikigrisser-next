@@ -9,7 +9,7 @@ import { TalentSection } from "./TalentSection";
 export function HeroComponent({ hero }: { hero: Hero }) {
   return (
     <div className="bg-white flex flex-grow justify-center flex-col">
-      <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
+      <h1 className="text-6xl text-center mt-14 mb-10 font-thin text-gray-600">
         {hero.prettyName}
       </h1>
       <div className="flex flex-wrap justify-center">
@@ -17,10 +17,20 @@ export function HeroComponent({ hero }: { hero: Hero }) {
           <img
             src={"/heroes/" + hero.prettyName + ".png"}
             className="inline"
-            width={500}
-            height={500}
+            width={400}
+            height={400}
           ></img>
         </div>
+        {hero.spClass && (
+          <div className="w-full px-4" style={{ maxWidth: "500px" }}>
+            <img
+              src={"/heroes/" + hero.prettyName + " SP.png"}
+              className="inline"
+              width={400}
+              height={400}
+            ></img>
+          </div>
+        )}
       </div>
       <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
         <div className="flex flex-col" style={{ maxWidth: "1280px" }}>
@@ -40,8 +50,9 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <SoldiersSection startingClass={hero.startingClass}></SoldiersSection>
+        <SoldiersSection hero={hero}></SoldiersSection>
         <ClassSection heroClass={hero.startingClass}></ClassSection>
+        {hero.spClass && <ClassSection heroClass={hero.spClass}></ClassSection>}
       </div>
     </div>
   );
