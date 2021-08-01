@@ -15,7 +15,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4" style={{ maxWidth: "500px" }}>
           <img
-            src={"/heroes/" + hero.prettyName + ".png"}
+            src={`/heroes/${hero.prettyName}/${hero.prettyName}.png`}
             className="inline"
             width={400}
             height={400}
@@ -24,7 +24,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         {hero.spClass && (
           <div className="w-full px-4" style={{ maxWidth: "500px" }}>
             <img
-              src={"/heroes/" + hero.prettyName + " SP.png"}
+              src={`/heroes/${hero.prettyName}/${hero.prettyName} SP.png`}
               className="inline"
               width={400}
               height={400}
