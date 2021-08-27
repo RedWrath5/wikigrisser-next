@@ -1,17 +1,11 @@
 // import App from 'next/app'
-import { ApolloProvider } from "@apollo/client";
 import type { AppProps } from "next/app";
 import React from "react";
 import "tailwindcss/tailwind.css";
-import { client } from "../lib/apollo";
 import "../styles.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
-  );
+  return <Component {...pageProps} />;
 }
 
 // Only uncomment this method if you have blocking data requirements for

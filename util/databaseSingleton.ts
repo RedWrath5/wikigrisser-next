@@ -22,6 +22,7 @@ export class DBSingleton {
   private classesMap: ClassesMap;
   private heroMap: HeroMap;
   private skillToHeroMap: SkillToHeroMap;
+  private patchMap: PatchMap;
 
   private constructor() {
     this.workbook = XLSX.readFile("data/database.xlsx");
@@ -30,6 +31,7 @@ export class DBSingleton {
     this.classesMap = this.generateClassesMap();
     this.heroMap = this.generateHeroesMap();
     this.skillToHeroMap = this.generateSkillToHeroMap();
+    this.patchMap = this.generatePatchMap();
   }
 
   static getInstance(): DBSingleton {
@@ -54,6 +56,10 @@ export class DBSingleton {
 
   getSkillsToHeroMap() {
     return this.skillToHeroMap;
+  }
+
+  getPatchMap() {
+    return this.patchMap;
   }
 
   private generateSkillsMap() {
@@ -473,6 +479,42 @@ export class DBSingleton {
     return accumulator;
   }
 
+  private generatePatchMap(): PatchMap {
+    const patchSheat = this.workbook.Sheets["News Page"];
+    const patchMap: PatchMap = {};
+    let rowCounter = 3;
+    let notDone = true;
+
+    while (notDone) {
+      const patch: Patch = {
+        formattedDate: patchSheat["A" + rowCounter].v,
+        info: patchSheat["B" + rowCounter].v,
+        releaseDate: patchSheat["C" + rowCounter].w,
+        id: patchSheat["D" + rowCounter].v,
+        type: patchSheat["E" + rowCounter].v,
+        newHeroes: [],
+      };
+
+      const hero1 = patchSheat["E" + rowCounter]?.v || null;
+      hero1 && patch.newHeroes.push(hero1);
+      const hero2 = patchSheat["F" + rowCounter]?.v || null;
+      hero2 && patch.newHeroes.push(hero2);
+      const hero3 = patchSheat["G" + rowCounter]?.v || null;
+      hero3 && patch.newHeroes.push(hero3);
+      const hero4 = patchSheat["H" + rowCounter]?.v || null;
+      hero4 && patch.newHeroes.push(hero4);
+
+      patchMap[patch.id] = patch;
+
+      rowCounter++;
+      if (!patchSheat["A" + rowCounter]?.v) {
+        notDone = false;
+      }
+    }
+
+    return patchMap;
+  }
+
   private getNextKey(key: string): string {
     // https://stackoverflow.com/questions/2256607/how-to-get-the-next-letter-of-the-alphabet-in-javascript
     if (key === "Z" || key === "z") {
@@ -516,3 +558,16 @@ export interface SkillToHeroMap {
 }
 
 type HeroSkillsTouple = [string, Skill[]];
+
+export interface Patch {
+  id: number;
+  releaseDate: string;
+  formattedDate: string;
+  type: "major" | "minor";
+  newHeroes: string[];
+  info: string;
+}
+
+export interface PatchMap {
+  [id: number]: Patch;
+}
