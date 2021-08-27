@@ -22,7 +22,7 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
   return (
     <Layout>
       <div className="flex flex-grow flex-col bg-black">
-        <div>
+        <div className="flex justify-center">
           <img
             src={"/web/banner.jpg"}
             className="inline"
