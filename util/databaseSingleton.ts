@@ -257,6 +257,7 @@ export class DBSingleton {
       soldierBonus,
       exclusiveEquipment,
       spClass,
+      skinCount: this.getWorkbookHeroRowValue(rowNumber, "CS") ?? 0,
     };
   }
 

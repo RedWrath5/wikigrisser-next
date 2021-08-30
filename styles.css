@@ -67,3 +67,9 @@
 #page-container {
   min-height: 100vh;
 }
+
+/* Carousel */
+
+.carousel .control-dots .dot {
+  background: #000 !important;
+}

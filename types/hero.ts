@@ -11,6 +11,7 @@ export interface Hero {
   bondRequirments: BondRequirements | null;
   soldierBonus: SoldierBonus | null;
   exclusiveEquipment: Equipment | null;
+  skinCount: number;
 }
 
 export interface Talent {

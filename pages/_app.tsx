@@ -2,6 +2,7 @@
 import type { AppProps } from "next/app";
 import React from "react";
 import "tailwindcss/tailwind.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../styles.css";
 
 function MyApp({ Component, pageProps }: AppProps) {

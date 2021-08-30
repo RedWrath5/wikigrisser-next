@@ -17,6 +17,7 @@
     "next": "^10.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-responsive-carousel": "^3.2.21",
     "xlsx": "^0.16.9"
   },
   "devDependencies": {

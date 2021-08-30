@@ -2,6 +2,7 @@ import React from "react";
 import { Hero } from "../../types/hero";
 import { ClassSection } from "./ClassSection";
 import { EquipmentSection } from "./EquipmentSection";
+import { HeroSkinCarousel } from "./HeroSkinCarousel";
 import { SkillSection } from "./SkillSection";
 import { SoldiersSection } from "./SoldiersSection";
 import { TalentSection } from "./TalentSection";
@@ -14,23 +15,8 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       </h1>
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4" style={{ maxWidth: "500px" }}>
-          <img
-            src={`/heroes/${hero.prettyName}/${hero.prettyName}.png`}
-            className="inline"
-            width={400}
-            height={400}
-          ></img>
+          <HeroSkinCarousel hero={hero}></HeroSkinCarousel>
         </div>
-        {hero.spClass && (
-          <div className="w-full px-4" style={{ maxWidth: "500px" }}>
-            <img
-              src={`/heroes/${hero.prettyName}/${hero.prettyName} SP.png`}
-              className="inline"
-              width={400}
-              height={400}
-            ></img>
-          </div>
-        )}
       </div>
       <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
         <div className="flex flex-col" style={{ maxWidth: "1280px" }}>
