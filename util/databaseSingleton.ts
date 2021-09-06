@@ -1,4 +1,4 @@
-import XLSX, { WorkBook } from "xlsx";
+import XLSX, { CellObject, WorkBook, WorkSheet } from "xlsx";
 import {
   BondRequirements,
   Class,
@@ -12,27 +12,29 @@ import {
   UnitType,
 } from "../types/hero";
 import { ClassWorkbookRow, MaxStatsWorkbookRow } from "../types/spreedsheet";
+import {
+  ColIdMap,
+  FINAL_COLUMN_HEROES,
+  HERO_COLUMN_HEADERS,
+  HERO_COLUMN_IDS,
+} from "./columnHeaders";
 
 export class DBSingleton {
   private static instance: DBSingleton;
 
-  private workbook: WorkBook;
-  private skillsMap: SkillsMap;
-  private maxStats: MaxStatsWorkbookRow[];
-  private classesMap: ClassesMap;
-  private heroMap: HeroMap;
-  private skillToHeroMap: SkillToHeroMap;
-  private patchMap: PatchMap;
+  private workbook = XLSX.readFile("data/database.xlsx");
+  private hCM = this.mapColumnHeadersToColumnIds(
+    HERO_COLUMN_HEADERS,
+    this.workbook.Sheets.Heroes
+  ) as HERO_COLUMN_IDS;
+  private skillsMap = this.generateSkillsMap();
+  private maxStats = this.generateMaxStats();
+  private classesMap = this.generateClassesMap();
+  private heroMap = this.generateHeroesMap();
+  private skillToHeroMap = this.generateSkillToHeroMap();
+  private patchMap = this.generatePatchMap();
 
-  private constructor() {
-    this.workbook = XLSX.readFile("data/database.xlsx");
-    this.skillsMap = this.generateSkillsMap();
-    this.maxStats = this.getMaxStats();
-    this.classesMap = this.generateClassesMap();
-    this.heroMap = this.generateHeroesMap();
-    this.skillToHeroMap = this.generateSkillToHeroMap();
-    this.patchMap = this.generatePatchMap();
-  }
+  private constructor() {}
 
   static getInstance(): DBSingleton {
     if (!this.instance) {
@@ -89,7 +91,7 @@ export class DBSingleton {
     return skillsMap;
   }
 
-  getMaxStats(): MaxStatsWorkbookRow[] {
+  private generateMaxStats(): MaxStatsWorkbookRow[] {
     const maxStatsSheet = this.workbook.Sheets["Max Stats"];
     let notDone = true;
     let rowCounter = 2;
@@ -161,11 +163,12 @@ export class DBSingleton {
   private generateHeroesMap(): HeroMap {
     const heroes = [];
     let rowNumber = 3;
-    while (this.workbook.Sheets.Heroes["A" + rowNumber]?.v) {
-      let heroName: string = this.workbook.Sheets.Heroes["A" + rowNumber].v;
-      heroName = heroName.toLowerCase();
+    let cellValue = getCellValue(this.workbook.Sheets.Heroes["A" + rowNumber]);
+    while (cellValue) {
+      let heroName = cellValue.toString().toLowerCase();
       heroes.push(heroName);
       rowNumber++;
+      cellValue = getCellValue(this.workbook.Sheets.Heroes["A" + rowNumber]);
     }
 
     return heroes.reduce((accumulator, heroName) => {
@@ -198,8 +201,8 @@ export class DBSingleton {
     let rowNumber = this.findMatchingRow(name, "Heroes", "A");
 
     const talent: Talent = {
-      name: this.getWorkbookHeroRowValue(rowNumber, "C"),
-      description: this.getWorkbookHeroRowValue(rowNumber, "D"),
+      name: this.getHeroRowValue(rowNumber, this.hCM.talentName),
+      description: this.getHeroRowValue(rowNumber, this.hCM.talentDescription),
     };
 
     const factions = this.getFactionsForHero(rowNumber);
@@ -207,38 +210,47 @@ export class DBSingleton {
     const startingClass = this.getStartingClass(rowNumber);
 
     let threeCostSkill: Skill | null = {
-      name: this.getWorkbookHeroRowValue(rowNumber, "CM"),
-      cd: this.getWorkbookHeroRowValue(rowNumber, "CO"),
-      range: this.getWorkbookHeroRowValue(rowNumber, "CP"),
-      span: this.getWorkbookHeroRowValue(rowNumber, "CQ"),
-      description: this.getWorkbookHeroRowValue(rowNumber, "CR"),
+      name: this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillName),
+      cd: +this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillCD),
+      range: +this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillRange),
+      span: +this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillSpan),
+      description: this.getHeroRowValue(
+        rowNumber,
+        this.hCM.awakeningSkillEffect
+      ),
       cost: "•••",
     };
 
     if (threeCostSkill.name === null) threeCostSkill = null;
 
     let bondRequirments: BondRequirements | null = {
-      bond2: this.getWorkbookHeroRowValue(rowNumber, "BX"),
-      bond3: this.getWorkbookHeroRowValue(rowNumber, "BY"),
-      bond4: this.getWorkbookHeroRowValue(rowNumber, "BZ"),
-      bond5: this.getWorkbookHeroRowValue(rowNumber, "CA"),
+      bond2: this.getHeroRowValue(rowNumber, this.hCM.bond2ReqString),
+      bond3: this.getHeroRowValue(rowNumber, this.hCM.bond3ReqString),
+      bond4: this.getHeroRowValue(rowNumber, this.hCM.bond4ReqString),
+      bond5: this.getHeroRowValue(rowNumber, this.hCM.bond5ReqString),
     };
 
     if (bondRequirments.bond2 === undefined) bondRequirments = null;
 
     let soldierBonus: SoldierBonus | null = {
-      hp: this.getWorkbookHeroRowValue(rowNumber, "BR"),
-      atk: this.getWorkbookHeroRowValue(rowNumber, "BS"),
-      def: this.getWorkbookHeroRowValue(rowNumber, "BT"),
-      mdef: this.getWorkbookHeroRowValue(rowNumber, "BU"),
+      hp: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusHP),
+      atk: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusATK),
+      def: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusDEF),
+      mdef: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusMDEF),
     };
 
     if (soldierBonus.hp === undefined) soldierBonus = null;
 
     let exclusiveEquipment: Equipment | null = {
-      name: this.getWorkbookHeroRowValue(rowNumber, "CJ"),
-      type: this.getWorkbookHeroRowValue(rowNumber, "CK"),
-      effect: this.getWorkbookHeroRowValue(rowNumber, "CL"),
+      name: this.getHeroRowValue(rowNumber, this.hCM.exclusiveEquipmentName),
+      type: this.getHeroRowValue(
+        rowNumber,
+        this.hCM.exclusiveEquipmentType
+      ) as any,
+      effect: this.getHeroRowValue(
+        rowNumber,
+        this.hCM.exclusiveEquipmentEffect
+      ),
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
@@ -247,8 +259,8 @@ export class DBSingleton {
 
     return {
       name,
-      prettyName: this.getWorkbookHeroRowValue(rowNumber, "A"),
-      rarity: this.getWorkbookHeroRowValue(rowNumber, "B"),
+      prettyName: this.getHeroRowValue(rowNumber, this.hCM.name),
+      rarity: this.getHeroRowValue(rowNumber, this.hCM.rarity) as any,
       talent,
       factions,
       startingClass,
@@ -257,7 +269,7 @@ export class DBSingleton {
       soldierBonus,
       exclusiveEquipment,
       spClass,
-      skinCount: this.getWorkbookHeroRowValue(rowNumber, "CS") ?? 0,
+      skinCount: +this.getHeroRowValue(rowNumber, this.hCM.skinCount) ?? 0,
     };
   }
 
@@ -287,8 +299,10 @@ export class DBSingleton {
     return rowNumber;
   };
 
-  private getWorkbookHeroRowValue(rowNumber: number, column: string) {
-    return this.workbook.Sheets.Heroes[column + rowNumber]?.v || null;
+  private getHeroRowValue(rowNumber: number, column: string): string {
+    return getCellValue(
+      this.workbook.Sheets.Heroes[column + rowNumber]
+    ) as string;
   }
 
   private getWorkbookSpClassRowValue(rowNumber: number, column: string) {
@@ -313,7 +327,7 @@ export class DBSingleton {
     const factions: Factions[] = [];
 
     Object.entries(FACTION_TO_COL_MAP).forEach(([key, value]) => {
-      const cellValue = this.getWorkbookHeroRowValue(rowNumber, key);
+      const cellValue = this.getHeroRowValue(rowNumber, key);
       if (cellValue === "✓" || cellValue === "✓+") factions.push(value);
     });
 
@@ -322,17 +336,32 @@ export class DBSingleton {
 
   private getStartingClass(rowNumber: number): Class {
     const soldiers =
-      this.getWorkbookHeroRowValue(rowNumber, "BV")?.split(",") || [];
+      this.getHeroRowValue(rowNumber, this.hCM.trainingGroundUnlocks)?.split(
+        ","
+      ) || [];
     return {
-      name: this.getWorkbookHeroRowValue(rowNumber, "X"),
+      name: this.getHeroRowValue(rowNumber, this.hCM.startingClassName),
       skills: [
-        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "Y")] || null,
-        this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, "Z")] || null,
+        this.skillsMap[
+          this.getHeroRowValue(rowNumber, this.hCM.startingClassSkill1)
+        ],
+        this.skillsMap[
+          this.getHeroRowValue(rowNumber, this.hCM.startingClassSkill2)
+        ],
       ],
       children: [
-        ...this.getTopLevelClassPath(rowNumber, "AB"),
-        ...this.getTopLevelClassPath(rowNumber, "AP"),
-        ...this.getTopLevelClassPath(rowNumber, "BD"),
+        ...this.getTopLevelClassPath(
+          rowNumber,
+          this.hCM.leftClassStartingPosition
+        ),
+        ...this.getTopLevelClassPath(
+          rowNumber,
+          this.hCM.middleClassStartingPosition
+        ),
+        ...this.getTopLevelClassPath(
+          rowNumber,
+          this.hCM.rightClassStartingPosition
+        ),
       ],
       heroType: "Aquatic",
       soldiers: soldiers,
@@ -349,13 +378,12 @@ export class DBSingleton {
       rowNumber,
       this.getNextKey(skill1)
     );
-    const name = this.getWorkbookHeroRowValue(rowNumber, startingCol);
+    const name = this.getHeroRowValue(rowNumber, startingCol);
     let outerClass: Class[] = [
       {
         name,
         skills: [
-          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1)] ||
-            null,
+          this.skillsMap[this.getHeroRowValue(rowNumber, skill1)] || null,
         ],
         heroType: this.classesMap[name]?.type || null,
         soldiers: [],
@@ -376,8 +404,8 @@ export class DBSingleton {
     const soldier1Pos = this.getNextKey(skill1Pos);
     const skill2Pos = this.getNextKey(soldier1Pos);
     const soldier2Pos = this.getNextKey(skill2Pos);
-    const name = this.getWorkbookHeroRowValue(rowNumber, startingCol);
-    const heroName = this.getWorkbookHeroRowValue(rowNumber, "A");
+    const name = this.getHeroRowValue(rowNumber, startingCol);
+    const heroName = this.getHeroRowValue(rowNumber, "A");
     const maxStats =
       this.maxStats.find(
         (stats) => stats.class === name && stats.name === heroName
@@ -390,15 +418,13 @@ export class DBSingleton {
       {
         name,
         skills: [
-          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill1Pos)] ||
-            null,
-          this.skillsMap[this.getWorkbookHeroRowValue(rowNumber, skill2Pos)] ||
-            null,
+          this.skillsMap[this.getHeroRowValue(rowNumber, skill1Pos)] || null,
+          this.skillsMap[this.getHeroRowValue(rowNumber, skill2Pos)] || null,
         ],
         heroType: classInstance?.type || null,
         soldiers: [
-          this.getWorkbookHeroRowValue(rowNumber, soldier1Pos),
-          this.getWorkbookHeroRowValue(rowNumber, soldier2Pos),
+          this.getHeroRowValue(rowNumber, soldier1Pos),
+          this.getHeroRowValue(rowNumber, soldier2Pos),
         ],
         children: [],
         maxStats,
@@ -516,6 +542,53 @@ export class DBSingleton {
     return patchMap;
   }
 
+  private mapColumnHeadersToColumnIds(
+    columnHeaders: { [key: string]: string[] },
+    sheet: WorkSheet
+  ) {
+    return Object.keys(columnHeaders).reduce((accumulator, key) => {
+      console.log("test");
+      console.time();
+      const value = columnHeaders[key];
+      let rowNumber = 1;
+      let columnId = "A";
+      value.forEach((columnIdToFind) => {
+        columnId = this.scanForHeaderString(
+          columnIdToFind,
+          sheet,
+          rowNumber,
+          columnId
+        );
+      });
+      accumulator[key] = columnId;
+      console.timeEnd();
+      return accumulator;
+    }, {} as ColIdMap);
+  }
+
+  private scanForHeaderString(
+    headerToFind: string,
+    sheet: WorkSheet,
+    rowNumberToScan: number,
+    colIdToStartOn: string = "A"
+  ): string {
+    let currentCol = colIdToStartOn;
+    let notDone = true;
+
+    while (notDone) {
+      const cellId = currentCol + rowNumberToScan;
+      const cellValue = getCellValue(sheet[cellId]);
+
+      if (cellValue === headerToFind || cellId === FINAL_COLUMN_HEROES) {
+        notDone = false;
+        return currentCol;
+      }
+      currentCol = this.getNextKey(currentCol);
+    }
+
+    return "";
+  }
+
   private getNextKey(key: string): string {
     // https://stackoverflow.com/questions/2256607/how-to-get-the-next-letter-of-the-alphabet-in-javascript
     if (key === "Z" || key === "z") {
@@ -571,4 +644,15 @@ export interface Patch {
 
 export interface PatchMap {
   [id: number]: Patch;
+}
+
+function getCellValue(cellObj: CellObject | undefined) {
+  if (!cellObj) return null;
+  if (cellObj.w) return cellObj.w;
+
+  if (cellObj.v) return cellObj.v;
+
+  if (cellObj.f) return cellObj.f;
+
+  return null;
 }
