@@ -23,18 +23,26 @@ export class DBSingleton {
   private static instance: DBSingleton;
 
   private workbook = XLSX.readFile("data/database.xlsx");
-  private hCM = this.mapColumnHeadersToColumnIds(
-    HERO_COLUMN_HEADERS,
-    this.workbook.Sheets.Heroes
-  ) as HERO_COLUMN_IDS;
-  private skillsMap = this.generateSkillsMap();
-  private maxStats = this.generateMaxStats();
-  private classesMap = this.generateClassesMap();
-  private heroMap = this.generateHeroesMap();
-  private skillToHeroMap = this.generateSkillToHeroMap();
-  private patchMap = this.generatePatchMap();
+  private hCM: HERO_COLUMN_IDS;
+  private skillsMap: SkillsMap;
+  private maxStats: MaxStatsWorkbookRow[];
+  private classesMap: ClassesMap;
+  private heroMap: HeroMap;
+  private skillToHeroMap: SkillToHeroMap;
+  private patchMap: PatchMap;
 
-  private constructor() {}
+  private constructor() {
+    this.hCM = this.mapColumnHeadersToColumnIds(
+      HERO_COLUMN_HEADERS,
+      this.workbook.Sheets.Heroes
+    ) as HERO_COLUMN_IDS;
+    this.skillsMap = this.generateSkillsMap();
+    this.maxStats = this.generateMaxStats();
+    this.classesMap = this.generateClassesMap();
+    this.heroMap = this.generateHeroesMap();
+    this.skillToHeroMap = this.generateSkillToHeroMap();
+    this.patchMap = this.generatePatchMap();
+  }
 
   static getInstance(): DBSingleton {
     if (!this.instance) {
@@ -160,7 +168,7 @@ export class DBSingleton {
     return classesMap;
   }
 
-  private generateHeroesMap(): HeroMap {
+  private generateHeroesMap = (): HeroMap => {
     const heroes = [];
     let rowNumber = 3;
     let cellValue = getCellValue(this.workbook.Sheets.Heroes["A" + rowNumber]);
@@ -179,7 +187,7 @@ export class DBSingleton {
       );
       return accumulator;
     }, {} as HeroMap);
-  }
+  };
 
   private fixMatthew(hero: Hero, heroMap: HeroMap): Hero {
     if (hero.name.includes("matthew")) {
@@ -197,7 +205,7 @@ export class DBSingleton {
     return hero;
   }
 
-  private getHeroData(name: string): Hero {
+  private getHeroData = (name: string): Hero => {
     let rowNumber = this.findMatchingRow(name, "Heroes", "A");
 
     const talent: Talent = {
@@ -271,7 +279,7 @@ export class DBSingleton {
       spClass,
       skinCount: +this.getHeroRowValue(rowNumber, this.hCM.skinCount) ?? 0,
     };
-  }
+  };
 
   private findMatchingRow = (
     matchingString: string,
@@ -344,10 +352,10 @@ export class DBSingleton {
       skills: [
         this.skillsMap[
           this.getHeroRowValue(rowNumber, this.hCM.startingClassSkill1)
-        ],
+        ] || null,
         this.skillsMap[
           this.getHeroRowValue(rowNumber, this.hCM.startingClassSkill2)
-        ],
+        ] || null,
       ],
       children: [
         ...this.getTopLevelClassPath(
@@ -547,8 +555,6 @@ export class DBSingleton {
     sheet: WorkSheet
   ) {
     return Object.keys(columnHeaders).reduce((accumulator, key) => {
-      console.log("test");
-      console.time();
       const value = columnHeaders[key];
       let rowNumber = 1;
       let columnId = "A";
@@ -559,9 +565,9 @@ export class DBSingleton {
           rowNumber,
           columnId
         );
+        rowNumber++;
       });
       accumulator[key] = columnId;
-      console.timeEnd();
       return accumulator;
     }, {} as ColIdMap);
   }
@@ -579,7 +585,7 @@ export class DBSingleton {
       const cellId = currentCol + rowNumberToScan;
       const cellValue = getCellValue(sheet[cellId]);
 
-      if (cellValue === headerToFind || cellId === FINAL_COLUMN_HEROES) {
+      if (cellValue === headerToFind || currentCol === FINAL_COLUMN_HEROES) {
         notDone = false;
         return currentCol;
       }
