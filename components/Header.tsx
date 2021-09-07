@@ -59,6 +59,9 @@ export function Header() {
           <div className="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2">
             <Link href="/heroes/gallery">Heroes</Link>
           </div>
+          <div className="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2">
+            <Link href="/equipment">Equipment</Link>
+          </div>
         </div>
       </nav>
     </header>

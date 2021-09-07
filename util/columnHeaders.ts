@@ -3,18 +3,18 @@ export const HERO_COLUMN_HEADERS = {
   rarity: ["Rarity"],
   talentName: ["Talents", "Talent Name"],
   talentDescription: ["Talents", "Description"],
-  protagonist: ["Factions", "index(Images!$A$2:$L$2, 1, 1"],
-  glory: ["Factions", "index(Images!$A$2:$L$2, 1, 2"],
-  origin: ["Factions", "index(Images!$A$2:$L$2, 1, 3"],
-  princess: ["Factions", "index(Images!$A$2:$L$2, 1, 4"],
-  empire: ["Factions", "index(Images!$A$2:$L$2, 1, 5"],
-  strategic: ["Factions", "index(Images!$A$2:$L$2, 1, 6"],
-  dark: ["Factions", "index(Images!$A$2:$L$2, 1, 7"],
-  meteor: ["Factions", "index(Images!$A$2:$L$2, 1, 8"],
-  legends: ["Factions", "index(Images!$A$2:$L$2, 1, 9"],
-  mythic: ["Factions", "index(Images!$A$2:$L$2, 1, 10"],
-  tensei: ["Factions", "index(Images!$A$2:$L$2, 1, 11"],
-  time: ["Factions", "index(Images!$A$2:$L$2, 1, 12"],
+  protagonist: ["Factions", "index(Images!$A$2:$L$2, 1, 1)"],
+  glory: ["Factions", "index(Images!$A$2:$L$2, 1, 2)"],
+  origin: ["Factions", "index(Images!$A$2:$L$2, 1, 3)"],
+  princess: ["Factions", "index(Images!$A$2:$L$2, 1, 4)"],
+  empire: ["Factions", "index(Images!$A$2:$L$2, 1, 5)"],
+  strategic: ["Factions", "index(Images!$A$2:$L$2, 1, 6)"],
+  dark: ["Factions", "index(Images!$A$2:$L$2, 1, 7)"],
+  meteor: ["Factions", "index(Images!$A$2:$L$2, 1, 8)"],
+  legends: ["Factions", "index(Images!$A$2:$L$2, 1, 9)"],
+  mythic: ["Factions", "index(Images!$A$2:$L$2, 1, 10)"],
+  tensei: ["Factions", "index(Images!$A$2:$L$2, 1, 11)"],
+  time: ["Factions", "index(Images!$A$2:$L$2, 1, 12)"],
   startingClassName: ["Starting Class", "Class\nName"],
   startingClassSkill1: ["Starting Class", "Skill 1\n(Level 1)"],
   startingClassSkill2: ["Starting Class", "Skill 2\n(Level 12)"],
@@ -52,7 +52,21 @@ export const HERO_COLUMN_HEADERS = {
   skinCount: ["Skin Count"],
 };
 
-export const FINAL_COLUMN_HEROES = "CU";
+export const EQUIPMENT_COLUMN_HEADERS = {
+  name: ["Name"],
+  slot: ["Slot"],
+  type: ["Type"],
+  quality: ["Quality"],
+  user1: ["User 1"],
+  user2: ["User 2"],
+  user3: ["User 3"],
+  user4: ["User 4"],
+  stat1: ["Level 50 Flat Stat 1"],
+  stat2: ["Level 50 Flat Stat 2"],
+  equipSkill: ["Equip Skill Lv50"],
+};
+
+export const FINAL_COL_KEY = "FINAL_COLUMN";
 
 export interface ColIdMap {
   [key: string]: string;
@@ -60,4 +74,8 @@ export interface ColIdMap {
 
 export type HERO_COLUMN_IDS = {
   [key in keyof typeof HERO_COLUMN_HEADERS]: string;
+};
+
+export type EQUIPMENT_COLUMN_IDS = {
+  [key in keyof typeof EQUIPMENT_COLUMN_HEADERS]: string;
 };

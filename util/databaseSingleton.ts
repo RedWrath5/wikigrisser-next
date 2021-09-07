@@ -1,4 +1,4 @@
-import XLSX, { CellObject, WorkBook, WorkSheet } from "xlsx";
+import XLSX, { CellObject, WorkSheet } from "xlsx";
 import {
   BondRequirements,
   Class,
@@ -14,7 +14,9 @@ import {
 import { ClassWorkbookRow, MaxStatsWorkbookRow } from "../types/spreedsheet";
 import {
   ColIdMap,
-  FINAL_COLUMN_HEROES,
+  EQUIPMENT_COLUMN_HEADERS,
+  EQUIPMENT_COLUMN_IDS,
+  FINAL_COL_KEY,
   HERO_COLUMN_HEADERS,
   HERO_COLUMN_IDS,
 } from "./columnHeaders";
@@ -24,24 +26,31 @@ export class DBSingleton {
 
   private workbook = XLSX.readFile("data/database.xlsx");
   private hCM: HERO_COLUMN_IDS;
+  private eCM: EQUIPMENT_COLUMN_IDS;
   private skillsMap: SkillsMap;
   private maxStats: MaxStatsWorkbookRow[];
   private classesMap: ClassesMap;
   private heroMap: HeroMap;
   private skillToHeroMap: SkillToHeroMap;
   private patchMap: PatchMap;
+  private equipment: Equipment[];
 
   private constructor() {
     this.hCM = this.mapColumnHeadersToColumnIds(
       HERO_COLUMN_HEADERS,
       this.workbook.Sheets.Heroes
     ) as HERO_COLUMN_IDS;
+    this.eCM = this.mapColumnHeadersToColumnIds(
+      EQUIPMENT_COLUMN_HEADERS,
+      this.workbook.Sheets.Equipment
+    ) as EQUIPMENT_COLUMN_IDS;
     this.skillsMap = this.generateSkillsMap();
     this.maxStats = this.generateMaxStats();
     this.classesMap = this.generateClassesMap();
     this.heroMap = this.generateHeroesMap();
     this.skillToHeroMap = this.generateSkillToHeroMap();
     this.patchMap = this.generatePatchMap();
+    this.equipment = this.generateEquipment();
   }
 
   static getInstance(): DBSingleton {
@@ -70,6 +79,10 @@ export class DBSingleton {
 
   getPatchMap() {
     return this.patchMap;
+  }
+
+  getEquipment() {
+    return this.equipment;
   }
 
   private generateSkillsMap() {
@@ -251,7 +264,7 @@ export class DBSingleton {
 
     let exclusiveEquipment: Equipment | null = {
       name: this.getHeroRowValue(rowNumber, this.hCM.exclusiveEquipmentName),
-      type: this.getHeroRowValue(
+      slot: this.getHeroRowValue(
         rowNumber,
         this.hCM.exclusiveEquipmentType
       ) as any,
@@ -259,6 +272,9 @@ export class DBSingleton {
         rowNumber,
         this.hCM.exclusiveEquipmentEffect
       ),
+      stat1: null,
+      stat2: null,
+      type: "",
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
@@ -550,6 +566,36 @@ export class DBSingleton {
     return patchMap;
   }
 
+  private generateEquipment() {
+    let notDone = true;
+    let rowCounter = 2;
+    let equipmentArr: Equipment[] = [];
+
+    while (notDone) {
+      const equipment: Equipment = {
+        name: this.getEquipmentRowValue(rowCounter, this.eCM.name),
+        effect: this.getEquipmentRowValue(rowCounter, this.eCM.equipSkill),
+        slot: this.getEquipmentRowValue(rowCounter, this.eCM.slot) as any,
+        stat1: this.getEquipmentRowValue(rowCounter, this.eCM.stat1),
+        stat2: this.getEquipmentRowValue(rowCounter, this.eCM.stat2),
+        type: this.getEquipmentRowValue(rowCounter, this.eCM.type) as any,
+      };
+      equipmentArr.push(equipment);
+      rowCounter++;
+      if (!this.getEquipmentRowValue(rowCounter, this.eCM.name)) {
+        notDone = false;
+      }
+    }
+
+    return equipmentArr;
+  }
+
+  private getEquipmentRowValue(rowNumber: number, column: string): string {
+    return getCellValue(
+      this.workbook.Sheets.Equipment[column + rowNumber]
+    ) as string;
+  }
+
   private mapColumnHeadersToColumnIds(
     columnHeaders: { [key: string]: string[] },
     sheet: WorkSheet
@@ -585,7 +631,12 @@ export class DBSingleton {
       const cellId = currentCol + rowNumberToScan;
       const cellValue = getCellValue(sheet[cellId]);
 
-      if (cellValue === headerToFind || currentCol === FINAL_COLUMN_HEROES) {
+      if (cellValue === FINAL_COL_KEY) {
+        notDone = false;
+        console.error("Column Key not Found", headerToFind);
+      }
+
+      if (cellValue === headerToFind) {
         notDone = false;
         return currentCol;
       }

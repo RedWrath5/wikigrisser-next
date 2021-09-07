@@ -67,26 +67,6 @@ export interface SoldierBonus {
   mdef: number;
 }
 
-export interface Equipment {
-  name: string;
-  type: "Helmet" | "Armor" | "Weapon" | "Accessory";
-  effect: string;
-}
-
-// export type Factions =
-//   | "protagonist"
-//   | "glory"
-//   | "origin"
-//   | "princess"
-//   | "empire"
-//   | "strategic"
-//   | "dark"
-//   | "meteor"
-//   | "legends"
-//   | "mythic"
-//   | "tensei"
-//   | "time";
-
 export enum Factions {
   Protagonist = "protagonist",
   Glory = "glory",
@@ -114,3 +94,32 @@ export type UnitType =
   | "Holy"
   | "Demon"
   | "Dragon";
+
+export interface Equipment {
+  name: string;
+  slot: EquipmentSlot;
+  type: EquipmentType;
+  effect: string;
+  stat1: string | null;
+  stat2: string | null;
+}
+
+export enum EquipmentSlot {
+  Head = "Head",
+  Body = "Body",
+  Weapon = "Weapon",
+  Accessory = "Accessory",
+}
+
+export type EquipmentType =
+  | "Bow"
+  | "Dagger"
+  | "Sword"
+  | "Axe"
+  | "Lance"
+  | "Hammer"
+  | "Staff"
+  | "Cloth"
+  | "Leather"
+  | "Heavy"
+  | "";
