@@ -144,13 +144,13 @@ interface Filter {
 }
 
 type Sort = {
-  value: "aplhabetically" | "rarity";
+  value: "alphabetically" | "rarity";
   prettyValue: string;
 };
 
 const SORTS: Sort[] = [
   { value: "rarity", prettyValue: "Rarity" },
-  { value: "aplhabetically", prettyValue: "Aplhabetically" },
+  { value: "alphabetically", prettyValue: "Alphabetically" },
 ];
 
 function compareByName(a: Hero, b: Hero) {
