@@ -49,7 +49,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   }
 
   function applySort(heroArray: Hero[], sort: Sort): Hero[] {
-    if (sort.value === "aplhabetically") return heroArray.sort(compareByName);
+    if (sort.value === "alphabetically") return heroArray.sort(compareByName);
 
     if (sort.value === "rarity") return heroArray.sort(compareByRarity);
 
