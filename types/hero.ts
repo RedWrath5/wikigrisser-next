@@ -1,3 +1,5 @@
+import { ClassWorkbookRow, Material } from "./spreedsheet";
+
 export interface Hero {
   name: string;
   prettyName: string;
@@ -28,6 +30,7 @@ export interface Class {
   soldiers: string[];
   children: Class[];
   maxStats: HeroStats | null;
+  materials: Array<Array<Material>>;
 }
 
 export interface SPClass extends Class {
@@ -79,7 +82,7 @@ export enum Factions {
   Legends = "legends",
   Mythic = "mythic",
   Tensei = "tensei",
-  Time = "time",
+  Time = "time"
 }
 
 export type UnitType =
@@ -108,7 +111,7 @@ export enum EquipmentSlot {
   Head = "Head",
   Body = "Body",
   Weapon = "Weapon",
-  Accessory = "Accessory",
+  Accessory = "Accessory"
 }
 
 export type EquipmentType =
