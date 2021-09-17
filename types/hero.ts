@@ -82,7 +82,7 @@ export enum Factions {
   Legends = "legends",
   Mythic = "mythic",
   Tensei = "tensei",
-  Time = "time"
+  Time = "time",
 }
 
 export type UnitType =
@@ -111,7 +111,7 @@ export enum EquipmentSlot {
   Head = "Head",
   Body = "Body",
   Weapon = "Weapon",
-  Accessory = "Accessory"
+  Accessory = "Accessory",
 }
 
 export type EquipmentType =
