@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
 import { EquipmentSection } from "../heroes/EquipmentSection";
+import { BoundedColumn } from "../layout/BoundedColumn";
 
 export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   const [filteredAndGroupedEquipment, setFilteredAndGroupedEquipment] =
@@ -18,8 +19,6 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
       .filter((equip) => equip.slot === slot)
       .reduce(
         (accumlator, equip) => {
-          console.log("accumlator", accumlator);
-          console.log("type", equip.type);
           accumlator[equip.type ?? ""].push(equip);
           return accumlator;
         },
@@ -70,31 +69,25 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
       {Object.entries(filteredAndGroupedEquipment)
         .filter(([key, equips]) => equips.length > 0)
         .map(([key, equips]) => (
-          <>
+          <React.Fragment key={key}>
             <div className="flex flex-row bg-gray-200 justify-center">
-              <div
-                className="flex- flex-row w-full ml-2 mr-2"
-                style={{ maxWidth: "1280px" }}
-              >
+              <BoundedColumn>
                 <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
                   <div className="ml-2 text-2xl">{key || "Accessories"}</div>
                 </div>
-              </div>
+              </BoundedColumn>
             </div>
             <div className="flex flex-row bg-white justify-center">
-              <div
-                className="flex- flex-row w-full ml-2 mr-2"
-                style={{ maxWidth: "1280px" }}
-              >
+              <BoundedColumn>
                 {equips.map((equip) => (
                   <EquipmentSection
                     equipment={equip}
                     isExclusive={false}
                   ></EquipmentSection>
                 ))}
-              </div>
+              </BoundedColumn>
             </div>
-          </>
+          </React.Fragment>
         ))}
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { Hero } from "../../types/hero";
+import { BoundedColumn } from "../layout/BoundedColumn";
 import { ClassSection } from "./ClassSection";
 import { EquipmentSection } from "./EquipmentSection";
 import { HeroSkinCarousel } from "./HeroSkinCarousel";
@@ -19,7 +20,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         </div>
       </div>
       <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
-        <div className="flex flex-col" style={{ maxWidth: "1280px" }}>
+        <BoundedColumn>
           <TalentSection hero={hero}></TalentSection>
           {hero.exclusiveEquipment?.name && (
             <EquipmentSection
@@ -33,7 +34,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
               isAwakening={true}
             ></SkillSection>
           )}
-        </div>
+        </BoundedColumn>
       </div>
       <div className="flex flex-col">
         <SoldiersSection hero={hero}></SoldiersSection>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../types/hero";
 import { HeroMap } from "../util/databaseSingleton";
+import { BoundedColumn } from "./layout/BoundedColumn";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
@@ -85,54 +86,56 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
         </FormControl>
       </div>
 
-      <div className="flex flex-wrap justify-center text-center mb-5">
-        <div className="flex" style={{ maxWidth: "1280px" }}>
-          {Object.values(Factions).map((faction) => (
-            <div key={faction} className="flex mr-1 cursor-pointer">
-              <img
-                className={
-                  filters.find(
-                    (filter) =>
-                      filter.type === "faction" && filter.value === faction
-                  )
-                    ? "bg-blue-100 rounded-xl"
-                    : ""
-                }
-                onClick={() => toggleFactionFilter(faction)}
-                src={"/factions/" + faction + ".png"}
-                width={50}
-                height={50}
-              ></img>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex font-sans font-normal justify-center">
-        <div
-          className="flex flex-row flex-wrap gap-5 justify-center"
-          style={{ maxWidth: "1280px" }}
-        >
-          {filteredAndSortedHeroes.map((hero) => {
-            return (
-              <div className="cursor-pointer" key={hero.name}>
-                <Link href={"/heroes/" + hero.name} passHref={true}>
-                  <a>
-                    <img
-                      src={"/hero cards/Card_" + hero.prettyName + ".png"}
-                      width={100}
-                      height={100}
-                    ></img>
-                  </a>
-                </Link>
-                <Link href={"/heroes/" + hero.name}>
-                  <p className="text-center" style={{ width: "100px" }}>
-                    {hero.prettyName}
-                  </p>
-                </Link>
+      <div className="flex flex-row justify-center">
+        <BoundedColumn>
+          <div className="flex flex-row flex-wrap justify-center text-center mb-5">
+            {Object.values(Factions).map((faction) => (
+              <div key={faction} className="flex mr-1 cursor-pointer">
+                <img
+                  className={
+                    filters.find(
+                      (filter) =>
+                        filter.type === "faction" && filter.value === faction
+                    )
+                      ? "bg-blue-100 rounded-xl"
+                      : ""
+                  }
+                  onClick={() => toggleFactionFilter(faction)}
+                  src={"/factions/" + faction + ".png"}
+                  width={50}
+                  height={50}
+                ></img>
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        </BoundedColumn>
+      </div>
+
+      <div className="flex font-sans font-normal justify-center">
+        <BoundedColumn>
+          <div className="flex flex-row flex-wrap gap-5 justify-center">
+            {filteredAndSortedHeroes.map((hero) => {
+              return (
+                <div className="cursor-pointer" key={hero.name}>
+                  <Link href={"/heroes/" + hero.name} passHref={true}>
+                    <a>
+                      <img
+                        src={"/hero cards/Card_" + hero.prettyName + ".png"}
+                        width={100}
+                        height={100}
+                      ></img>
+                    </a>
+                  </Link>
+                  <Link href={"/heroes/" + hero.name}>
+                    <p className="text-center" style={{ width: "100px" }}>
+                      {hero.prettyName}
+                    </p>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </BoundedColumn>
       </div>
     </div>
   );
