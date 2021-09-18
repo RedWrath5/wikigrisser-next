@@ -67,16 +67,16 @@ export const EQUIPMENT_COLUMN_HEADERS = {
 };
 
 export const SOLDIER_COLUMN_HEADERS = {
-  name: "Name",
-  tier: "Tier",
-  type: "Type",
-  range: "Range",
-  move: "Move",
-  effect: "Skills (→Training Max)",
-  baseHp: "Base\nHP",
-  baseAtk: "Base\nATK",
-  baseDef: "Base\nDEF",
-  baseMdef: "Base\nMDEF",
+  name: ["Name"],
+  tier: ["Tier"],
+  type: ["Type"],
+  range: ["Range"],
+  move: ["Move"],
+  effect: ["Skills (Training Max)"],
+  baseHp: ["Base\nHP"],
+  baseAtk: ["Base\nATK"],
+  baseDef: ["Base\nDEF"],
+  baseMdef: ["Base\nMDEF"],
 };
 
 export const FINAL_COL_KEY = "FINAL_COLUMN";

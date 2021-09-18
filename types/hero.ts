@@ -126,3 +126,15 @@ export type EquipmentType =
   | "Leather"
   | "Heavy"
   | "";
+
+export interface Soldier {
+  name: string;
+  type: UnitType;
+  effect: string;
+  move: number;
+  range: number;
+  baseHp: number;
+  baseAtk: number;
+  baseDef: number;
+  baseMdef: number;
+}

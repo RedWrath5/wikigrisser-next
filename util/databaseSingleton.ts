@@ -6,6 +6,7 @@ import {
   Factions,
   Hero,
   Skill,
+  Soldier,
   SoldierBonus,
   SPClass as SpClass,
   Talent,
@@ -24,6 +25,8 @@ import {
   FINAL_COL_KEY,
   HERO_COLUMN_HEADERS,
   HERO_COLUMN_IDS,
+  SOLDIER_COLUMN_HEADERS,
+  SOLDIER_COLUMN_IDS,
 } from "./columnHeaders";
 
 export class DBSingleton {
@@ -37,6 +40,7 @@ export class DBSingleton {
   private skillToHeroMap: SkillToHeroMap;
   private patchMap: PatchMap;
   private equipment: Equipment[];
+  private soldier: Soldier[];
 
   private constructor() {
     this.skillsMap = this.generateSkillsMap();
@@ -46,6 +50,7 @@ export class DBSingleton {
     this.skillToHeroMap = this.generateSkillToHeroMap();
     this.patchMap = this.generatePatchMap();
     this.equipment = this.generateEquipment();
+    this.soldier = this.generateSoldiers();
   }
 
   static getInstance(): DBSingleton {
@@ -141,25 +146,12 @@ export class DBSingleton {
     const classesMap: ClassesMap = {};
     let rowCounter = 3;
     let notDone = true;
-    const imageToClassMap: { [image: string]: UnitType } = {
-      "index(Images!$A$1:$K$1, 1, 1)": "Infantry",
-      "index(Images!$A$1:$K$1, 1, 2)": "Lancer",
-      "index(Images!$A$1:$K$1, 1, 3)": "Cavalry",
-      "index(Images!$A$1:$K$1, 1, 4)": "Flier",
-      "index(Images!$A$1:$K$1, 1, 5)": "Aquatic",
-      "index(Images!$A$1:$K$1, 1, 6)": "Archer",
-      "index(Images!$A$1:$K$1, 1, 7)": "Assassin",
-      "index(Images!$A$1:$K$1, 1, 8)": "Holy",
-      "index(Images!$A$1:$K$1, 1, 9)": "Mage",
-      "index(Images!$A$1:$K$1, 1, 10)": "Demon",
-      "index(Images!$A$1:$K$1, 1, 11)": "Dragon",
-    };
 
     while (notDone) {
       const heroClass: ClassWorkbookRow = {
         name: classesSheat["A" + rowCounter].v || null,
         tier: classesSheat["B" + rowCounter]?.v || null,
-        type: imageToClassMap[classesSheat["C" + rowCounter]?.f] || null,
+        type: IMAGE_TO_CLASS_MAP[classesSheat["C" + rowCounter]?.f] || null,
         damage: classesSheat["D" + rowCounter]?.v || null,
         range: classesSheat["E" + rowCounter]?.v || null,
         move: classesSheat["F" + rowCounter]?.v || null,
@@ -656,6 +648,43 @@ export class DBSingleton {
     ) as string;
   }
 
+  generateSoldiers(): Soldier[] {
+    const scm = this.mapColumnHeadersToColumnIds(
+      SOLDIER_COLUMN_HEADERS,
+      this.workbook.Sheets.Soldiers
+    ) as SOLDIER_COLUMN_IDS;
+    let notDone = true;
+    let rowCounter = 2;
+    const soldierArr: Soldier[] = [];
+
+    while (notDone) {
+      const soldier: Soldier = {
+        name: this.getSoldierRowValue(rowCounter, scm.name),
+        effect: this.getSoldierRowValue(rowCounter, scm.effect),
+        move: +this.getSoldierRowValue(rowCounter, scm.move),
+        range: +this.getSoldierRowValue(rowCounter, scm.range),
+        type: IMAGE_TO_CLASS_MAP[this.getSoldierRowValue(rowCounter, scm.type)],
+        baseAtk: +this.getSoldierRowValue(rowCounter, scm.baseAtk),
+        baseDef: +this.getSoldierRowValue(rowCounter, scm.baseDef),
+        baseHp: +this.getSoldierRowValue(rowCounter, scm.baseHp),
+        baseMdef: +this.getSoldierRowValue(rowCounter, scm.baseMdef),
+      };
+      soldierArr.push(soldier);
+      rowCounter++;
+      if (!this.getSoldierRowValue(rowCounter, scm.name)) {
+        notDone = false;
+      }
+    }
+
+    return soldierArr;
+  }
+
+  private getSoldierRowValue(rowNumber: number, column: string): string {
+    return getCellValue(
+      this.workbook.Sheets.Soldiers[column + rowNumber]
+    ) as string;
+  }
+
   private mapColumnHeadersToColumnIds(
     columnHeaders: { [key: string]: string[] },
     sheet: WorkSheet
@@ -750,6 +779,10 @@ export interface SkillToHeroMap {
 
 type HeroSkillsTouple = [string, Skill[]];
 
+export interface SoldierMap {
+  [name: string]: Soldier;
+}
+
 export interface Patch {
   id: number;
   releaseDate: string;
@@ -773,3 +806,17 @@ function getCellValue(cellObj: CellObject | undefined) {
 
   return null;
 }
+
+const IMAGE_TO_CLASS_MAP: { [image: string]: UnitType } = {
+  "index(Images!$A$1:$K$1, 1, 1)": "Infantry",
+  "index(Images!$A$1:$K$1, 1, 2)": "Lancer",
+  "index(Images!$A$1:$K$1, 1, 3)": "Cavalry",
+  "index(Images!$A$1:$K$1, 1, 4)": "Flier",
+  "index(Images!$A$1:$K$1, 1, 5)": "Aquatic",
+  "index(Images!$A$1:$K$1, 1, 6)": "Archer",
+  "index(Images!$A$1:$K$1, 1, 7)": "Assassin",
+  "index(Images!$A$1:$K$1, 1, 8)": "Holy",
+  "index(Images!$A$1:$K$1, 1, 9)": "Mage",
+  "index(Images!$A$1:$K$1, 1, 10)": "Demon",
+  "index(Images!$A$1:$K$1, 1, 11)": "Dragon",
+};
