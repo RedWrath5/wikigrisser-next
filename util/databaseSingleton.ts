@@ -25,8 +25,6 @@ export class DBSingleton {
   private static instance: DBSingleton;
 
   private workbook = XLSX.readFile("data/database.xlsx");
-  private hCM: HERO_COLUMN_IDS;
-  private eCM: EQUIPMENT_COLUMN_IDS;
   private skillsMap: SkillsMap;
   private maxStats: MaxStatsWorkbookRow[];
   private classesMap: ClassesMap;
@@ -36,14 +34,6 @@ export class DBSingleton {
   private equipment: Equipment[];
 
   private constructor() {
-    this.hCM = this.mapColumnHeadersToColumnIds(
-      HERO_COLUMN_HEADERS,
-      this.workbook.Sheets.Heroes
-    ) as HERO_COLUMN_IDS;
-    this.eCM = this.mapColumnHeadersToColumnIds(
-      EQUIPMENT_COLUMN_HEADERS,
-      this.workbook.Sheets.Equipment
-    ) as EQUIPMENT_COLUMN_IDS;
     this.skillsMap = this.generateSkillsMap();
     this.maxStats = this.generateMaxStats();
     this.classesMap = this.generateClassesMap();
@@ -182,18 +172,26 @@ export class DBSingleton {
   }
 
   private generateHeroesMap = (): HeroMap => {
+    const heroColumnMappings = this.mapColumnHeadersToColumnIds(
+      HERO_COLUMN_HEADERS,
+      this.workbook.Sheets.Heroes
+    ) as HERO_COLUMN_IDS;
     const heroes = [];
     let rowNumber = 3;
-    let cellValue = getCellValue(this.workbook.Sheets.Heroes["A" + rowNumber]);
+    let cellValue = getCellValue(
+      this.workbook.Sheets.Heroes[heroColumnMappings.name + rowNumber]
+    );
     while (cellValue) {
       let heroName = cellValue.toString().toLowerCase();
       heroes.push(heroName);
       rowNumber++;
-      cellValue = getCellValue(this.workbook.Sheets.Heroes["A" + rowNumber]);
+      cellValue = getCellValue(
+        this.workbook.Sheets.Heroes[heroColumnMappings.name + rowNumber]
+      );
     }
 
     return heroes.reduce((accumulator, heroName) => {
-      accumulator[heroName] = this.getHeroData(heroName);
+      accumulator[heroName] = this.getHeroData(heroName, heroColumnMappings);
       accumulator[heroName] = this.fixMatthew(
         accumulator[heroName],
         accumulator
@@ -218,60 +216,51 @@ export class DBSingleton {
     return hero;
   }
 
-  private getHeroData = (name: string): Hero => {
+  private getHeroData = (name: string, hcm: HERO_COLUMN_IDS): Hero => {
     let rowNumber = this.findMatchingRow(name, "Heroes", "A");
 
     const talent: Talent = {
-      name: this.getHeroRowValue(rowNumber, this.hCM.talentName),
-      description: this.getHeroRowValue(rowNumber, this.hCM.talentDescription),
+      name: this.getHeroRowValue(rowNumber, hcm.talentName),
+      description: this.getHeroRowValue(rowNumber, hcm.talentDescription),
     };
 
     const factions = this.getFactionsForHero(rowNumber);
 
-    const startingClass = this.getStartingClass(rowNumber);
+    const startingClass = this.getStartingClass(rowNumber, hcm);
 
     let threeCostSkill: Skill | null = {
-      name: this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillName),
-      cd: +this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillCD),
-      range: +this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillRange),
-      span: +this.getHeroRowValue(rowNumber, this.hCM.awakeningSkillSpan),
-      description: this.getHeroRowValue(
-        rowNumber,
-        this.hCM.awakeningSkillEffect
-      ),
+      name: this.getHeroRowValue(rowNumber, hcm.awakeningSkillName),
+      cd: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillCD),
+      range: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillRange),
+      span: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillSpan),
+      description: this.getHeroRowValue(rowNumber, hcm.awakeningSkillEffect),
       cost: "•••",
     };
 
     if (threeCostSkill.name === null) threeCostSkill = null;
 
     let bondRequirments: BondRequirements | null = {
-      bond2: this.getHeroRowValue(rowNumber, this.hCM.bond2ReqString),
-      bond3: this.getHeroRowValue(rowNumber, this.hCM.bond3ReqString),
-      bond4: this.getHeroRowValue(rowNumber, this.hCM.bond4ReqString),
-      bond5: this.getHeroRowValue(rowNumber, this.hCM.bond5ReqString),
+      bond2: this.getHeroRowValue(rowNumber, hcm.bond2ReqString),
+      bond3: this.getHeroRowValue(rowNumber, hcm.bond3ReqString),
+      bond4: this.getHeroRowValue(rowNumber, hcm.bond4ReqString),
+      bond5: this.getHeroRowValue(rowNumber, hcm.bond5ReqString),
     };
 
     if (bondRequirments.bond2 === undefined) bondRequirments = null;
 
     let soldierBonus: SoldierBonus | null = {
-      hp: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusHP),
-      atk: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusATK),
-      def: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusDEF),
-      mdef: +this.getHeroRowValue(rowNumber, this.hCM.soldierBonusMDEF),
+      hp: +this.getHeroRowValue(rowNumber, hcm.soldierBonusHP),
+      atk: +this.getHeroRowValue(rowNumber, hcm.soldierBonusATK),
+      def: +this.getHeroRowValue(rowNumber, hcm.soldierBonusDEF),
+      mdef: +this.getHeroRowValue(rowNumber, hcm.soldierBonusMDEF),
     };
 
     if (soldierBonus.hp === undefined) soldierBonus = null;
 
     let exclusiveEquipment: Equipment | null = {
-      name: this.getHeroRowValue(rowNumber, this.hCM.exclusiveEquipmentName),
-      slot: this.getHeroRowValue(
-        rowNumber,
-        this.hCM.exclusiveEquipmentType
-      ) as any,
-      effect: this.getHeroRowValue(
-        rowNumber,
-        this.hCM.exclusiveEquipmentEffect
-      ),
+      name: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentName),
+      slot: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentType) as any,
+      effect: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentEffect),
       stat1: null,
       stat2: null,
       type: "",
@@ -283,8 +272,8 @@ export class DBSingleton {
 
     return {
       name,
-      prettyName: this.getHeroRowValue(rowNumber, this.hCM.name),
-      rarity: this.getHeroRowValue(rowNumber, this.hCM.rarity) as any,
+      prettyName: this.getHeroRowValue(rowNumber, hcm.name),
+      rarity: this.getHeroRowValue(rowNumber, hcm.rarity) as any,
       talent,
       factions,
       startingClass,
@@ -293,7 +282,7 @@ export class DBSingleton {
       soldierBonus,
       exclusiveEquipment,
       spClass,
-      skinCount: +this.getHeroRowValue(rowNumber, this.hCM.skinCount) ?? 0,
+      skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
     };
   };
 
@@ -358,33 +347,46 @@ export class DBSingleton {
     return factions;
   }
 
-  private getStartingClass(rowNumber: number): Class {
+  private getStartingClass(
+    rowNumber: number,
+    heroColumnMappings: HERO_COLUMN_IDS
+  ): Class {
     const soldiers =
-      this.getHeroRowValue(rowNumber, this.hCM.trainingGroundUnlocks)?.split(
-        ","
-      ) || [];
+      this.getHeroRowValue(
+        rowNumber,
+        heroColumnMappings.trainingGroundUnlocks
+      )?.split(",") || [];
     return {
-      name: this.getHeroRowValue(rowNumber, this.hCM.startingClassName),
+      name: this.getHeroRowValue(
+        rowNumber,
+        heroColumnMappings.startingClassName
+      ),
       skills: [
         this.skillsMap[
-          this.getHeroRowValue(rowNumber, this.hCM.startingClassSkill1)
+          this.getHeroRowValue(
+            rowNumber,
+            heroColumnMappings.startingClassSkill1
+          )
         ] || null,
         this.skillsMap[
-          this.getHeroRowValue(rowNumber, this.hCM.startingClassSkill2)
+          this.getHeroRowValue(
+            rowNumber,
+            heroColumnMappings.startingClassSkill2
+          )
         ] || null,
       ],
       children: [
         ...this.getTopLevelClassPath(
           rowNumber,
-          this.hCM.leftClassStartingPosition
+          heroColumnMappings.leftClassStartingPosition
         ),
         ...this.getTopLevelClassPath(
           rowNumber,
-          this.hCM.middleClassStartingPosition
+          heroColumnMappings.middleClassStartingPosition
         ),
         ...this.getTopLevelClassPath(
           rowNumber,
-          this.hCM.rightClassStartingPosition
+          heroColumnMappings.rightClassStartingPosition
         ),
       ],
       heroType: "Aquatic",
@@ -567,22 +569,26 @@ export class DBSingleton {
   }
 
   private generateEquipment() {
+    const ecm = this.mapColumnHeadersToColumnIds(
+      EQUIPMENT_COLUMN_HEADERS,
+      this.workbook.Sheets.Equipment
+    ) as EQUIPMENT_COLUMN_IDS;
     let notDone = true;
     let rowCounter = 2;
     let equipmentArr: Equipment[] = [];
 
     while (notDone) {
       const equipment: Equipment = {
-        name: this.getEquipmentRowValue(rowCounter, this.eCM.name),
-        effect: this.getEquipmentRowValue(rowCounter, this.eCM.equipSkill),
-        slot: this.getEquipmentRowValue(rowCounter, this.eCM.slot) as any,
-        stat1: this.getEquipmentRowValue(rowCounter, this.eCM.stat1),
-        stat2: this.getEquipmentRowValue(rowCounter, this.eCM.stat2),
-        type: this.getEquipmentRowValue(rowCounter, this.eCM.type) as any,
+        name: this.getEquipmentRowValue(rowCounter, ecm.name),
+        effect: this.getEquipmentRowValue(rowCounter, ecm.equipSkill),
+        slot: this.getEquipmentRowValue(rowCounter, ecm.slot) as any,
+        stat1: this.getEquipmentRowValue(rowCounter, ecm.stat1),
+        stat2: this.getEquipmentRowValue(rowCounter, ecm.stat2),
+        type: this.getEquipmentRowValue(rowCounter, ecm.type) as any,
       };
       equipmentArr.push(equipment);
       rowCounter++;
-      if (!this.getEquipmentRowValue(rowCounter, this.eCM.name)) {
+      if (!this.getEquipmentRowValue(rowCounter, ecm.name)) {
         notDone = false;
       }
     }

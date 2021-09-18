@@ -66,6 +66,19 @@ export const EQUIPMENT_COLUMN_HEADERS = {
   equipSkill: ["Equip Skill Lv50"],
 };
 
+export const SOLDIER_COLUMN_HEADERS = {
+  name: "Name",
+  tier: "Tier",
+  type: "Type",
+  range: "Range",
+  move: "Move",
+  effect: "Skills (→Training Max)",
+  baseHp: "Base\nHP",
+  baseAtk: "Base\nATK",
+  baseDef: "Base\nDEF",
+  baseMdef: "Base\nMDEF",
+};
+
 export const FINAL_COL_KEY = "FINAL_COLUMN";
 
 export interface ColIdMap {
@@ -78,4 +91,8 @@ export type HERO_COLUMN_IDS = {
 
 export type EQUIPMENT_COLUMN_IDS = {
   [key in keyof typeof EQUIPMENT_COLUMN_HEADERS]: string;
+};
+
+export type SOLDIER_COLUMN_IDS = {
+  [key in keyof typeof SOLDIER_COLUMN_HEADERS]: string;
 };
