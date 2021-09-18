@@ -11,8 +11,13 @@ import {
   Talent,
   UnitType,
 } from "../types/hero";
-import { ClassWorkbookRow, MaxStatsWorkbookRow } from "../types/spreedsheet";
 import {
+  ClassWorkbookRow,
+  Material,
+  MaxStatsWorkbookRow,
+} from "../types/spreedsheet";
+import {
+  CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS,
   ColIdMap,
   EQUIPMENT_COLUMN_HEADERS,
   EQUIPMENT_COLUMN_IDS,
@@ -158,7 +163,31 @@ export class DBSingleton {
         damage: classesSheat["D" + rowCounter]?.v || null,
         range: classesSheat["E" + rowCounter]?.v || null,
         move: classesSheat["F" + rowCounter]?.v || null,
+        materials: [],
       };
+
+      // Check values in possible columns
+      const materials: Material[] = [];
+      for (const letter of CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS) {
+        if (classesSheat[letter + rowCounter] !== undefined) {
+          const material: Material = {
+            count: classesSheat[letter + rowCounter].v,
+            name: classesSheat[letter + 1].v,
+            quality: this.getClassQuality(letter, classesSheat),
+          };
+          materials.push(material);
+        }
+      }
+
+      // split into two dimensional array
+      for (const v of materials) {
+        if (!heroClass.materials[v.quality]) {
+          heroClass.materials[v.quality] = [];
+        }
+        heroClass.materials[v.quality].push(v);
+      }
+      // remove 0 element, because it always empty
+      heroClass.materials.shift();
 
       classesMap[heroClass.name] = heroClass;
 
@@ -170,6 +199,26 @@ export class DBSingleton {
 
     return classesMap;
   }
+
+  // Get quality from column caption.
+  private getClassQuality = (column: string, classesSheat: XLSX.WorkSheet) => {
+    let index = CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS.indexOf(column);
+    while (index >= 0) {
+      /* Check header of current column. If nothing, check previous, until get value */
+      if (
+        classesSheat[CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS[index] + 2] !==
+        undefined
+      ) {
+        // Caption always like "Tier 2 Upgrade 3 (Level 35)". Return upgrade number in integer format
+        return parseInt(
+          classesSheat[
+            CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS[index] + 2
+          ].v.charAt(15)
+        );
+      } else index = index - 1;
+    }
+    return 0;
+  };
 
   private generateHeroesMap = (): HeroMap => {
     const heroColumnMappings = this.mapColumnHeadersToColumnIds(
@@ -356,11 +405,12 @@ export class DBSingleton {
         rowNumber,
         heroColumnMappings.trainingGroundUnlocks
       )?.split(",") || [];
+    const name = this.getHeroRowValue(
+      rowNumber,
+      heroColumnMappings.startingClassName
+    );
     return {
-      name: this.getHeroRowValue(
-        rowNumber,
-        heroColumnMappings.startingClassName
-      ),
+      name,
       skills: [
         this.skillsMap[
           this.getHeroRowValue(
@@ -392,6 +442,7 @@ export class DBSingleton {
       heroType: "Aquatic",
       soldiers: soldiers,
       maxStats: null,
+      materials: this.classesMap[name]?.materials || [],
     };
   }
 
@@ -415,6 +466,7 @@ export class DBSingleton {
         soldiers: [],
         children,
         maxStats: null,
+        materials: this.classesMap[name]?.materials || [],
       },
     ];
     if (outerClass[0].name === null) outerClass = [];
@@ -454,6 +506,7 @@ export class DBSingleton {
         ],
         children: [],
         maxStats,
+        materials: this.classesMap[name]?.materials || [],
       },
     ];
     if (classes[0].name === null) classes = [];
@@ -491,6 +544,7 @@ export class DBSingleton {
       soldiers: [this.getWorkbookSpClassRowValue(rowNumber, "V")],
       children: [],
       maxStats,
+      materials: [],
     };
   }
 
