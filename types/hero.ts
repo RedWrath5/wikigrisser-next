@@ -1,3 +1,5 @@
+import { ClassWorkbookRow, Material } from "./spreedsheet";
+
 export interface Hero {
   name: string;
   prettyName: string;
@@ -28,6 +30,7 @@ export interface Class {
   soldiers: string[];
   children: Class[];
   maxStats: HeroStats | null;
+  materials: Array<Array<Material>>;
 }
 
 export interface SPClass extends Class {
