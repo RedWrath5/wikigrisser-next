@@ -85,18 +85,19 @@ export enum Factions {
   Time = "time",
 }
 
-export type UnitType =
-  | "Infantry"
-  | "Lancer"
-  | "Cavalry"
-  | "Flier"
-  | "Aquatic"
-  | "Archer"
-  | "Assassin"
-  | "Mage"
-  | "Holy"
-  | "Demon"
-  | "Dragon";
+export enum UnitType {
+  Infantry = "Infantry",
+  Lancer = "Lancer",
+  Cavalry = "Cavalry",
+  Flier = "Flier",
+  Aquatic = "Aquatic",
+  Archer = "Archer",
+  Assassin = "Assassin",
+  Mage = "Mage",
+  Holy = "Holy",
+  Demon = "Demon",
+  Dragon = "Dragon",
+}
 
 export interface Equipment {
   name: string;
@@ -129,6 +130,7 @@ export type EquipmentType =
 
 export interface Soldier {
   name: string;
+  tier: number;
   type: UnitType;
   effect: string;
   move: number;

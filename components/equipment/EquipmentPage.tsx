@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
-import { EquipmentSection } from "../heroes/EquipmentSection";
+import { EquipmentSection } from "./EquipmentSection";
 import { BoundedColumn } from "../layout/BoundedColumn";
 
 export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {

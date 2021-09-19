@@ -2,7 +2,7 @@ import React from "react";
 import { Hero } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { ClassSection } from "./ClassSection";
-import { EquipmentSection } from "./EquipmentSection";
+import { EquipmentSection } from "../equipment/EquipmentSection";
 import { HeroSkinCarousel } from "./HeroSkinCarousel";
 import { SkillSection } from "./SkillSection";
 import { SoldiersSection } from "./SoldiersSection";

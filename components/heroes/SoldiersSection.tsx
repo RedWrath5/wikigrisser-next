@@ -1,5 +1,5 @@
 import React from "react";
-import { Class, Hero } from "../../types/hero";
+import { Hero } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { SoldiersSubSection } from "./SoldiersSubSection";
 
@@ -17,26 +17,24 @@ export function SoldiersSection({
           </div>
         </BoundedColumn>
       </div>
-      <div className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center ">
         <BoundedColumn>
-          <div className="flex flex-col mt-2 mb-2">
-            {startingClass.children.map((child) => (
-              <SoldiersSubSection
-                key={child.name}
-                heroClass={child}
-              ></SoldiersSubSection>
-            ))}
+          {startingClass.children.map((child) => (
             <SoldiersSubSection
-              heroClass={startingClass}
-              isStarting={true}
+              key={child.name}
+              heroClass={child}
             ></SoldiersSubSection>
-            {spClass && (
-              <SoldiersSubSection
-                heroClass={spClass}
-                isSpClass={true}
-              ></SoldiersSubSection>
-            )}
-          </div>
+          ))}
+          <SoldiersSubSection
+            heroClass={startingClass}
+            isStarting={true}
+          ></SoldiersSubSection>
+          {spClass && (
+            <SoldiersSubSection
+              heroClass={spClass}
+              isSpClass={true}
+            ></SoldiersSubSection>
+          )}
         </BoundedColumn>
       </div>
     </div>

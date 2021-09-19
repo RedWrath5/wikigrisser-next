@@ -4,7 +4,7 @@ import { EquipmentPage } from "../components/equipment/EquipmentPage";
 import { DBSingleton } from "../util/databaseSingleton";
 import { Layout } from "../components/Layout";
 
-const HeroGalleryPage = ({
+const EquipmentGalleryPage = ({
   equipment,
 }: PropsWithRef<{ equipment: Equipment[] }>) => (
   <Layout>
@@ -23,4 +23,4 @@ export const getStaticProps = async () => {
   };
 };
 
-export default HeroGalleryPage;
+export default EquipmentGalleryPage;

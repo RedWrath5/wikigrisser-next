@@ -85,6 +85,10 @@ export class DBSingleton {
     return this.equipment;
   }
 
+  getSoldiers() {
+    return this.soldier;
+  }
+
   private generateSkillsMap() {
     const skillsSheat = this.workbook.Sheets.Skills;
     const skillsMap: SkillsMap = {};
@@ -431,7 +435,7 @@ export class DBSingleton {
           heroColumnMappings.rightClassStartingPosition
         ),
       ],
-      heroType: "Aquatic",
+      heroType: UnitType.Aquatic,
       soldiers: soldiers,
       maxStats: null,
       materials: this.classesMap[name]?.materials || [],
@@ -660,6 +664,7 @@ export class DBSingleton {
     while (notDone) {
       const soldier: Soldier = {
         name: this.getSoldierRowValue(rowCounter, scm.name),
+        tier: +this.getSoldierRowValue(rowCounter, scm.tier),
         effect: this.getSoldierRowValue(rowCounter, scm.effect),
         move: +this.getSoldierRowValue(rowCounter, scm.move),
         range: +this.getSoldierRowValue(rowCounter, scm.range),
@@ -808,15 +813,15 @@ function getCellValue(cellObj: CellObject | undefined) {
 }
 
 const IMAGE_TO_CLASS_MAP: { [image: string]: UnitType } = {
-  "index(Images!$A$1:$K$1, 1, 1)": "Infantry",
-  "index(Images!$A$1:$K$1, 1, 2)": "Lancer",
-  "index(Images!$A$1:$K$1, 1, 3)": "Cavalry",
-  "index(Images!$A$1:$K$1, 1, 4)": "Flier",
-  "index(Images!$A$1:$K$1, 1, 5)": "Aquatic",
-  "index(Images!$A$1:$K$1, 1, 6)": "Archer",
-  "index(Images!$A$1:$K$1, 1, 7)": "Assassin",
-  "index(Images!$A$1:$K$1, 1, 8)": "Holy",
-  "index(Images!$A$1:$K$1, 1, 9)": "Mage",
-  "index(Images!$A$1:$K$1, 1, 10)": "Demon",
-  "index(Images!$A$1:$K$1, 1, 11)": "Dragon",
+  "index(Images!$A$1:$K$1, 1, 1)": UnitType.Infantry,
+  "index(Images!$A$1:$K$1, 1, 2)": UnitType.Lancer,
+  "index(Images!$A$1:$K$1, 1, 3)": UnitType.Cavalry,
+  "index(Images!$A$1:$K$1, 1, 4)": UnitType.Flier,
+  "index(Images!$A$1:$K$1, 1, 5)": UnitType.Aquatic,
+  "index(Images!$A$1:$K$1, 1, 6)": UnitType.Archer,
+  "index(Images!$A$1:$K$1, 1, 7)": UnitType.Assassin,
+  "index(Images!$A$1:$K$1, 1, 8)": UnitType.Holy,
+  "index(Images!$A$1:$K$1, 1, 9)": UnitType.Mage,
+  "index(Images!$A$1:$K$1, 1, 10)": UnitType.Demon,
+  "index(Images!$A$1:$K$1, 1, 11)": UnitType.Dragon,
 };
