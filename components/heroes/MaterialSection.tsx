@@ -7,7 +7,7 @@ import { HeroIcon } from "./HeroIcon";
 {
   /* Hero class icon + material tiers list*/
 }
-export function HeroCard({ heroClass }: { heroClass: Class }) {
+function HeroCard({ heroClass }: { heroClass: Class }) {
   return (
     <>
       <HeroIcon name={heroClass.name} />
@@ -30,7 +30,7 @@ export function HeroCard({ heroClass }: { heroClass: Class }) {
 }
 
 /* Materials row for materials tier list */
-export function MaterialList({
+function MaterialList({
   materials,
   tier,
 }: {
@@ -54,7 +54,7 @@ export function MaterialList({
 {
   /* Material icon + counter */
 }
-export function MaterialItem({ material }: { material: Material }) {
+function MaterialItem({ material }: { material: Material }) {
   return (
     <div className="w-20 ml-1">
       <img
@@ -70,7 +70,9 @@ export function MaterialItem({ material }: { material: Material }) {
     </div>
   );
 }
-{/* Main page */}
+{
+  /* Main page */
+}
 export function MaterialSection({ heroClass }: { heroClass: Class }) {
   return (
     <div className="flex flex-col justify-center ">

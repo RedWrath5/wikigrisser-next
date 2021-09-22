@@ -47,7 +47,6 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         </BoundedColumn>
       </div>
       <div className="flex flex-col">
-
         <div className="flex flex-wrap justify-center">
           <Tabs value={tab} onChange={handleChangeTab}>
             <Tab label="Class & Soldiers" value="main" />
