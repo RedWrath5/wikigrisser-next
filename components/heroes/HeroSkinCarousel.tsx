@@ -4,7 +4,7 @@ import { Hero } from "../../types/hero";
 
 export function HeroSkinCarousel({ hero }: { hero: Hero }) {
   const imagesArray = [
-    <div>
+    <div key={hero.name}>
       <img
         src={`/heroes/${hero.prettyName}/${hero.prettyName}.png`}
         width={400}
@@ -15,7 +15,7 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
 
   if (hero.spClass) {
     imagesArray.push(
-      <div>
+      <div key="sp">
         <img
           src={`/heroes/${hero.prettyName}/${hero.prettyName} SP.png`}
           width={400}
@@ -27,7 +27,7 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
 
   Array.apply(null, Array(hero.skinCount)).forEach((element, index) => {
     imagesArray.push(
-      <div>
+      <div key={index}>
         <img
           src={`/heroes/${hero.prettyName}/${hero.prettyName} Skin ${
             index + 1
