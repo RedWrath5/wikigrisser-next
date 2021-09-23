@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../types/hero";
@@ -11,10 +17,16 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   );
   const [filters, setFilters] = useState([] as Filter[]);
   const [sort, setSort] = useState<Sort>(SORTS[1]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     filterAndSort(filters, sort);
   }, [filters, sort]);
+
+  useEffect(() => {
+    if (searchText.length > 0) search(searchText);
+    else filterAndSort(filters, sort);
+  }, [searchText]);
 
   function toggleFactionFilter(faction: Factions) {
     const index = filters.findIndex(
@@ -57,6 +69,13 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
     return heroArray;
   }
 
+  function search(text: string) {
+    let heroArray = Object.values(heroMap).filter((hero) =>
+      hero.name.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+    );
+    setFilteredAndSortedHeroes(heroArray);
+  }
+
   const handleSortChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
@@ -71,6 +90,18 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
         Heroes
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">
+        <div className="mr-4">
+          <FormControl>
+            <InputLabel>Search</InputLabel>
+            <Input
+              value={searchText}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchText(event.target.value);
+              }}
+            />
+          </FormControl>
+        </div>
+
         <FormControl>
           <InputLabel>Sort</InputLabel>
           <Select

@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
 import { EquipmentSection } from "./EquipmentSection";
@@ -9,10 +15,16 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
     useState({} as GroupedEquipment);
 
   const [slot, setSlot] = useState(EquipmentSlot.Weapon);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     filterAndGroup(slot);
   }, [slot]);
+
+  useEffect(() => {
+    if (searchText.length > 0) search(searchText);
+    else filterAndGroup(slot);
+  }, [searchText]);
 
   function filterAndGroup(slot: EquipmentSlot) {
     const filteredAndGrouped = equipment
@@ -40,6 +52,33 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
     setFilteredAndGroupedEquipment(filteredAndGrouped);
   }
 
+  function search(text: string) {
+    const filteredAndGrouped = equipment
+      .filter((equip) =>
+        equip.name.toLowerCase().includes(text.toLocaleLowerCase())
+      )
+      .reduce(
+        (accumlator, equip) => {
+          accumlator[equip.type ?? ""].push(equip);
+          return accumlator;
+        },
+        {
+          Axe: [],
+          Bow: [],
+          Cloth: [],
+          Dagger: [],
+          Hammer: [],
+          Heavy: [],
+          Lance: [],
+          Leather: [],
+          Staff: [],
+          Sword: [],
+          "": [],
+        } as GroupedEquipment
+      );
+    setFilteredAndGroupedEquipment(filteredAndGrouped);
+  }
+
   const handleSlotChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
@@ -52,6 +91,18 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
         Equipment
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">
+        <div className="mr-4">
+          <FormControl>
+            <InputLabel>Search</InputLabel>
+            <Input
+              value={searchText}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchText(event.target.value);
+              }}
+            />
+          </FormControl>
+        </div>
+
         <FormControl>
           <InputLabel>Slot</InputLabel>
           <Select
