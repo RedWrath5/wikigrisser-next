@@ -14,8 +14,15 @@ export interface Hero {
   soldierBonus: SoldierBonus | null;
   exclusiveEquipment: Equipment | null;
   skinCount: number;
+  relatedBonds: RelatedBond[];
 }
 
+export interface RelatedBond {
+  prettyName: string;
+  name: string;
+  text: string;
+  type: "Bond 4" | "Bond 5";
+}
 export interface Talent {
   name: string;
   description: string;

@@ -29,8 +29,36 @@ export class HeroLoader extends Loader<HeroMap> {
   }
 
   load() {
-    return this.generateHeroesMap();
+    const heroMap = this.generateHeroesMap();
+    return this.addRelatedBonds(heroMap);
   }
+
+  private addRelatedBonds = (heroMap: HeroMap) => {
+    const heroes = Object.keys(heroMap);
+    for (const hero of heroes) {
+      const bond4 = heroMap[hero].bondRequirments?.bond4;
+      const bond5 = heroMap[hero].bondRequirments?.bond5;
+      for (const relatedHero of heroes) {
+        if (bond4?.toLocaleLowerCase().includes(relatedHero.toLowerCase())) {
+          heroMap[relatedHero].relatedBonds.push({
+            prettyName: heroMap[hero].prettyName,
+            name: heroMap[hero].name,
+            text: bond4,
+            type: "Bond 4",
+          });
+        }
+        if (bond5?.toLocaleLowerCase().includes(relatedHero.toLowerCase())) {
+          heroMap[relatedHero].relatedBonds.push({
+            prettyName: heroMap[hero].prettyName,
+            name: heroMap[hero].name,
+            text: bond5,
+            type: "Bond 5",
+          });
+        }
+      }
+    }
+    return heroMap;
+  };
 
   private generateHeroesMap = (): HeroMap => {
     const heroColumnMappings = this.mapColumnHeadersToColumnIds(
@@ -144,6 +172,7 @@ export class HeroLoader extends Loader<HeroMap> {
       exclusiveEquipment,
       spClass,
       skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
+      relatedBonds: [],
     };
   };
 

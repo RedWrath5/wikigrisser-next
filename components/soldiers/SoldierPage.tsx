@@ -18,6 +18,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
 
   useEffect(() => {
     filterSoldiers(type);
+    setSearchText("");
   }, [type]);
 
   useEffect(() => {
