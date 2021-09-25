@@ -11,7 +11,6 @@ export function TalentSection({
     bondRequirments,
     soldierBonus,
     spClass,
-    relatedBonds,
   },
 }: {
   hero: Hero;
@@ -71,10 +70,10 @@ export function TalentSection({
             <li>Strength: Level 25 Intimacy + {bondRequirments.bond5}</li>
           </>
         )}
-        {relatedBonds.length > 0 && (
+        {bondRequirments && bondRequirments.relatedBonds.length > 0 && (
           <>
             <p className="pt-5 font-bold">Related Bonds</p>
-            {relatedBonds.map((bond) => (
+            {bondRequirments.relatedBonds.map((bond) => (
               <li>
                 <a href={"/heroes/" + bond.name} className="underline">
                   {bond.prettyName}

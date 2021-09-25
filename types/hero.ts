@@ -14,14 +14,13 @@ export interface Hero {
   soldierBonus: SoldierBonus | null;
   exclusiveEquipment: Equipment | null;
   skinCount: number;
-  relatedBonds: RelatedBond[];
 }
 
 export interface RelatedBond {
   prettyName: string;
   name: string;
   text: string;
-  type: "Bond 4" | "Bond 5";
+  type: "ATK" | "DEF";
 }
 export interface Talent {
   name: string;
@@ -68,6 +67,9 @@ export interface BondRequirements {
   bond3: string;
   bond4: string;
   bond5: string;
+  bond4Char: string | null;
+  bond5Char: string | null;
+  relatedBonds: RelatedBond[];
 }
 
 export interface SoldierBonus {
