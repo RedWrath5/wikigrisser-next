@@ -19,6 +19,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
 
   useEffect(() => {
     filterAndGroup(slot);
+    setSearchText("");
   }, [slot]);
 
   useEffect(() => {
@@ -84,7 +85,6 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   ) => {
     setSlot(event.target.value as EquipmentSlot);
   };
-
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">

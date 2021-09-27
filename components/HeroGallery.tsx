@@ -21,6 +21,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
 
   useEffect(() => {
     filterAndSort(filters, sort);
+    setSearchText("");
   }, [filters, sort]);
 
   useEffect(() => {

@@ -29,8 +29,33 @@ export class HeroLoader extends Loader<HeroMap> {
   }
 
   load() {
-    return this.generateHeroesMap();
+    const heroMap = this.generateHeroesMap();
+    return this.addRelatedBonds(heroMap);
   }
+
+  private addRelatedBonds = (heroMap: HeroMap) => {
+    const heroes = Object.values(heroMap);
+    for (const hero of heroes) {
+      const bond4HeroName = hero.bondRequirments?.bond4Char;
+      const bond5HeroName = hero.bondRequirments?.bond5Char;
+      const bond4Hero = bond4HeroName ? heroMap[bond4HeroName] : null;
+      const bond5Hero = bond5HeroName ? heroMap[bond5HeroName] : null;
+
+      bond4Hero?.bondRequirments?.relatedBonds.push({
+        prettyName: hero.prettyName,
+        name: hero.name,
+        text: hero.bondRequirments?.bond4 || "",
+        type: "DEF",
+      });
+      bond5Hero?.bondRequirments?.relatedBonds.push({
+        prettyName: hero.prettyName,
+        name: hero.name,
+        text: hero.bondRequirments?.bond5 || "",
+        type: "ATK",
+      });
+    }
+    return heroMap;
+  };
 
   private generateHeroesMap = (): HeroMap => {
     const heroColumnMappings = this.mapColumnHeadersToColumnIds(
@@ -100,11 +125,19 @@ export class HeroLoader extends Loader<HeroMap> {
 
     if (threeCostSkill.name === null) threeCostSkill = null;
 
+    const bond4Char = this.getHeroRowValue(rowNumber, hcm.bond4ReqChar);
+    const bond5Char = this.getHeroRowValue(rowNumber, hcm.bond5ReqChar);
+
     let bondRequirments: BondRequirements | null = {
       bond2: this.getHeroRowValue(rowNumber, hcm.bond2ReqString),
       bond3: this.getHeroRowValue(rowNumber, hcm.bond3ReqString),
       bond4: this.getHeroRowValue(rowNumber, hcm.bond4ReqString),
       bond5: this.getHeroRowValue(rowNumber, hcm.bond5ReqString),
+      bond4Char:
+        bond4Char && bond4Char.length > 2 ? bond4Char.toLowerCase() : null,
+      bond5Char:
+        bond5Char && bond5Char.length > 2 ? bond5Char.toLowerCase() : null,
+      relatedBonds: [],
     };
 
     if (bondRequirments.bond2 === undefined) bondRequirments = null;

@@ -16,6 +16,12 @@ export interface Hero {
   skinCount: number;
 }
 
+export interface RelatedBond {
+  prettyName: string;
+  name: string;
+  text: string;
+  type: "ATK" | "DEF";
+}
 export interface Talent {
   name: string;
   description: string;
@@ -61,6 +67,9 @@ export interface BondRequirements {
   bond3: string;
   bond4: string;
   bond5: string;
+  bond4Char: string | null;
+  bond5Char: string | null;
+  relatedBonds: RelatedBond[];
 }
 
 export interface SoldierBonus {

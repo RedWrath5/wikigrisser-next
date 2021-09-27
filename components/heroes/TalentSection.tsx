@@ -70,6 +70,21 @@ export function TalentSection({
             <li>Strength: Level 25 Intimacy + {bondRequirments.bond5}</li>
           </>
         )}
+        {bondRequirments && bondRequirments.relatedBonds.length > 0 && (
+          <>
+            <p className="pt-5 font-bold">Related Bonds</p>
+            {bondRequirments.relatedBonds.map((bond) => (
+              <li>
+                <a href={"/heroes/" + bond.name} className="underline">
+                  {bond.prettyName}
+                </a>
+                <span className="ml-1">
+                  {bond.type}: {bond.text}
+                </span>
+              </li>
+            ))}
+          </>
+        )}
         {maxStats.length > 0 && (
           <p className="pt-5 font-bold">Level 70 Max Stats:</p>
         )}
