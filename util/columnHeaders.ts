@@ -79,6 +79,42 @@ export const SOLDIER_COLUMN_HEADERS = {
   baseMdef: ["Base\nMDEF"],
 };
 
+export const TRAINING_HEADERS = {
+  name: ["Soldier Type"],
+  gold: ["Aniki Drops →"],
+  bronzeBooks: ["Basic Materials"],
+  silverBooks: ["Special Materials"],
+  goldBooks: ["Rare Materials"],
+  epicBooks: ["Epic Materials"],
+};
+
+export const ANIKI_DROP_HEADERS = {
+  vitaminA: ["Vitamin A"],
+  vitaminB: ["Vitamin B"],
+  vitaminC: ["Vitamin C"],
+  vitaminD: ["Vitamin D"],
+  vitaminE: ["Vitamin E"],
+  vitaminF: ["Vitamin F"],
+  springRod: ["Spring Rod"],
+  beldum: ["Beldum"],
+  pushUpStand: ["Push-Up Stand"],
+  elasticRope: ["Elastic Rope"],
+  gripper: ["Gripper"],
+  rings: ["Rings"],
+  sandbag: ["Sandbag"],
+  barbell: ["Barbell"],
+  chestMachine: ["Chest Machine"],
+  abRoller: ["Ab Roller"],
+  balanceBall: ["Balance Ball"],
+  yogaMat: ["Yoga Mat"],
+  darkNecklace: ["Dark Necklace"],
+  brownEssentialOil: ["Brown Essential Oil"],
+  devoutGloves: ["Devout Gloves"],
+  prettySpray: ["Pretty Spray"],
+  burningStraps: ["Burning Straps"],
+  crazyShorts: ["Crazy Shorts"],
+};
+
 export const FINAL_COL_KEY = "FINAL_COLUMN";
 
 export const CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS = [
@@ -200,4 +236,12 @@ export type EQUIPMENT_COLUMN_IDS = {
 
 export type SOLDIER_COLUMN_IDS = {
   [key in keyof typeof SOLDIER_COLUMN_HEADERS]: string;
+};
+
+export type TRAINING_HEADERS_IDS = {
+  [key in keyof typeof TRAINING_HEADERS]: string;
+};
+
+export type ANIKI_DROP_HEADERS_IDS = {
+  [key in keyof typeof ANIKI_DROP_HEADERS]: string;
 };

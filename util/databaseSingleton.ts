@@ -8,6 +8,8 @@ import { PatchLoader } from "./loaders/PatchLoader";
 import { SkillsLoader } from "./loaders/SkillsLoader";
 import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
+import { TrainingLoader } from "./loaders/TrainingLoader";
+import {suppressConsoleLogs} from "@headlessui/react/dist/test-utils/suppress-console-logs";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -26,6 +28,7 @@ export class DBSingleton {
   private patchMap = new PatchLoader(this.workBook).load();
   private equipment = new EquipmentLoader(this.workBook).load();
   private soldier = new SoldierLoader(this.workBook).load();
+  private training = new TrainingLoader(this.workBook).load();
 
   static getInstance(): DBSingleton {
     if (!this.instance) {
@@ -61,6 +64,10 @@ export class DBSingleton {
 
   getSoldiers() {
     return this.soldier;
+  }
+
+  getTraining() {
+    return this.training;
   }
 }
 

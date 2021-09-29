@@ -149,3 +149,32 @@ export interface Soldier {
   baseDef: number;
   baseMdef: number;
 }
+
+export interface TrainingSKill {
+  name: string;
+  text: string;
+  type:
+    | "Infantry"
+    | "Lancer"
+    | "Cavalry"
+    | "Flier/Aquatic"
+    | "Archer/Assassin"
+    | "Holy/Mage/Demon";
+
+  levels: TrainingSkillLevels[];
+}
+
+export interface TrainingSkillLevels {
+  level: string;
+  modX: string | null;
+  modY: string | null;
+  modZ: string | null;
+  gold: string;
+  books: TrainingMaterial[];
+  materials: TrainingMaterial[];
+}
+
+export interface TrainingMaterial {
+  name: string;
+  count: string;
+}
