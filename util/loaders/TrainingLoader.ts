@@ -1,5 +1,6 @@
 import { WorkBook } from "xlsx/types";
 import {
+  prettyAnikiTypes,
   TrainingMaterial,
   TrainingSKill,
   TrainingSKillMap,
@@ -13,6 +14,16 @@ import {
 import { Loader } from "./Loader";
 
 export class TrainingLoader extends Loader<TrainingSKillMap> {
+  trainingHeadersIds = this.mapColumnHeadersToColumnIds(
+    TRAINING_HEADERS,
+    this.workBook.Sheets.Training
+  ) as TRAINING_HEADERS_IDS;
+
+  anikiDropHeadersIds = this.mapColumnHeadersToColumnIds(
+    ANIKI_DROP_HEADERS,
+    this.workBook.Sheets.Training
+  ) as ANIKI_DROP_HEADERS_IDS;
+
   constructor(workBook: WorkBook) {
     super(workBook);
   }
@@ -22,24 +33,20 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
   }
 
   generateTraining(): TrainingSKillMap {
-    const ids = this.mapColumnHeadersToColumnIds(
-      TRAINING_HEADERS,
-      this.workBook.Sheets.Training
-    ) as TRAINING_HEADERS_IDS;
-
     let notDone = true;
     let rowCounter = 9;
     let arrayCounter = -1; // counter for result array. We need push new levels into last element
-    let type = ""; // training type (Infantry/Cavalry). Need save it here and update if find row with next type
+    let type: keyof typeof prettyAnikiTypes = "Infantry"; // training type (Infantry/Cavalry). Need save it here and update if find row with next type
 
     const resultArray: TrainingSKill[] = [];
-    //    let name: string;
-    //  let text: string;
 
     while (notDone) {
       // get name and switch training type if name is new type of training
-      const name = this.getTrainingRowValue(rowCounter, ids.name);
-      type = this.getTypeFromName(name) || type;
+      const name = this.getTrainingRowValue(
+        rowCounter,
+        this.trainingHeadersIds.name
+      );
+      type = this.getTypeFromName(type, name);
 
       // get level value and check is this row we need to parse (we dont need rows without level value)
       const level = this.getTrainingRowValue(rowCounter, "D");
@@ -51,7 +58,7 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
       // if name is not null, then this is new training talent, else its new level of previously parsed
       if (name !== null) {
         const text = this.getTrainingRowValue(rowCounter, "B");
-        const item: any = {
+        const item: TrainingSKill = {
           name,
           text,
           type,
@@ -62,8 +69,11 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
               modX: this.getTrainingRowValue(rowCounter, "E"),
               modY: this.getTrainingRowValue(rowCounter, "F"),
               modZ: this.getTrainingRowValue(rowCounter, "G"),
-              gold: this.getTrainingRowValue(rowCounter, ids.gold),
-              books: this.getBooks(type, rowCounter, ids),
+              gold: this.getTrainingRowValue(
+                rowCounter,
+                this.trainingHeadersIds.gold
+              ),
+              books: this.getBooks(type, rowCounter, this.trainingHeadersIds),
               materials: this.getMaterials(rowCounter),
             },
           ],
@@ -77,14 +87,21 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
           modX: this.getTrainingRowValue(rowCounter, "E"),
           modY: this.getTrainingRowValue(rowCounter, "F"),
           modZ: this.getTrainingRowValue(rowCounter, "G"),
-          gold: this.getTrainingRowValue(rowCounter, ids.gold),
-          books: this.getBooks(type, rowCounter, ids),
+          gold: this.getTrainingRowValue(
+            rowCounter,
+            this.trainingHeadersIds.gold
+          ),
+          books: this.getBooks(type, rowCounter, this.trainingHeadersIds),
           materials: this.getMaterials(rowCounter),
         });
       }
       rowCounter++;
 
-      notDone = !this.isLastRow(rowCounter, ids.name, ids.gold);
+      notDone = !this.isLastRow(
+        rowCounter,
+        this.trainingHeadersIds.name,
+        this.trainingHeadersIds.gold
+      );
     }
 
     return this.generateMap(resultArray);
@@ -98,20 +115,17 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
     }
     return trainingSKillMap;
   }
-
   private getMaterials(rowCounter: number) {
-    const ids = this.mapColumnHeadersToColumnIds(
-      ANIKI_DROP_HEADERS,
-      this.workBook.Sheets.Training
-    ) as ANIKI_DROP_HEADERS_IDS;
-
     const keys = Object.keys(ANIKI_DROP_HEADERS) as Array<
       keyof typeof ANIKI_DROP_HEADERS
     >;
 
     const result: TrainingMaterial[] = [];
     for (const key of keys) {
-      const count = this.getTrainingRowValue(rowCounter, ids[key]);
+      const count = this.getTrainingRowValue(
+        rowCounter,
+        this.anikiDropHeadersIds[key]
+      );
 
       if (count) {
         result.push({
@@ -124,32 +138,12 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
   }
 
   private getBooks(
-    type: string,
+    type: keyof typeof prettyAnikiTypes,
     rowCounter: number,
     ids: TRAINING_HEADERS_IDS
   ): TrainingMaterial[] {
     const result: TrainingMaterial[] = [];
-    let prettyType = "";
-    switch (type) {
-      case "Infantry":
-        prettyType = "infantry";
-        break;
-      case "Lancer":
-        prettyType = "lancer";
-        break;
-      case "Cavalry":
-        prettyType = "cavalry";
-        break;
-      case "Flier/Aquatic":
-        prettyType = "flier";
-        break;
-      case "Archer/Assassin":
-        prettyType = "archer";
-        break;
-      case "Holy/Mage/Demon":
-        prettyType = "holy";
-        break;
-    }
+    const prettyType = prettyAnikiTypes[type];
 
     const bronze = this.getTrainingRowValue(rowCounter, ids.bronzeBooks);
     const silver = this.getTrainingRowValue(rowCounter, ids.silverBooks);
@@ -205,8 +199,11 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
   /* Get training type from name column.
   Need check if name is real type of training, if no then we use previous type
   */
-  private getTypeFromName(name: string): string | null {
-    const types: { [key: string]: string } = {
+  private getTypeFromName(
+    currentType: keyof typeof prettyAnikiTypes,
+    name: string
+  ): keyof typeof prettyAnikiTypes {
+    const types: { [key: string]: keyof typeof prettyAnikiTypes } = {
       INFANTRY: "Infantry",
       LANCER: "Lancer",
       CAVALRY: "Cavalry",
@@ -214,9 +211,7 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
       "ARCHER & ASSASSIN": "Archer/Assassin",
       "HOLY/MAGE/DEMON": "Holy/Mage/Demon",
     };
-    if (Object.keys(types).includes(name)) {
-      return types[name];
-    } else return null;
+    return types[name] || currentType;
   }
 
   private getTrainingRowValue(rowNumber: number, column: string): string {
