@@ -9,7 +9,6 @@ import { SkillsLoader } from "./loaders/SkillsLoader";
 import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
-import {suppressConsoleLogs} from "@headlessui/react/dist/test-utils/suppress-console-logs";
 
 export class DBSingleton {
   private static instance: DBSingleton;

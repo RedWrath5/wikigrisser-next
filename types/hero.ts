@@ -150,6 +150,10 @@ export interface Soldier {
   baseMdef: number;
 }
 
+export interface TrainingSKillMap {
+  [key: string]: TrainingSKill;
+}
+
 export interface TrainingSKill {
   name: string;
   text: string;

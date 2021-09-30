@@ -1,5 +1,9 @@
 import { WorkBook } from "xlsx/types";
-import { TrainingMaterial, TrainingSKill } from "../../types/hero";
+import {
+  TrainingMaterial,
+  TrainingSKill,
+  TrainingSKillMap,
+} from "../../types/hero";
 import {
   ANIKI_DROP_HEADERS,
   ANIKI_DROP_HEADERS_IDS,
@@ -8,7 +12,7 @@ import {
 } from "../columnHeaders";
 import { Loader } from "./Loader";
 
-export class TrainingLoader extends Loader<TrainingSKill[]> {
+export class TrainingLoader extends Loader<TrainingSKillMap> {
   constructor(workBook: WorkBook) {
     super(workBook);
   }
@@ -17,7 +21,7 @@ export class TrainingLoader extends Loader<TrainingSKill[]> {
     return this.generateTraining();
   }
 
-  generateTraining(): TrainingSKill[] {
+  generateTraining(): TrainingSKillMap {
     const ids = this.mapColumnHeadersToColumnIds(
       TRAINING_HEADERS,
       this.workBook.Sheets.Training
@@ -28,7 +32,7 @@ export class TrainingLoader extends Loader<TrainingSKill[]> {
     let arrayCounter = -1; // counter for result array. We need push new levels into last element
     let type = ""; // training type (Infantry/Cavalry). Need save it here and update if find row with next type
 
-    const result: TrainingSKill[] = [];
+    const resultArray: TrainingSKill[] = [];
     //    let name: string;
     //  let text: string;
 
@@ -64,11 +68,11 @@ export class TrainingLoader extends Loader<TrainingSKill[]> {
             },
           ],
         };
-        result.push(item);
+        resultArray.push(item);
         arrayCounter++;
       } else {
         // Parse rest data and it into levels property
-        result[arrayCounter].levels.push({
+        resultArray[arrayCounter].levels.push({
           level: level,
           modX: this.getTrainingRowValue(rowCounter, "E"),
           modY: this.getTrainingRowValue(rowCounter, "F"),
@@ -82,7 +86,17 @@ export class TrainingLoader extends Loader<TrainingSKill[]> {
 
       notDone = !this.isLastRow(rowCounter, ids.name, ids.gold);
     }
-    return result;
+
+    return this.generateMap(resultArray);
+  }
+
+  private generateMap(TrainingSKillArray: TrainingSKill[]): TrainingSKillMap {
+    const trainingSKillMap: TrainingSKillMap = {};
+
+    for (const skill of TrainingSKillArray) {
+      trainingSKillMap[skill.name] = skill;
+    }
+    return trainingSKillMap;
   }
 
   private getMaterials(rowCounter: number) {
