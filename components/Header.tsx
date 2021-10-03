@@ -37,10 +37,12 @@ export function Header() {
         className="flex flex-col sm:flex-row w-full justify-between items-center px-4 sm:px-6 py-1 bg-black shadow sm:shadow-none border-t-4 border-red-900"
       >
         <div className="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
-          <img src="/logo-big.jpg" width={50} height={50}></img>
-          <div className="ml-2">
-            <Link href="/">Wikigrisser Next</Link>
-          </div>
+          <Link href="/">
+            <span className="flex flex-row cursor-pointer items-center text-center">
+              <img src="/logo-big.jpg" width={50} height={50}></img>
+              <div className="ml-2">Wikigrisser Next</div>
+            </span>
+          </Link>
 
           <button
             id="menuBtn"
@@ -56,17 +58,34 @@ export function Header() {
           id="menu"
           className="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden"
         >
-          <div className="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2">
-            <Link href="/heroes/gallery">Heroes</Link>
-          </div>
-          <div className="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2">
-            <Link href="/equipment">Equipment</Link>
-          </div>
-          <div className="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2">
-            <Link href="/soldiers">Soldiers</Link>
-          </div>
+          {LINKS.map((link) => (
+            <Link href={link.url}>
+              <div className="text-gray-300 font-bold hover:text-white text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2 cursor-pointer">
+                {link.text}
+              </div>
+            </Link>
+          ))}
         </div>
       </nav>
     </header>
   );
 }
+
+const LINKS = [
+  {
+    text: "News",
+    url: "/news",
+  },
+  {
+    text: "Heroes",
+    url: "/heroes/gallery",
+  },
+  {
+    text: "Equipment",
+    url: "/equipment",
+  },
+  {
+    text: "Soldiers",
+    url: "/soldiers",
+  },
+];
