@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Soldier } from "../../types/hero";
+import { TrainingSkillSection } from "./TrainingSkillSection";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
+  const [showMore, setShowMore] = useState(false);
+
+  const handleShowMoreButton = () => {
+    setShowMore(!showMore);
+  };
+
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2 w-full">
       <div className="col-span-12 text-center sm:col-span-1">
@@ -22,6 +29,28 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
           Move: {soldier.move} / Range: {soldier.range}
         </p>
         <p className="whitespace-pre-line">{soldier.effect}</p>
+      </div>
+
+      <div className="flex justify-center col-span-12 border-t-2 border-black border-solid mt-6">
+        {soldier.trainingSkill && (
+          <button onClick={handleShowMoreButton} className="">
+            <img
+              src="ui/arrow_down.png"
+              alt="arrow image"
+              className={
+                showMore
+                  ? "transform -rotate-180 bg-white -mt-6"
+                  : "bg-white -mt-6"
+              }
+            />
+          </button>
+        )}
+      </div>
+
+      <div className="mt-2 col-span-12 sm:col-span-11">
+        {showMore && soldier.trainingSkill && (
+          <TrainingSkillSection trainingSkill={soldier.trainingSkill} />
+        )}
       </div>
     </div>
   );

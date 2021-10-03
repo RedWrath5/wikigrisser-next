@@ -1,4 +1,5 @@
 import { ClassWorkbookRow, Material } from "./spreedsheet";
+import { ANIKI_DROP_HEADERS } from "../util/columnHeaders";
 
 export interface Hero {
   name: string;
@@ -148,4 +149,40 @@ export interface Soldier {
   baseAtk: number;
   baseDef: number;
   baseMdef: number;
+  trainingSkill: TrainingSkill | null;
+}
+
+export interface TrainingSkillMap {
+  [key: string]: TrainingSkill;
+}
+
+export interface TrainingSkill {
+  name: string;
+  text: string;
+  type: keyof typeof prettyAnikiTypes;
+  levels: TrainingSkillLevel[];
+}
+
+export const prettyAnikiTypes = {
+  Infantry: "infantry",
+  Lancer: "lancer",
+  Cavalry: "cavalry",
+  "Flier/Aquatic": "flier",
+  "Archer/Assassin": "archer",
+  "Holy/Mage/Demon": "holy",
+};
+
+export interface TrainingSkillLevel {
+  level: string;
+  modX: string | null;
+  modY: string | null;
+  modZ: string | null;
+  gold: string;
+  books: TrainingMaterial[];
+  materials: TrainingMaterial[];
+}
+
+export interface TrainingMaterial {
+  name: string;
+  count: string;
 }

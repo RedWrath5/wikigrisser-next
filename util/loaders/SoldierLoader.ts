@@ -1,5 +1,5 @@
 import { WorkBook } from "xlsx/types";
-import { Soldier } from "../../types/hero";
+import { Soldier, TrainingSkillMap } from "../../types/hero";
 import { SOLDIER_COLUMN_HEADERS, SOLDIER_COLUMN_IDS } from "../columnHeaders";
 import { IMAGE_TO_CLASS_MAP } from "../mappers/IMAGE_TO_CLASS_MAP";
 import { Loader } from "./Loader";
@@ -34,6 +34,7 @@ export class SoldierLoader extends Loader<Soldier[]> {
         baseDef: +this.getSoldierRowValue(rowCounter, scm.baseDef),
         baseHp: +this.getSoldierRowValue(rowCounter, scm.baseHp),
         baseMdef: +this.getSoldierRowValue(rowCounter, scm.baseMdef),
+        trainingSkill: null,
       };
       soldierArr.push(soldier);
       rowCounter++;
@@ -49,5 +50,14 @@ export class SoldierLoader extends Loader<Soldier[]> {
     return this.getCellValue(
       this.workBook.Sheets.Soldiers[column + rowNumber]
     ) as string;
+  }
+
+  static addTrainingInfo(
+    soldiers: Soldier[],
+    trainingInfo: TrainingSkillMap
+  ): Soldier[] {
+    return soldiers.map((v) => {
+      return { ...v, trainingSkill: trainingInfo[v?.name] || null };
+    });
   }
 }
