@@ -2,8 +2,8 @@ import { WorkBook } from "xlsx/types";
 import {
   prettyAnikiTypes,
   TrainingMaterial,
-  TrainingSKill,
-  TrainingSKillMap,
+  TrainingSkill,
+  TrainingSkillMap,
 } from "../../types/hero";
 import {
   ANIKI_DROP_HEADERS,
@@ -13,7 +13,7 @@ import {
 } from "../columnHeaders";
 import { Loader } from "./Loader";
 
-export class TrainingLoader extends Loader<TrainingSKillMap> {
+export class TrainingLoader extends Loader<TrainingSkillMap> {
   trainingHeadersIds = this.mapColumnHeadersToColumnIds(
     TRAINING_HEADERS,
     this.workBook.Sheets.Training
@@ -32,13 +32,13 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
     return this.generateTraining();
   }
 
-  generateTraining(): TrainingSKillMap {
+  generateTraining(): TrainingSkillMap {
     let notDone = true;
     let rowCounter = 9;
     let arrayCounter = -1; // counter for result array. We need push new levels into last element
     let type: keyof typeof prettyAnikiTypes = "Infantry"; // training type (Infantry/Cavalry). Need save it here and update if find row with next type
 
-    const resultArray: TrainingSKill[] = [];
+    const resultArray: TrainingSkill[] = [];
 
     while (notDone) {
       // get name and switch training type if name is new type of training
@@ -58,7 +58,7 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
       // if name is not null, then this is new training talent, else its new level of previously parsed
       if (name !== null) {
         const text = this.getTrainingRowValue(rowCounter, "B");
-        const item: TrainingSKill = {
+        const item: TrainingSkill = {
           name,
           text,
           type,
@@ -107,8 +107,8 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
     return this.generateMap(resultArray);
   }
 
-  private generateMap(TrainingSKillArray: TrainingSKill[]): TrainingSKillMap {
-    const trainingSKillMap: TrainingSKillMap = {};
+  private generateMap(TrainingSKillArray: TrainingSkill[]): TrainingSkillMap {
+    const trainingSKillMap: TrainingSkillMap = {};
 
     for (const skill of TrainingSKillArray) {
       trainingSKillMap[skill.name] = skill;
@@ -152,28 +152,26 @@ export class TrainingLoader extends Loader<TrainingSKillMap> {
 
     if (bronze)
       result.push({
-        name: `${prettyType}BronzeBooks`,
+        name: `${prettyType}BronzeBook`,
         count: bronze,
       });
 
     if (silver)
       result.push({
-        name: `${prettyType}SilverBooks`,
+        name: `${prettyType}SilverBook`,
         count: silver,
       });
 
     if (gold)
       result.push({
-        name: `${prettyType}GoldBooks`,
+        name: `${prettyType}GoldBook`,
         count: gold,
       });
-
     if (epic)
       result.push({
-        name: `${prettyType}EpicBooks`,
+        name: `${prettyType}EpicBook`,
         count: epic,
       });
-
     return result;
   }
 

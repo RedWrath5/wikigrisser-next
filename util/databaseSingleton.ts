@@ -37,6 +37,10 @@ export class DBSingleton {
     return this.instance;
   }
 
+  constructor() {
+    this.soldier = SoldierLoader.addTrainingInfo(this.soldier, this.training);
+  }
+
   getWorkBook() {
     return this.workBook;
   }

@@ -149,17 +149,18 @@ export interface Soldier {
   baseAtk: number;
   baseDef: number;
   baseMdef: number;
+  trainingSkill: TrainingSkill | null;
 }
 
-export interface TrainingSKillMap {
-  [key: string]: TrainingSKill;
+export interface TrainingSkillMap {
+  [key: string]: TrainingSkill;
 }
 
-export interface TrainingSKill {
+export interface TrainingSkill {
   name: string;
   text: string;
   type: keyof typeof prettyAnikiTypes;
-  levels: TrainingSkillLevels[];
+  levels: TrainingSkillLevel[];
 }
 
 export const prettyAnikiTypes = {
@@ -171,7 +172,7 @@ export const prettyAnikiTypes = {
   "Holy/Mage/Demon": "holy",
 };
 
-export interface TrainingSkillLevels {
+export interface TrainingSkillLevel {
   level: string;
   modX: string | null;
   modY: string | null;
