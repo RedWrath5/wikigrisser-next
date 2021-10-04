@@ -1,4 +1,5 @@
 import {
+  Collapse,
   FormControl,
   Input,
   InputLabel,
@@ -9,21 +10,37 @@ import React, { useEffect, useState } from "react";
 import { Soldier, UnitType } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { SoldiersGallerySection } from "./SoldierGallerySection";
+import { TransitionGroup } from "react-transition-group";
+
+const tiers = [
+  {
+    name: "Tier 1",
+    value: 1,
+  },
+  {
+    name: "Tier 2",
+    value: 2,
+  },
+  {
+    name: "Tier 3",
+    value: 3,
+  },
+];
 
 export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
   const [filteredSoldiers, setFilteredSoldiers] = useState([] as Soldier[]);
-
   const [type, setType] = useState(UnitType.Infantry);
+  const [tier, setTier] = useState(3);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    filterSoldiers(type);
+    filterSoldiers(type, tier);
     setSearchText("");
-  }, [type]);
+  }, [type, tier]);
 
   useEffect(() => {
-    if (setSearchText.length > 0) search(searchText);
-    else filterSoldiers(type);
+    if (searchText.length > 0) search(searchText);
+    else filterSoldiers(type, tier);
   }, [searchText]);
 
   function search(text: string) {
@@ -33,13 +50,16 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
     setFilteredSoldiers(filtered);
   }
 
-  function filterSoldiers(type: UnitType) {
+  function filterSoldiers(type: UnitType, tier: number) {
     const filtered = soldiers.filter(
-      (soldier) => soldier.type === type && soldier.tier === 3
+      (soldier) => soldier.type === type && soldier.tier === tier
     );
-
-    setFilteredSoldiers(filtered);
+   setFilteredSoldiers(filtered);
   }
+
+  const handleTierChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setTier(event.target.value as number);
+  };
 
   const handleSlotChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
@@ -80,19 +100,37 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
               ))}
           </Select>
         </FormControl>
+
+        <div className="ml-4">
+          <FormControl>
+            <InputLabel>Tier</InputLabel>
+            <Select value={tier} onChange={handleTierChange}>
+              {tiers.map((v) => (
+                <MenuItem key={v.name} value={v.value}>
+                  {v.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       </div>
+
       <div className="flex flex-row justify-center w-full">
         <BoundedColumn>
-          {filteredSoldiers.map((soldier) => (
-            <div
-              key={soldier.name}
-              className="flex flex-row w-full bg-white justify-center"
-            >
-              <SoldiersGallerySection
-                soldier={soldier}
-              ></SoldiersGallerySection>
-            </div>
-          ))}
+          <TransitionGroup>
+            {filteredSoldiers.map((soldier) => (
+              <Collapse timeout={750} key={soldier.name}>
+                <div
+                  key={soldier.name}
+                  className="flex flex-row w-full bg-white justify-center"
+                >
+                  <SoldiersGallerySection
+                    soldier={soldier}
+                  ></SoldiersGallerySection>
+                </div>
+              </Collapse>
+            ))}
+          </TransitionGroup>
         </BoundedColumn>
       </div>
     </div>
