@@ -1,4 +1,5 @@
 import {
+  Fade,
   FormControl,
   Input,
   InputLabel,
@@ -10,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../types/hero";
 import { HeroMap } from "../util/databaseSingleton";
 import { BoundedColumn } from "./layout/BoundedColumn";
+import { TransitionGroup } from "react-transition-group";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
@@ -145,9 +147,9 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
 
       <div className="flex font-sans font-normal justify-center">
         <BoundedColumn>
-          <div className="flex flex-row flex-wrap gap-5 justify-center">
-            {filteredAndSortedHeroes.map((hero) => {
-              return (
+          <TransitionGroup className="flex flex-row flex-wrap gap-5 justify-center">
+            {filteredAndSortedHeroes.map((hero) => (
+              <Fade  timeout={750} key={hero.name}>
                 <div className="cursor-pointer" key={hero.name}>
                   <Link href={"/heroes/" + hero.name} passHref={true}>
                     <a>
@@ -164,9 +166,9 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
                     </p>
                   </Link>
                 </div>
-              );
-            })}
-          </div>
+              </Fade>
+            ))}
+          </TransitionGroup>
         </BoundedColumn>
       </div>
     </div>

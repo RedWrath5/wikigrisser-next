@@ -1,4 +1,5 @@
 import {
+  Collapse,
   FormControl,
   Input,
   InputLabel,
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
 import { EquipmentSection } from "./EquipmentSection";
 import { BoundedColumn } from "../layout/BoundedColumn";
+import { TransitionGroup } from "react-transition-group";
 
 export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   const [filteredAndGroupedEquipment, setFilteredAndGroupedEquipment] =
@@ -117,29 +119,31 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           </Select>
         </FormControl>
       </div>
-      {Object.entries(filteredAndGroupedEquipment)
-        .filter(([key, equips]) => equips.length > 0)
-        .map(([key, equips]) => (
-          <React.Fragment key={key}>
-            <div className="flex flex-row bg-gray-200 justify-center">
-              <BoundedColumn>
-                <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
-                  <div className="ml-2 text-2xl">{key || "Accessories"}</div>
-                </div>
-              </BoundedColumn>
-            </div>
-            <div className="flex flex-row bg-white justify-center">
-              <BoundedColumn>
-                {equips.map((equip) => (
-                  <EquipmentSection
-                    equipment={equip}
-                    isExclusive={false}
-                  ></EquipmentSection>
-                ))}
-              </BoundedColumn>
-            </div>
-          </React.Fragment>
-        ))}
+      <TransitionGroup>
+        {Object.entries(filteredAndGroupedEquipment)
+          .filter(([key, equips]) => equips.length > 0)
+          .map(([key, equips]) => (
+            <Collapse timeout={750} key={key}>
+              <div className="flex flex-row bg-gray-200 justify-center">
+                <BoundedColumn>
+                  <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
+                    <div className="ml-2 text-2xl">{key || "Accessories"}</div>
+                  </div>
+                </BoundedColumn>
+              </div>
+              <div className="flex flex-row bg-white justify-center">
+                <BoundedColumn>
+                  {equips.map((equip) => (
+                    <EquipmentSection
+                      equipment={equip}
+                      isExclusive={false}
+                    ></EquipmentSection>
+                  ))}
+                </BoundedColumn>
+              </div>
+            </Collapse>
+          ))}
+      </TransitionGroup>
     </div>
   );
 }
