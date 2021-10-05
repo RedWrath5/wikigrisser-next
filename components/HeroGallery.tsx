@@ -1,5 +1,4 @@
 import {
-  Fade,
   FormControl,
   Input,
   InputLabel,
@@ -147,28 +146,26 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
 
       <div className="flex font-sans font-normal justify-center">
         <BoundedColumn>
-          <TransitionGroup className="flex flex-row flex-wrap gap-5 justify-center">
+          <div className="flex flex-row flex-wrap gap-5 justify-center">
             {filteredAndSortedHeroes.map((hero) => (
-              <Fade  timeout={750} key={hero.name}>
-                <div className="cursor-pointer" key={hero.name}>
-                  <Link href={"/heroes/" + hero.name} passHref={true}>
-                    <a>
-                      <img
-                        src={"/hero cards/Card_" + hero.prettyName + ".png"}
-                        width={100}
-                        height={100}
-                      ></img>
-                    </a>
-                  </Link>
-                  <Link href={"/heroes/" + hero.name}>
-                    <p className="text-center" style={{ width: "100px" }}>
-                      {hero.prettyName}
-                    </p>
-                  </Link>
-                </div>
-              </Fade>
+              <div className="cursor-pointer" key={hero.name}>
+                <Link href={"/heroes/" + hero.name} passHref={true}>
+                  <a>
+                    <img
+                      src={"/hero cards/Card_" + hero.prettyName + ".png"}
+                      width={100}
+                      height={100}
+                    ></img>
+                  </a>
+                </Link>
+                <Link href={"/heroes/" + hero.name}>
+                  <p className="text-center" style={{ width: "100px" }}>
+                    {hero.prettyName}
+                  </p>
+                </Link>
+              </div>
             ))}
-          </TransitionGroup>
+          </div>
         </BoundedColumn>
       </div>
     </div>
