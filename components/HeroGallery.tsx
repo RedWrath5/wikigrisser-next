@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../types/hero";
 import { HeroMap } from "../util/databaseSingleton";
 import { BoundedColumn } from "./layout/BoundedColumn";
-import { TransitionGroup } from "react-transition-group";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
