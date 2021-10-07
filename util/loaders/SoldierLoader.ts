@@ -5,12 +5,13 @@ import { IMAGE_TO_CLASS_MAP } from "../mappers/IMAGE_TO_CLASS_MAP";
 import { Loader } from "./Loader";
 
 export class SoldierLoader extends Loader<Soldier[]> {
-  constructor(workBook: WorkBook) {
+  constructor(workBook: WorkBook, private trainingInfo: TrainingSkillMap) {
     super(workBook);
   }
 
   load() {
-    return this.generateSoldiers();
+    const soldiers = this.generateSoldiers();
+    return this.addTrainingInfo(soldiers);
   }
 
   generateSoldiers(): Soldier[] {
@@ -52,12 +53,9 @@ export class SoldierLoader extends Loader<Soldier[]> {
     ) as string;
   }
 
-  static addTrainingInfo(
-    soldiers: Soldier[],
-    trainingInfo: TrainingSkillMap
-  ): Soldier[] {
+  private addTrainingInfo(soldiers: Soldier[]): Soldier[] {
     return soldiers.map((v) => {
-      return { ...v, trainingSkill: trainingInfo[v?.name] || null };
+      return { ...v, trainingSkill: this.trainingInfo[v?.name] || null };
     });
   }
 }

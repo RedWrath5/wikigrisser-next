@@ -59,7 +59,7 @@ export function Header() {
           className="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden"
         >
           {LINKS.map((link) => (
-            <Link href={link.url}>
+            <Link key={link.text} href={link.url}>
               <div className="text-gray-300 font-bold hover:text-white text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2 cursor-pointer">
                 {link.text}
               </div>

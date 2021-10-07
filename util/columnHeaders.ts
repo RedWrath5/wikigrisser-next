@@ -96,7 +96,7 @@ export const ANIKI_DROP_HEADERS = {
   vitaminE: ["Vitamin E"],
   vitaminF: ["Vitamin F"],
   springRod: ["Spring Rod"],
-  beldum: ["Beldum"],
+  dumbbell: ["Dumbbell"],
   pushUpStand: ["Push-Up Stand"],
   elasticRope: ["Elastic Rope"],
   gripper: ["Gripper"],
