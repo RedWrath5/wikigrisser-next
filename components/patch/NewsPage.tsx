@@ -6,6 +6,15 @@ export function NewsPage({ patches }: { patches: PatchMap }) {
     reducePatchesToMajorPatches,
     {}
   );
+
+  for (const index in groupedPatches) {
+    let groupReleased = true;
+    for (const patch of groupedPatches[index]) {
+      if (patch.released === false) groupReleased = false;
+    }
+    if (groupReleased) delete groupedPatches[index];
+  }
+
   return (
     <div>
       {Object.values(groupedPatches).map((majorPatchSection: Patch[]) => (
