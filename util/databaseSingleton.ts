@@ -13,6 +13,14 @@ import { TrainingLoader } from "./loaders/TrainingLoader";
 export class DBSingleton {
   private static instance: DBSingleton;
 
+  static getInstance(): DBSingleton {
+    if (!this.instance) {
+      this.instance = new this();
+    }
+
+    return this.instance;
+  }
+
   private workBook = XLSX.readFile("data/database.xlsx");
   private skillsMap = new SkillsLoader(this.workBook).load();
   private maxStats = new MaxStatsLoader(this.workBook).load();
@@ -23,23 +31,14 @@ export class DBSingleton {
     this.maxStats,
     this.classesMap
   ).load();
-  private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
   private patchMap = new PatchLoader(this.workBook).load();
   private equipment = new EquipmentLoader(this.workBook).load();
-  private soldier = new SoldierLoader(this.workBook).load();
   private training = new TrainingLoader(this.workBook).load();
+  private soldier = new SoldierLoader(this.workBook, this.training).load();
 
-  static getInstance(): DBSingleton {
-    if (!this.instance) {
-      this.instance = new this();
-    }
+  private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
-    return this.instance;
-  }
-
-  constructor() {
-    this.soldier = SoldierLoader.addTrainingInfo(this.soldier, this.training);
-  }
+  constructor() {}
 
   getWorkBook() {
     return this.workBook;

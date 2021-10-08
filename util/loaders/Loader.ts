@@ -2,7 +2,11 @@ import { CellObject, WorkBook, WorkSheet } from "xlsx/types";
 import { ColIdMap, FINAL_COL_KEY } from "../columnHeaders";
 
 export abstract class Loader<T> {
-  constructor(protected workBook: WorkBook) {}
+  constructor(protected workBook: WorkBook) {
+    if (DEBUGGING_ON) {
+      console.log(this.constructor.name, "contructed");
+    }
+  }
   abstract load(): T;
 
   protected getCellValue(cellObj: CellObject | undefined) {
@@ -91,3 +95,5 @@ export abstract class Loader<T> {
     }
   }
 }
+
+const DEBUGGING_ON = false;
