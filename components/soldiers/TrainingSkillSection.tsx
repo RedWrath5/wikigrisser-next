@@ -10,7 +10,7 @@ export function TrainingSkillSection({
   return (
     <ul>
       {levels.map((level) => (
-        <TrainingSkillRow level={level} />
+        <TrainingSkillRow level={level} key={level.level} />
       ))}
     </ul>
   );

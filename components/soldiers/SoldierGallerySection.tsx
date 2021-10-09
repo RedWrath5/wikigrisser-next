@@ -36,7 +36,7 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
         {soldier.trainingSkill && (
           <button onClick={handleShowMoreButton} className="">
             <img
-              src="ui/arrow_down.png"
+              src="ui/arrow_down.svg"
               alt="arrow image"
               className={
                 showMore
