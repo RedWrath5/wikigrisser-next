@@ -25,7 +25,6 @@ export class PatchLoader extends Loader<PatchMap> {
         id: patchSheat["D" + rowCounter].v,
         type: patchSheat["E" + rowCounter].v,
         newHeroes: [],
-        released: new Date() > new Date(patchSheat["C" + rowCounter].w),
       };
 
       const hero1 = patchSheat["E" + rowCounter]?.v || null;

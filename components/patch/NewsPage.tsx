@@ -6,19 +6,10 @@ export function NewsPage({ patches }: { patches: PatchMap }) {
     reducePatchesToMajorPatches,
     {}
   );
-
-  for (const index in groupedPatches) {
-    let groupReleased = true;
-    for (const patch of groupedPatches[index]) {
-      if (patch.released === false) groupReleased = false;
-    }
-    if (groupReleased) delete groupedPatches[index];
-  }
-
   return (
     <div>
       {Object.values(groupedPatches).map((majorPatchSection: Patch[]) => (
-        <div className="flex flex-col mb-5">
+        <div className="flex flex-col mb-5" key={majorPatchSection[0].id}>
           <div className="flex flex-row bg-gray-200 justify-center">
             <div className="flex flex-col text-center mt-2 mb-2 ">
               <img
@@ -52,10 +43,16 @@ function reducePatchesToMajorPatches(
   patch: Patch
 ) {
   if (patch.type === "major") {
-    accumulator[patch.id] = [patch];
+    const now = new Date();
+    const releaseDate = new Date(patch.releaseDate);
+    const diffDays = Math.ceil(
+      (now.valueOf() - releaseDate.valueOf()) / (1000 * 60 * 60 * 24)
+    );
+    if (diffDays < 28) accumulator[patch.id] = [patch];
   } else {
     const lastMajorPatchId = Object.keys(accumulator).pop()!;
-    accumulator[lastMajorPatchId].push(patch);
+    if (accumulator[lastMajorPatchId])
+      accumulator[lastMajorPatchId].push(patch);
   }
   return accumulator;
 }

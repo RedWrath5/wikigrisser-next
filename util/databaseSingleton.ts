@@ -92,7 +92,6 @@ export interface Patch {
   type: "major" | "minor";
   newHeroes: string[];
   info: string;
-  released: boolean;
 }
 
 export interface PatchMap {
