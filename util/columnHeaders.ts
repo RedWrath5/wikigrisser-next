@@ -115,6 +115,36 @@ export const ANIKI_DROP_HEADERS = {
   crazyShorts: ["Crazy Shorts"],
 };
 
+export const PATCHES_HEADERS = {
+  id: ["ID"],
+  date: ["Date"],
+  info: ["Info"],
+  globalReleaseDate: ["Global Release Date"],
+  patchType: ["Patch Type (major/minor)"],
+  patchName: ["Patch Name"],
+  newHero1: ["New Hero 1"],
+  newHero2: ["New Hero 2"],
+  newHero3: ["New Hero 3"],
+  newHero4: ["New Hero 4"],
+  banner1Type: ["Banner 1 Type (standard/destiny/equipment)"],
+  banner1Item1: ["Banner 1 Item 1"],
+  banner1Item2: ["Banner 1 Item 2"],
+  banner1Item3: ["Banner 1 Item 3"],
+  banner1Item4: ["Banner 1 Item 4"],
+  banner2Type: ["Banner 1 Type (standard/destiny/equipment)"],
+  banner2Item1: ["Banner 2 Item 1"],
+  banner2Item2: ["Banner 2 Item 2"],
+  banner2Item3: ["Banner 2 Item 3"],
+  banner2Item4: ["Banner 2 Item 4"],
+  awakeningSkill1: ["Awakening Skill 1"],
+  awakeningSkill2: ["Awakening Skill 2"],
+  awakeningSkill3: ["Awakening Skill 3"],
+  awakeningSkill4: ["Awakening Skill 4"],
+  exclusive1: ["Exclusive 1"],
+  exclusive2: ["Exclusive 2"],
+  exclusive3: ["Exclusive 3"],
+};
+
 export const FINAL_COL_KEY = "FINAL_COLUMN";
 
 export const CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS = [
@@ -240,6 +270,10 @@ export type SOLDIER_COLUMN_IDS = {
 
 export type TRAINING_HEADERS_IDS = {
   [key in keyof typeof TRAINING_HEADERS]: string;
+};
+
+export type PATCHES_IDS = {
+  [key in keyof typeof PATCHES_HEADERS]: string;
 };
 
 export type ANIKI_DROP_HEADERS_IDS = {

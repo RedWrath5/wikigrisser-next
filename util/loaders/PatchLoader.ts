@@ -1,8 +1,15 @@
 import { WorkBook } from "xlsx/types";
+import { PATCHES_HEADERS, PATCHES_IDS } from "../columnHeaders";
 import { Patch, PatchMap } from "../databaseSingleton";
 import { Loader } from "./Loader";
 
 export class PatchLoader extends Loader<PatchMap> {
+  sheet = this.workBook.Sheets.Patches;
+  headers = this.mapColumnHeadersToColumnIds(
+    PATCHES_HEADERS,
+    this.sheet
+  ) as PATCHES_IDS;
+
   constructor(workBook: WorkBook) {
     super(workBook);
   }
@@ -12,38 +19,52 @@ export class PatchLoader extends Loader<PatchMap> {
   }
 
   private generatePatchMap(): PatchMap {
-    const patchSheat = this.workBook.Sheets["News Page"];
     const patchMap: PatchMap = {};
-    let rowCounter = 3;
+    let rowCounter = 2;
     let notDone = true;
 
     while (notDone) {
       const patch: Patch = {
-        formattedDate: patchSheat["A" + rowCounter].v,
-        info: patchSheat["B" + rowCounter].v,
-        releaseDate: patchSheat["C" + rowCounter].w,
-        id: patchSheat["D" + rowCounter].v,
-        type: patchSheat["E" + rowCounter].v,
+        formattedDate: this.getPatchRowValue(rowCounter, this.headers.date),
+        info: this.getPatchRowValue(rowCounter, this.headers.info),
+        releaseDate: this.getPatchRowValue(
+          rowCounter,
+          this.headers.globalReleaseDate
+        ),
+        id: +this.getPatchRowValue(rowCounter, this.headers.id),
+        name: this.getPatchRowValue(rowCounter, this.headers.patchName),
+        type: this.getPatchRowValue(
+          rowCounter,
+          this.headers.patchType
+        ) as "major",
         newHeroes: [],
       };
 
-      const hero1 = patchSheat["E" + rowCounter]?.v || null;
+      const hero1 =
+        this.getPatchRowValue(rowCounter, this.headers.newHero1) || null;
       hero1 && patch.newHeroes.push(hero1);
-      const hero2 = patchSheat["F" + rowCounter]?.v || null;
+      const hero2 =
+        this.getPatchRowValue(rowCounter, this.headers.newHero2) || null;
       hero2 && patch.newHeroes.push(hero2);
-      const hero3 = patchSheat["G" + rowCounter]?.v || null;
+      const hero3 =
+        this.getPatchRowValue(rowCounter, this.headers.newHero3) || null;
       hero3 && patch.newHeroes.push(hero3);
-      const hero4 = patchSheat["H" + rowCounter]?.v || null;
+      const hero4 =
+        this.getPatchRowValue(rowCounter, this.headers.newHero4) || null;
       hero4 && patch.newHeroes.push(hero4);
 
       patchMap[patch.id] = patch;
 
       rowCounter++;
-      if (!patchSheat["A" + rowCounter]?.v) {
+      if (!this.getPatchRowValue(rowCounter, this.headers.id)) {
         notDone = false;
       }
     }
 
     return patchMap;
+  }
+
+  private getPatchRowValue(rowNumber: number, column: string): string {
+    return this.getCellValue(this.sheet[column + rowNumber]) as string;
   }
 }

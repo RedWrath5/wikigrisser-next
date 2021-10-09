@@ -18,9 +18,7 @@ export function NewsPage({ patches }: { patches: PatchMap }) {
                 width={400}
                 height={200}
               ></img>
-              <div className="ml-2 text-2xl">
-                {majorPatchSection[0].formattedDate}
-              </div>
+              <div className="ml-2 text-2xl">{majorPatchSection[0].name}</div>
             </div>
           </div>
 

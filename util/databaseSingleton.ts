@@ -92,6 +92,7 @@ export interface Patch {
   type: "major" | "minor";
   newHeroes: string[];
   info: string;
+  name: string;
 }
 
 export interface PatchMap {
