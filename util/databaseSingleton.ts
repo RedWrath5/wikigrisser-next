@@ -1,5 +1,5 @@
 import XLSX from "xlsx";
-import { Hero, Soldier } from "../types/hero";
+import { Hero, LanguageMap, Soldier } from "../types/hero";
 import { ClassesLoader } from "./loaders/ClassesLoader";
 import { EquipmentLoader } from "./loaders/EquipmentLoader";
 import { HeroLoader } from "./loaders/HeroLoader";
@@ -9,6 +9,7 @@ import { SkillsLoader } from "./loaders/SkillsLoader";
 import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
+import { LanguageLoader } from "./loaders/LanguageLoader";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -35,6 +36,9 @@ export class DBSingleton {
   private equipment = new EquipmentLoader(this.workBook).load();
   private training = new TrainingLoader(this.workBook).load();
   private soldier = new SoldierLoader(this.workBook, this.training).load();
+  private langMap = {
+    russian: new LanguageLoader(this.workBook).load(),
+  };
 
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
@@ -70,6 +74,10 @@ export class DBSingleton {
 
   getTraining() {
     return this.training;
+  }
+
+  getLang() {
+    return this.langMap;
   }
 }
 
