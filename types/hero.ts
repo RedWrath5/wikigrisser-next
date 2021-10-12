@@ -1,5 +1,4 @@
-import { ClassWorkbookRow, Material } from "./spreedsheet";
-import { ANIKI_DROP_HEADERS } from "../util/columnHeaders";
+import { Material } from "./spreedsheet";
 
 export interface Hero {
   name: string;
@@ -185,4 +184,19 @@ export interface TrainingSkillLevel {
 export interface TrainingMaterial {
   name: string;
   count: string;
+}
+
+export interface LanguageMap {
+  [key: string]: Language;
+}
+
+export interface Language {
+  soldiers: {
+    [key: string]: SoldierLang;
+  };
+}
+
+export interface SoldierLang {
+  name: string;
+  effect: string;
 }

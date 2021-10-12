@@ -1,10 +1,41 @@
-import React, { useState } from "react";
-import { Soldier } from "../../types/hero";
+import React, { useContext, useEffect, useState } from "react";
+import { LanguageMap, Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
+import { LanguageLoader } from "../../util/loaders/LanguageLoader";
+import { LangContext } from "../Layout";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
+  const [name, setName] = useState(soldier.name);
+  const [effect, setEffect] = useState(soldier.effect);
+
+  const { langMode, langMap } = useContext(LangContext);
+
+  useEffect(() => {
+    if (langMode === "english") {
+      setName(soldier.name);
+      setEffect(soldier.effect);
+    } else {
+      const name = LanguageLoader.getLangText(
+        langMode,
+        "soldiers",
+        soldier.name,
+        "name",
+        langMap
+      );
+      if (name) setName(name);
+
+      const effect = LanguageLoader.getLangText(
+        langMode,
+        "soldiers",
+        soldier.name,
+        "effect",
+        langMap
+      );
+      if (effect) setEffect(effect);
+    }
+  }, [langMode]); // should be lang here
 
   const handleShowMoreButton = () => {
     setShowMore(!showMore);
@@ -21,7 +52,7 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
         ></img>
       </div>
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
-        <p className="text-2xl">{soldier.name}</p>
+        <p className="text-2xl">{name}</p>
         <p>
           HP: {soldier.baseHp} / ATK: {soldier.baseAtk} / DEF: {soldier.baseDef}{" "}
           / MDEF: {soldier.baseMdef}
@@ -29,7 +60,7 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
         <p>
           Move: {soldier.move} / Range: {soldier.range}
         </p>
-        <p className="whitespace-pre-line">{soldier.effect}</p>
+        <p className="whitespace-pre-line">{effect}</p>
       </div>
 
       <div className="flex justify-center col-span-12 border-t-2 border-black border-solid mt-6">

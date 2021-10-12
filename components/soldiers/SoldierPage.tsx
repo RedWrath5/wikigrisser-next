@@ -54,7 +54,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
     const filtered = soldiers.filter(
       (soldier) => soldier.type === type && soldier.tier === tier
     );
-   setFilteredSoldiers(filtered);
+    setFilteredSoldiers(filtered);
   }
 
   const handleTierChange = (event: React.ChangeEvent<{ value: unknown }>) => {
