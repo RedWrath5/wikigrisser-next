@@ -3,13 +3,12 @@ import { TranslateSoldiersMap, Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
 import { TranslateSoldiersLoader } from "../../util/loaders/TranslateSoldiersLoader";
-
+import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
-  const [name, setName] = useState(soldier.name);
-  const [effect, setEffect] = useState(soldier.effect);
-
+  const { getSoldierInfo } = useSoldierTranslateContext();
+  const { name, effect } = getSoldierInfo(soldier.name);
 
   const handleShowMoreButton = () => {
     setShowMore(!showMore);

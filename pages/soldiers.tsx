@@ -1,17 +1,21 @@
 import React, { PropsWithRef } from "react";
-import { TranslateSoldiersMap, Soldier } from "../types/hero";
+import {TranslateSoldiersMap, Soldier, TranslateSoldiersLanguageMap} from "../types/hero";
 import { DBSingleton } from "../util/databaseSingleton";
 import { Layout } from "../components/Layout";
 import { SoldierPage } from "../components/soldiers/SoldierPage";
+import { SoldierTranslateWrapper } from "../components/context/SoldierTranslateContext";
 
 const SoldierGalleryPage = ({
   soldiers,
+  translateSoldiersMap,
 }: PropsWithRef<{
   soldiers: Soldier[];
-  translateSoldiersMap: TranslateSoldiersMap;
+  translateSoldiersMap: TranslateSoldiersLanguageMap;
 }>) => (
   <Layout>
-    <SoldierPage soldiers={soldiers} />
+    <SoldierTranslateWrapper translateMap={translateSoldiersMap}>
+      <SoldierPage soldiers={soldiers} />
+    </SoldierTranslateWrapper>
   </Layout>
 );
 

@@ -5,30 +5,43 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import {
+  TranslateSoldiers,
+  TranslateSoldiersLanguageMap,
+} from "../../types/hero";
+import { useLanguageSwitchContext } from "./LanguageSwitchContext";
 
 export interface SoldierTranslateContextInterface {
-  language: string;
-  setLanguage: (arg0: string) => void;
+  translateMap: TranslateSoldiersLanguageMap;
+  getSoldierInfo: (name: string) => TranslateSoldiers;
 }
 export const SoldierTranslateContext =
   createContext<SoldierTranslateContextInterface>(
     {} as SoldierTranslateContextInterface
   );
 
-export function SoldierTranslateWrapper({ children }: PropsWithChildren<{}>) {
-  const [language, setLanguage] = useState("english");
+export function SoldierTranslateWrapper({
+  translateMap,
+  children,
+}: PropsWithChildren<{ translateMap: TranslateSoldiersLanguageMap }>) {
+  const { language } = useLanguageSwitchContext();
 
-  useEffect(() => {
-    const lang = localStorage.getItem("language");
-    if (lang) setLanguage(lang);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("language", language);
-  }, [language]);
-
+  const getSoldierInfo = (name: string): TranslateSoldiers => {
+    try {
+      return translateMap[language][name];
+    } catch (e) {
+      return translateMap["english"][name];
+    } finally {
+      if (!translateMap[language][name] && !translateMap["english"][name]) {
+        return {
+          name: "text not found",
+          effect: "text not found",
+        };
+      }
+    }
+  };
   return (
-    <SoldierTranslateContext.Provider value={{ language, setLanguage }}>
+    <SoldierTranslateContext.Provider value={{ translateMap, getSoldierInfo }}>
       {children}
     </SoldierTranslateContext.Provider>
   );

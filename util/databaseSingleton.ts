@@ -46,7 +46,7 @@ export class DBSingleton {
     english : {
       "Guardian Infantry": {
         name: "Guardian Infantry",
-        effect: "Guardian Infantry",
+        effect: "Guardian Infantry effect",
       },
     }
   };
