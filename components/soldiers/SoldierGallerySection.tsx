@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { TranslateSoldiersMap, Soldier } from "../../types/hero";
+import React, {useState } from "react";
+import {  Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
-import { TranslateSoldiersLoader } from "../../util/loaders/TranslateSoldiersLoader";
 import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {

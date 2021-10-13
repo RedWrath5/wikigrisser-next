@@ -1,5 +1,5 @@
 import React, { PropsWithRef } from "react";
-import {TranslateSoldiersMap, Soldier, TranslateSoldiersLanguageMap} from "../types/hero";
+import { Soldier, TranslateSoldiersLanguageMap} from "../types/hero";
 import { DBSingleton } from "../util/databaseSingleton";
 import { Layout } from "../components/Layout";
 import { SoldierPage } from "../components/soldiers/SoldierPage";

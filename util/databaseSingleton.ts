@@ -1,7 +1,6 @@
 import XLSX from "xlsx";
 import {
   Hero,
-  TranslateSoldiersMap,
   Soldier,
   TranslateSoldiersLanguageMap,
 } from "../types/hero";

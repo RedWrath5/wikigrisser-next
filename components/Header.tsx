@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { PropsWithRef, useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { MenuItem, Select } from "@material-ui/core";
 import { useLanguageSwitchContext } from "./context/LanguageSwitchContext";
 

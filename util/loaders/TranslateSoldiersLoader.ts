@@ -10,19 +10,4 @@ export class TranslateSoldiersLoader extends Loader<TranslateSoldiersMap> {
       },
     };
   }
-  /*
-  static getLangText = (
-    language: string,
-    type: string,
-    key: string,
-    field: string,
-    langMap: TranslateSoldiersMap
-  ) => {
-    try {
-      // @ts-ignore
-      return langMap[language][type][key][field];
-    } catch (e) {
-      return null;
-    }
-  };*/
 }

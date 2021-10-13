@@ -5,7 +5,6 @@ import "tailwindcss/tailwind.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../styles.css";
 import {
-  LanguageSwitchContext,
   LanguageSwitchContextWrapper,
 } from "../components/context/LanguageSwitchContext";
 
