@@ -1,41 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LanguageMap, Soldier } from "../../types/hero";
+import { TranslateSoldiersMap, Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
-import { LanguageLoader } from "../../util/loaders/LanguageLoader";
-import { LangContext } from "../Layout";
+import { TranslateSoldiersLoader } from "../../util/loaders/TranslateSoldiersLoader";
+
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
   const [name, setName] = useState(soldier.name);
   const [effect, setEffect] = useState(soldier.effect);
 
-  const { langMode, langMap } = useContext(LangContext);
-
-  useEffect(() => {
-    if (langMode === "english") {
-      setName(soldier.name);
-      setEffect(soldier.effect);
-    } else {
-      const name = LanguageLoader.getLangText(
-        langMode,
-        "soldiers",
-        soldier.name,
-        "name",
-        langMap
-      );
-      if (name) setName(name);
-
-      const effect = LanguageLoader.getLangText(
-        langMode,
-        "soldiers",
-        soldier.name,
-        "effect",
-        langMap
-      );
-      if (effect) setEffect(effect);
-    }
-  }, [langMode]); // should be lang here
 
   const handleShowMoreButton = () => {
     setShowMore(!showMore);

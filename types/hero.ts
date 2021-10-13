@@ -186,17 +186,15 @@ export interface TrainingMaterial {
   count: string;
 }
 
-export interface LanguageMap {
-  [key: string]: Language;
+export interface TranslateSoldiersLanguageMap {
+  [key: string]: TranslateSoldiersMap;
 }
 
-export interface Language {
-  soldiers: {
-    [key: string]: SoldierLang;
-  };
+export interface TranslateSoldiersMap {
+    [key: string]: TranslateSoldiers;
 }
 
-export interface SoldierLang {
+export interface TranslateSoldiers {
   name: string;
   effect: string;
 }

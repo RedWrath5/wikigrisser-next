@@ -1,26 +1,28 @@
 import React, { PropsWithRef } from "react";
-import { LanguageMap, Soldier } from "../types/hero";
+import { TranslateSoldiersMap, Soldier } from "../types/hero";
 import { DBSingleton } from "../util/databaseSingleton";
 import { Layout } from "../components/Layout";
 import { SoldierPage } from "../components/soldiers/SoldierPage";
 
 const SoldierGalleryPage = ({
   soldiers,
-  langMap,
-}: PropsWithRef<{ soldiers: Soldier[]; langMap: LanguageMap }>) => (
-  <Layout langMap={langMap}>
-    <SoldierPage soldiers={soldiers}></SoldierPage>
+}: PropsWithRef<{
+  soldiers: Soldier[];
+  translateSoldiersMap: TranslateSoldiersMap;
+}>) => (
+  <Layout>
+    <SoldierPage soldiers={soldiers} />
   </Layout>
 );
 
 export const getStaticProps = async () => {
   var workbook = DBSingleton.getInstance();
   const soldiers = workbook.getSoldiers();
-  const langMap = workbook.getLang();
+  const translateSoldiersMap = workbook.getTranslateSoldiersMap();
   return {
     props: {
       soldiers,
-      langMap,
+      translateSoldiersMap,
     },
   };
 };

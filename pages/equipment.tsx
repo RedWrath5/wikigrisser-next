@@ -8,7 +8,7 @@ const EquipmentGalleryPage = ({
   equipment,
 }: PropsWithRef<{ equipment: Equipment[] }>) => (
   <Layout>
-    <EquipmentPage equipment={equipment}></EquipmentPage>
+    <EquipmentPage equipment={equipment}/>
   </Layout>
 );
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { PropsWithRef, useContext, useEffect, useState } from "react";
 import { MenuItem, Select } from "@material-ui/core";
-import { LangContext } from "./Layout";
+import { useLanguageSwitchContext } from "./context/LanguageSwitchContext";
 
 export function Header() {
   // https://ttntm.me/blog/tailwind-responsive-menu/
@@ -18,17 +18,15 @@ export function Header() {
         header?.classList.remove("pt-scroll");
       }
     });
-    const lang = localStorage.getItem("lang");
-    if (lang) setLangMode(lang);
   }, []);
 
-  const { langMode, setLangMode } = useContext(LangContext);
+  const languages = ["english", "russian"];
+  const { language, setLanguage } = useLanguageSwitchContext();
 
   const handleChangeLanguage = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
-    localStorage.setItem("lang", event.target.value as string);
-    setLangMode(event.target.value as string);
+    setLanguage(event.target.value as string);
   };
 
   function navToggle() {
@@ -40,7 +38,6 @@ export function Header() {
     nav?.classList.toggle("hidden");
   }
 
-  const languages = ["english", "russian"];
   return (
     <header
       id="top"
@@ -80,7 +77,7 @@ export function Header() {
             </Link>
           ))}
           <Select
-            value={langMode}
+            value={language}
             onChange={handleChangeLanguage}
             className="text-white"
           >
