@@ -1,16 +1,12 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-} from "react";
+import React, { createContext, PropsWithChildren, useContext } from "react";
+import { useLanguageSwitchContext } from "./LanguageSwitchContext";
+import { SoldierMap } from "../../util/databaseSingleton";
 import {
   TranslateSoldiers,
   TranslateSoldiersLanguageMap,
-} from "../../types/hero";
-import { useLanguageSwitchContext } from "./LanguageSwitchContext";
+} from "../../types/translate";
 
 export interface SoldierTranslateContextInterface {
-  translateMap: TranslateSoldiersLanguageMap;
   getSoldierInfo: (name: string) => TranslateSoldiers;
 }
 export const SoldierTranslateContext =
@@ -20,26 +16,32 @@ export const SoldierTranslateContext =
 
 export function SoldierTranslateWrapper({
   translateMap,
+  soldierMap,
   children,
-}: PropsWithChildren<{ translateMap: TranslateSoldiersLanguageMap }>) {
+}: PropsWithChildren<{
+  translateMap: TranslateSoldiersLanguageMap;
+  soldierMap: SoldierMap;
+}>) {
   const { language } = useLanguageSwitchContext();
 
   const getSoldierInfo = (name: string): TranslateSoldiers => {
-    try {
+    if (translateMap[language] && translateMap[language][name])
       return translateMap[language][name];
-    } catch (e) {
-      return translateMap["english"][name];
-    } finally {
-      if (!translateMap[language][name] && !translateMap["english"][name]) {
+    else {
+      if (soldierMap[name])
         return {
-          name: "text not found",
-          effect: "text not found",
+          name: soldierMap[name].name,
+          effect: soldierMap[name].effect,
         };
-      }
     }
+    // Just for TS check. He dont know, we always find what we need.
+    return {
+      name: "",
+      effect: "",
+    };
   };
   return (
-    <SoldierTranslateContext.Provider value={{ translateMap, getSoldierInfo }}>
+    <SoldierTranslateContext.Provider value={{ getSoldierInfo }}>
       {children}
     </SoldierTranslateContext.Provider>
   );

@@ -1,9 +1,5 @@
 import XLSX from "xlsx";
-import {
-  Hero,
-  Soldier,
-  TranslateSoldiersLanguageMap,
-} from "../types/hero";
+import { Hero, Soldier } from "../types/hero";
 import { ClassesLoader } from "./loaders/ClassesLoader";
 import { EquipmentLoader } from "./loaders/EquipmentLoader";
 import { HeroLoader } from "./loaders/HeroLoader";
@@ -14,6 +10,11 @@ import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
 import { TranslateSoldiersLoader } from "./loaders/TranslateSoldiersLoader";
+import {
+  TranslateSkillsLanguageMap,
+  TranslateSoldiersLanguageMap,
+} from "../types/translate";
+import { TranslateSkillsLoader } from "./loaders/TranslateSkillsLoader";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -27,6 +28,7 @@ export class DBSingleton {
   }
 
   private workBook = XLSX.readFile("data/database.xlsx");
+  private russian = XLSX.readFile("data/russian.xlsx");
   private skillsMap = new SkillsLoader(this.workBook).load();
   private maxStats = new MaxStatsLoader(this.workBook).load();
   private classesMap = new ClassesLoader(this.workBook).load();
@@ -41,13 +43,10 @@ export class DBSingleton {
   private training = new TrainingLoader(this.workBook).load();
   private soldier = new SoldierLoader(this.workBook, this.training).load();
   private translateSoldiersMap: TranslateSoldiersLanguageMap = {
-    russian: new TranslateSoldiersLoader(this.workBook).load(),
-    english : {
-      "Guardian Infantry": {
-        name: "Guardian Infantry",
-        effect: "Guardian Infantry effect",
-      },
-    }
+    russian: new TranslateSoldiersLoader(this.russian).load(),
+  };
+  private translateSkillsMap: TranslateSkillsLanguageMap = {
+    russian: new TranslateSkillsLoader(this.russian).load(),
   };
 
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
@@ -82,12 +81,22 @@ export class DBSingleton {
     return this.soldier;
   }
 
+  getSoldierMap(): SoldierMap {
+    const soldierMap: SoldierMap = {};
+    this.soldier.map((v) => (soldierMap[v.name] = v));
+    return soldierMap;
+  }
+
   getTraining() {
     return this.training;
   }
 
   getTranslateSoldiersMap() {
     return this.translateSoldiersMap;
+  }
+
+  getTranslateSkillsMap() {
+    return this.translateSkillsMap;
   }
 }
 

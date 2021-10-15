@@ -1,4 +1,4 @@
-import { Material } from "./spreedsheet";
+import {Material} from "./spreedsheet";
 
 export interface Hero {
   name: string;
@@ -186,15 +186,3 @@ export interface TrainingMaterial {
   count: string;
 }
 
-export interface TranslateSoldiersLanguageMap {
-  [key: string]: TranslateSoldiersMap;
-}
-
-export interface TranslateSoldiersMap {
-    [key: string]: TranslateSoldiers;
-}
-
-export interface TranslateSoldiers {
-  name: string;
-  effect: string;
-}
