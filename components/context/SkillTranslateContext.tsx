@@ -1,8 +1,7 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
-
 import { useLanguageSwitchContext } from "./LanguageSwitchContext";
-import { SoldierMap } from "../../util/databaseSingleton";
 import { TranslateSkills, TranslateSkillsMap } from "../../types/translate";
+import { SkillsMap } from "../../types/hero";
 
 export interface SkillTranslateContextInterface {
   getSkillInfo: (name: string) => TranslateSkills;
@@ -13,23 +12,28 @@ export const SkillTranslateContext =
   );
 
 export function SkillTranslateWrapper({
+  translateMap,
+  skillsMap,
   children,
 }: PropsWithChildren<{
   translateMap: TranslateSkillsMap;
-  soldierMap: SoldierMap;
+  skillsMap: SkillsMap;
 }>) {
   const { language } = useLanguageSwitchContext();
 
-  const getSkillInfo = (name: string): TranslateSkills => {
-    /*  if (translateMap[language] && translateMap[language][name])
+  const getSkillInfo = (name: string | number): TranslateSkills => {
+    // No idea how to handle it atm. I guess you want refactor it anyway,
+    // @ts-ignore
+    if (translateMap[language] && translateMap[language][name])
+      // @ts-ignore
       return translateMap[language][name];
     else {
-      if (soldierMap[name])
+      if (skillsMap[name])
         return {
-          name: soldierMap[name].name,
-          effect: soldierMap[name].effect,
+          name: skillsMap[name].name,
+          description: skillsMap[name].description || "",
         };
-    }*/
+    }
     // Just for TS check. He dont know, we always find what we need.
     return {
       name: "",

@@ -1,6 +1,6 @@
-import { WorkBook } from "xlsx/types";
-import { Skill } from "../../types/hero";
-import { Loader } from "./Loader";
+import {WorkBook} from "xlsx/types";
+import {Skill, SkillsMap} from "../../types/hero";
+import {Loader} from "./Loader";
 
 export class SkillsLoader extends Loader<SkillsMap> {
   constructor(workBook: WorkBook) {
@@ -39,6 +39,3 @@ export class SkillsLoader extends Loader<SkillsMap> {
   }
 }
 
-export interface SkillsMap {
-  [name: string]: Skill;
-}

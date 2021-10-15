@@ -1,25 +1,33 @@
 import React from "react";
 import { Layout } from "../../components/Layout";
-import { Hero } from "../../types/hero";
+import {Hero, SkillsMap} from "../../types/hero";
 import { HeroComponent } from "../../components/heroes/HeroComponent";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { DBSingleton, SkillToHeroMap } from "../../util/databaseSingleton";
 import skillToHeroContext from "../../util/skillToHeroContext";
+import { SkillTranslateWrapper } from "../../components/context/SkillTranslateContext";
+import { TranslateSkillsMap } from "../../types/translate";
 
 const HeroPage = ({
   heroData,
+  skillsMap,
+  translateMap,
   skillsToHeroMap,
 }: {
   heroData: Hero;
+  skillsMap: SkillsMap;
+  translateMap: TranslateSkillsMap;
   skillsToHeroMap: SkillToHeroMap;
 }) => {
   return (
     <>
-      <skillToHeroContext.Provider value={skillsToHeroMap}>
-        <Layout>
-          <HeroComponent hero={heroData}></HeroComponent>
-        </Layout>
-      </skillToHeroContext.Provider>
+      <SkillTranslateWrapper translateMap={translateMap} skillsMap={skillsMap}>
+        <skillToHeroContext.Provider value={skillsToHeroMap}>
+          <Layout>
+            <HeroComponent hero={heroData}></HeroComponent>
+          </Layout>
+        </skillToHeroContext.Provider>
+      </SkillTranslateWrapper>
     </>
   );
 };
@@ -42,6 +50,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const heroes = DBSingleton.getInstance().getHeroesMap();
   const skillsToHeroMap = DBSingleton.getInstance().getSkillsToHeroMap();
+  const translateMap = DBSingleton.getInstance().getTranslateSkillsMap();
+  const skillsMap = DBSingleton.getInstance().getSkillsMap();
 
   const name = context.params?.name as string;
   const heroData: Hero = heroes[name];
@@ -49,6 +59,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       heroData,
       skillsToHeroMap,
+      translateMap,
+      skillsMap,
     },
   };
 };

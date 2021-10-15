@@ -1,6 +1,7 @@
 import React from "react";
 import { Skill } from "../../types/hero";
 import { SkillIcon } from "./SkillIcon";
+import { useSkillTranslateContext } from "../context/SkillTranslateContext";
 
 export function SkillSection({
   skill,
@@ -9,6 +10,8 @@ export function SkillSection({
   skill: Skill;
   isAwakening?: boolean;
 }) {
+  const { getSkillInfo } = useSkillTranslateContext();
+  const { name, description } = getSkillInfo(skill.name);
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2">
       <div className="col-span-12 text-center sm:col-span-1">
@@ -17,13 +20,13 @@ export function SkillSection({
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
         <p className="text-2xl">
           {isAwakening && "Awakening: "}
-          {skill.name}
+          {name}
         </p>
         <p>
           Cost: {skill.cost} / CD:{skill.cd} / Range:{skill.range} / Span:
           {skill.span}
         </p>
-        <p className="whitespace-pre-line">{skill.description}</p>
+        <p className="whitespace-pre-line">{description}</p>
       </div>
     </div>
   );

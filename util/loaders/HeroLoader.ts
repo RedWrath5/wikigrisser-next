@@ -1,22 +1,21 @@
 import { WorkBook } from "xlsx/types";
 import {
-  BondRequirements,
-  Class,
-  Equipment,
-  Factions,
-  Hero,
-  Skill,
-  SoldierBonus,
-  SPClass,
-  Talent,
-  UnitType,
+    BondRequirements,
+    Class,
+    Equipment,
+    Factions,
+    Hero,
+    Skill, SkillsMap,
+    SoldierBonus,
+    SPClass,
+    Talent,
+    UnitType,
 } from "../../types/hero";
 import { MaxStatsWorkbookRow } from "../../types/spreedsheet";
 import { HERO_COLUMN_HEADERS, HERO_COLUMN_IDS } from "../columnHeaders";
 import { HeroMap } from "../databaseSingleton";
 import { ClassesMap } from "./ClassesLoader";
 import { Loader } from "./Loader";
-import { SkillsMap } from "./SkillsLoader";
 
 export class HeroLoader extends Loader<HeroMap> {
   constructor(

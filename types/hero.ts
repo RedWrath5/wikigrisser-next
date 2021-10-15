@@ -186,3 +186,6 @@ export interface TrainingMaterial {
   count: string;
 }
 
+export interface SkillsMap {
+    [name: string]: Skill;
+}

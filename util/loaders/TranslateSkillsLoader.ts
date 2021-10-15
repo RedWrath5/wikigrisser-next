@@ -14,6 +14,7 @@ export class TranslateSkillsLoader extends Loader<TranslateSkillsMap> {
     let notDone = true;
 
     while (notDone) {
+      //@ts-ignore lets fix it later
       translateSkillsMap[sheet["A" + rowCounter]?.v] = {
         name: sheet["B" + rowCounter]?.v || null,
         description: sheet["C" + rowCounter]?.v || null,

@@ -15,9 +15,9 @@ export interface TranslateSkillsLanguageMap {
   [key: string]: TranslateSkillsMap;
 }
 
-export interface TranslateSkillsMap {
-  [key: string]: TranslateSkills;
-}
+export type TranslateSkillsMap = {
+  [key in string | number]: TranslateSkills;
+};
 
 export interface TranslateSkills {
   name: string;
