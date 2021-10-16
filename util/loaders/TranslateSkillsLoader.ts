@@ -1,20 +1,22 @@
 import { Loader } from "./Loader";
 import { WorkBook } from "xlsx";
 import { TranslateSkillsMap } from "../../types/translate";
+import { SkillsMap } from "../../types/hero";
 
-export class TranslateSkillsLoader extends Loader<TranslateSkillsMap> {
+export class TranslateSkillsLoader extends Loader<
+  TranslateSkillsMap<SkillsMap>
+> {
   constructor(workBook: WorkBook) {
     super(workBook);
   }
 
-  load(): TranslateSkillsMap {
+  load(): TranslateSkillsMap<SkillsMap> {
     const sheet = this.workBook.Sheets.Skills;
-    const translateSkillsMap: TranslateSkillsMap = {};
+    const translateSkillsMap: TranslateSkillsMap<SkillsMap> = {};
     let rowCounter = 2;
     let notDone = true;
 
     while (notDone) {
-      //@ts-ignore lets fix it later
       translateSkillsMap[sheet["A" + rowCounter]?.v] = {
         name: sheet["B" + rowCounter]?.v || null,
         description: sheet["C" + rowCounter]?.v || null,

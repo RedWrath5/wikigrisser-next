@@ -1,6 +1,6 @@
 import XLSX from "xlsx";
 import { Hero, Soldier } from "../types/hero";
-import { ClassesLoader } from "./loaders/ClassesLoader";
+import {ClassesLoader, ClassesMap} from "./loaders/ClassesLoader";
 import { EquipmentLoader } from "./loaders/EquipmentLoader";
 import { HeroLoader } from "./loaders/HeroLoader";
 import { MaxStatsLoader } from "./loaders/MaxStatsLoader";
@@ -45,7 +45,7 @@ export class DBSingleton {
   private translateSoldiersMap: TranslateSoldiersLanguageMap = {
     russian: new TranslateSoldiersLoader(this.russian).load(),
   };
-  private translateSkillsMap: TranslateSkillsLanguageMap = {
+  private translateSkillsMap: TranslateSkillsLanguageMap<ClassesMap> = {
     russian: new TranslateSkillsLoader(this.russian).load(),
   };
 

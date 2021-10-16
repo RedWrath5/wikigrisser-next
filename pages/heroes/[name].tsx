@@ -1,12 +1,14 @@
 import React from "react";
 import { Layout } from "../../components/Layout";
-import {Hero, SkillsMap} from "../../types/hero";
+import { Hero, SkillsMap } from "../../types/hero";
 import { HeroComponent } from "../../components/heroes/HeroComponent";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { DBSingleton, SkillToHeroMap } from "../../util/databaseSingleton";
 import skillToHeroContext from "../../util/skillToHeroContext";
 import { SkillTranslateWrapper } from "../../components/context/SkillTranslateContext";
-import { TranslateSkillsMap } from "../../types/translate";
+import {
+  TranslateSkillsLanguageMap,
+} from "../../types/translate";
 
 const HeroPage = ({
   heroData,
@@ -16,7 +18,7 @@ const HeroPage = ({
 }: {
   heroData: Hero;
   skillsMap: SkillsMap;
-  translateMap: TranslateSkillsMap;
+  translateMap: TranslateSkillsLanguageMap<SkillsMap>;
   skillsToHeroMap: SkillToHeroMap;
 }) => {
   return (

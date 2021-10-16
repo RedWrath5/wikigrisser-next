@@ -11,12 +11,12 @@ export interface TranslateSoldiers {
   effect: string;
 }
 
-export interface TranslateSkillsLanguageMap {
-  [key: string]: TranslateSkillsMap;
+export interface TranslateSkillsLanguageMap<T> {
+  [key: string]: TranslateSkillsMap<T>;
 }
 
-export type TranslateSkillsMap = {
-  [key in string | number]: TranslateSkills;
+export type TranslateSkillsMap<T> = {
+  [key in keyof T]: TranslateSkills;
 };
 
 export interface TranslateSkills {
