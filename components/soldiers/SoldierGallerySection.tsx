@@ -1,8 +1,9 @@
-import React, {useState } from "react";
-import {  Soldier } from "../../types/hero";
+import React, { useState } from "react";
+import { Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
 import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
+import { ArrowCircleDown, ArrowCircleUp } from "@material-ui/icons";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
@@ -38,15 +39,12 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
       <div className="flex justify-center col-span-12 border-t-2 border-black border-solid mt-6">
         {soldier.trainingSkill && (
           <button onClick={handleShowMoreButton} className="">
-            <img
-              src="ui/arrow_down.svg"
-              alt="arrow image"
-              className={
-                showMore
-                  ? "transform -rotate-180 bg-white -mt-6"
-                  : "bg-white -mt-6"
-              }
-            />
+
+            {!showMore ? (
+              <ArrowCircleDown className="-mt-6 bg-white" style={{fontSize: '2.25rem'}} />
+            ) : (
+              <ArrowCircleUp className="text-4xl -mt-6 bg-white" style={{fontSize: '2.25rem'}} />
+            )}
           </button>
         )}
       </div>
