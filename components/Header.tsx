@@ -68,7 +68,7 @@ export function Header() {
               </div>
             </Link>
           ))}
-          <div onClick={() => setShowSettings(!showSettings)}>
+          <div onClick={() => setShowSettings(!showSettings)} className="self-start sm:self-center">
             <svg
               className="fill-current text-gray-300 hover:text-white cursor-pointer text-left"
               xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ function SettingsMenu() {
   };
 
   return (
-    <div className="rounded bg-white px-2 ml-0 mt-2 sm:ml-2 sm:mt-0">
+    <div className="rounded bg-white px-2 ml-0 mt-2 sm:ml-2 sm:mt-0 self-start">
       <Select value={language} onChange={handleChangeLanguage}>
         {languages.map((v) => (
           <MenuItem key={v.key} value={v.key}>
