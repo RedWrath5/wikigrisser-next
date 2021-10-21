@@ -1,6 +1,6 @@
 import XLSX from "xlsx";
-import { Hero, Soldier } from "../types/hero";
-import {ClassesLoader, ClassesMap} from "./loaders/ClassesLoader";
+import { Hero, SkillsMap, Soldier } from "../types/hero";
+import { ClassesLoader, ClassesMap } from "./loaders/ClassesLoader";
 import { EquipmentLoader } from "./loaders/EquipmentLoader";
 import { HeroLoader } from "./loaders/HeroLoader";
 import { MaxStatsLoader } from "./loaders/MaxStatsLoader";
@@ -11,10 +11,13 @@ import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
 import { TranslateSoldiersLoader } from "./loaders/TranslateSoldiersLoader";
 import {
+  TranslateHeroLanguageMap,
   TranslateSkillsLanguageMap,
+  TranslateSkillsMap,
   TranslateSoldiersLanguageMap,
 } from "../types/translate";
 import { TranslateSkillsLoader } from "./loaders/TranslateSkillsLoader";
+import { TranslateHeroLoader } from "./loaders/TranslateHeroLoader";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -48,7 +51,9 @@ export class DBSingleton {
   private translateSkillsMap: TranslateSkillsLanguageMap<ClassesMap> = {
     russian: new TranslateSkillsLoader(this.russian).load(),
   };
-
+  private translateHeroMap: TranslateHeroLanguageMap<HeroMap> = {
+    russian: new TranslateHeroLoader(this.russian).load(),
+  };
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
   constructor() {}
@@ -87,6 +92,18 @@ export class DBSingleton {
     return soldierMap;
   }
 
+  get3cSkillsMap(): TranslateSkillsMap<SkillsMap> {
+    return Object.keys(this.heroMap).reduce((accumulator, key) => {
+      if (this.heroMap[key].threeCostSkill) {
+        accumulator[this.heroMap[key].threeCostSkill?.name as string] = {
+          name: this.heroMap[key].threeCostSkill?.name as string,
+          description: this.heroMap[key].threeCostSkill?.description as string,
+        };
+      }
+      return accumulator;
+    }, {} as TranslateSkillsMap<SkillsMap>);
+  }
+
   getTraining() {
     return this.training;
   }
@@ -97,6 +114,10 @@ export class DBSingleton {
 
   getTranslateSkillsMap() {
     return this.translateSkillsMap;
+  }
+
+  getTranslateHeroMap() {
+    return this.translateHeroMap;
   }
 }
 

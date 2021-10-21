@@ -1,11 +1,13 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
 import { useLanguageSwitchContext } from "./LanguageSwitchContext";
 import {
+  TranslateHeroLanguageMap,
   TranslateSkills,
   TranslateSkillsLanguageMap,
   TranslateSkillsMap,
 } from "../../types/translate";
 import { SkillsMap } from "../../types/hero";
+import { HeroMap } from "../../util/databaseSingleton";
 
 export interface SkillTranslateContextInterface {
   getSkillInfo: (name: string) => TranslateSkills;
@@ -16,12 +18,16 @@ export const SkillTranslateContext =
   );
 
 export function SkillTranslateWrapper({
+  threeCostSkillMap,
+  translateHeroMap,
   translateMap,
   skillsMap,
   children,
 }: PropsWithChildren<{
   translateMap: TranslateSkillsLanguageMap<SkillsMap>;
   skillsMap: SkillsMap;
+  threeCostSkillMap: TranslateSkillsMap<SkillsMap>;
+  translateHeroMap: TranslateHeroLanguageMap<HeroMap>;
 }>) {
   const { language } = useLanguageSwitchContext();
 
@@ -33,6 +39,11 @@ export function SkillTranslateWrapper({
         return {
           name: skillsMap[name].name,
           description: skillsMap[name].description || "",
+        };
+      else if (threeCostSkillMap[name])
+        return {
+          name: threeCostSkillMap[name].name,
+          description: threeCostSkillMap[name].description || "",
         };
     }
     // Just for TS check. He dont know, we always find what we need.

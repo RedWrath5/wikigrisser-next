@@ -17,13 +17,14 @@ export class TranslateSkillsLoader extends Loader<
     let notDone = true;
 
     while (notDone) {
-      translateSkillsMap[sheet["A" + rowCounter]?.v] = {
-        name: sheet["B" + rowCounter]?.v || null,
-        description: sheet["C" + rowCounter]?.v || null,
-      };
+      translateSkillsMap[this.getCellValue(sheet["A" + rowCounter]) as string] =
+        {
+          name: this.getCellValue(sheet["B" + rowCounter]) as string,
+          description: this.getCellValue(sheet["C" + rowCounter]) as string,
+        };
       rowCounter++;
 
-      if (!sheet["A" + rowCounter]?.v) {
+      if (!this.getCellValue(sheet["A" + rowCounter])) {
         notDone = false;
       }
     }
