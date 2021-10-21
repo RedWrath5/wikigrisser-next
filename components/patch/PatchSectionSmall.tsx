@@ -7,8 +7,8 @@ export function PatchSectionSmall({ patch }: { patch: Patch }) {
       <img
         src={"/banners/" + patch.id + ".png"}
         className="inline col-span-2 md:col-span-1 justify-self-center md:justify-self-end pb-2 md:pb-0"
-        width={200}
-        height={100}
+        width={400}
+        height={200}
       ></img>
       <div className="whitespace-pre-line text-sm font- pl-4 col-span-2 md:col-span-1">
         {patch.info}
