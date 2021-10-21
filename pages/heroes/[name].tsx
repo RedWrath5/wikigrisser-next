@@ -7,44 +7,57 @@ import {
   DBSingleton,
   HeroMap,
   SkillToHeroMap,
+  SoldierMap,
 } from "../../util/databaseSingleton";
 import skillToHeroContext from "../../util/skillToHeroContext";
-import { SkillTranslateWrapper } from "../../components/context/SkillTranslateContext";
+import { HeroTranslateWrapper } from "../../components/context/HeroTranslateContext";
 import {
   TranslateHeroLanguageMap,
   TranslateSkillsLanguageMap,
   TranslateSkillsMap,
+  TranslateSoldiersLanguageMap,
 } from "../../types/translate";
+import { SoldierTranslateWrapper } from "../../components/context/SoldierTranslateContext";
 
 const HeroPage = ({
   heroData,
   skillsMap,
+  soldierMap,
   translateMap,
   skillsToHeroMap,
   translateHeroMap,
   threeCostSkillMap,
+  translateSoldiersMap,
 }: {
   heroData: Hero;
   skillsMap: SkillsMap;
-  translateMap: TranslateSkillsLanguageMap<SkillsMap>;
+  soldierMap: SoldierMap;
   skillsToHeroMap: SkillToHeroMap;
   threeCostSkillMap: TranslateSkillsMap<SkillsMap>;
+  translateSoldiersMap: TranslateSoldiersLanguageMap;
+  translateMap: TranslateSkillsLanguageMap<SkillsMap>;
   translateHeroMap: TranslateHeroLanguageMap<HeroMap>;
 }) => {
   return (
     <>
-      <SkillTranslateWrapper
-        translateMap={translateMap}
+      <HeroTranslateWrapper
+        translateSkillMap={translateMap}
         skillsMap={skillsMap}
         translateHeroMap={translateHeroMap}
         threeCostSkillMap={threeCostSkillMap}
+        hero={heroData}
       >
-        <skillToHeroContext.Provider value={skillsToHeroMap}>
-          <Layout>
-            <HeroComponent hero={heroData}></HeroComponent>
-          </Layout>
-        </skillToHeroContext.Provider>
-      </SkillTranslateWrapper>
+        <SoldierTranslateWrapper
+          translateMap={translateSoldiersMap}
+          soldierMap={soldierMap}
+        >
+          <skillToHeroContext.Provider value={skillsToHeroMap}>
+            <Layout>
+              <HeroComponent hero={heroData}></HeroComponent>
+            </Layout>
+          </skillToHeroContext.Provider>
+        </SoldierTranslateWrapper>
+      </HeroTranslateWrapper>
     </>
   );
 };
@@ -72,17 +85,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const skillsMap = db.getSkillsMap();
   const threeCostSkillMap = db.get3cSkillsMap();
   const translateHeroMap = db.getTranslateHeroMap();
+  const translateSoldiersMap = db.getTranslateSoldiersMap();
+  const soldierMap = db.getSoldierMap();
 
   const name = context.params?.name as string;
   const heroData: Hero = heroes[name];
   return {
     props: {
       heroData,
-      skillsToHeroMap,
-      translateMap,
       skillsMap,
-      threeCostSkillMap,
+      soldierMap,
+      translateMap,
+      skillsToHeroMap,
       translateHeroMap,
+      threeCostSkillMap,
+      translateSoldiersMap,
     },
   };
 };

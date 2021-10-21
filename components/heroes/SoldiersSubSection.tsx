@@ -1,4 +1,5 @@
 import { Class } from "../../types/hero";
+import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
 
 export function SoldiersSubSection({
   heroClass,
@@ -12,6 +13,9 @@ export function SoldiersSubSection({
   let flagUrl = "/unitTypeFlag/" + heroClass.heroType + ".png";
   if (isStarting) flagUrl = "/unitTypeFlag/Aniki.png";
   if (isSpClass) flagUrl = "/unitTypeFlag/" + heroClass.heroType + " SP.png";
+
+  const { getSoldierInfo } = useSoldierTranslateContext();
+
   return (
     <>
       {heroClass.soldiers.length > 0 && (
@@ -33,12 +37,15 @@ export function SoldiersSubSection({
             </p>
             <p>
               Soldiers:{" "}
-              {heroClass.soldiers.map((soldier, index) => (
-                <span key={soldier}>
-                  {soldier}
-                  {index < heroClass.soldiers.length - 1 && ", "}
-                </span>
-              ))}
+              {heroClass.soldiers.map(function (soldier, index) {
+                const { name } = getSoldierInfo(soldier);
+                return (
+                  <span key={soldier}>
+                    {name}
+                    {index < heroClass.soldiers.length - 1 && ", "}
+                  </span>
+                );
+              })}
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Skill } from "../../types/hero";
 import { SkillIcon } from "./SkillIcon";
-import { useSkillTranslateContext } from "../context/SkillTranslateContext";
+import { useHeroTranslateContext } from "../context/HeroTranslateContext";
 
 export function SkillSection({
   skill,
@@ -10,7 +10,7 @@ export function SkillSection({
   skill: Skill;
   isAwakening?: boolean;
 }) {
-  const { getSkillInfo } = useSkillTranslateContext();
+  const { getSkillInfo } = useHeroTranslateContext();
   const { name, description } = getSkillInfo(skill.name);
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2">

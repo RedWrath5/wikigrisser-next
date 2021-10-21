@@ -248,7 +248,7 @@ export class HeroLoader extends Loader<HeroMap> {
       this.getHeroRowValue(
         rowNumber,
         heroColumnMappings.trainingGroundUnlocks
-      )?.split(",") || [];
+      )?.split(",").map(v=>v.trim()) || [];
     const name = this.getHeroRowValue(
       rowNumber,
       heroColumnMappings.startingClassName

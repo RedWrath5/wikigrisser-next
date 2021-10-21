@@ -44,6 +44,19 @@ export interface TranslateHero {
   bond3: string;
   bond4: string;
   bond5: string;
-  uniqueEquipmentName: string;
-  uniqueEquipmentDescription: string;
+}
+
+// Equipment
+
+export interface TranslateEquipmentLanguageMap {
+  [key: string]: TranslateEquipmentMap;
+}
+
+export interface TranslateEquipmentMap {
+  [key: string]: TranslateEquipment;
+}
+
+export interface TranslateEquipment {
+  name: string;
+  description: string;
 }

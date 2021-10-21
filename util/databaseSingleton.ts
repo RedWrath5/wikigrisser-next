@@ -56,7 +56,9 @@ export class DBSingleton {
   };
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
-  constructor() {}
+  constructor() {
+    console.log(this.heroMap,"this.heroMap");
+  }
 
   getWorkBook() {
     return this.workBook;

@@ -1,10 +1,10 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
+import { useHeroTranslateContext } from "../context/HeroTranslateContext";
 
 export function TalentSection({
   hero: {
     factions,
-    talent,
     name,
     prettyName,
     startingClass,
@@ -15,6 +15,10 @@ export function TalentSection({
 }: {
   hero: Hero;
 }) {
+  const { getHeroInfo } = useHeroTranslateContext();
+  const { talentName, talentDescription, bond2, bond3, bond4, bond5 } =
+    getHeroInfo(name);
+
   let maxStats = findMaxStats(startingClass);
   if (spClass)
     maxStats = maxStats.concat({
@@ -52,8 +56,8 @@ export function TalentSection({
         )}
       </div>
       <div className="col-span-12 sm:col-span-9 pt-2">
-        <p className="text-2xl">Talent: {talent?.name}</p>
-        <p className="whitespace-pre-line">{talent?.description}</p>
+        <p className="text-2xl">Talent: {talentName}</p>
+        <p className="whitespace-pre-line">{talentDescription}</p>
         {spClass && (
           <>
             <p className="text-2xl mt-3">SP Talent: {spClass.talent?.name}</p>
@@ -64,17 +68,17 @@ export function TalentSection({
           <>
             <p className="pt-5 font-bold">Bond Requirement:</p>
             <li>Glory: Level 5 Intimacy.</li>
-            <li>Light: Level 10 Intimacy + {bondRequirments.bond2}</li>
-            <li>Honor: Level 15 Intimacy + {bondRequirments.bond3}</li>
-            <li>Toughness: Level 23 Intimacy + {bondRequirments.bond4}</li>
-            <li>Strength: Level 25 Intimacy + {bondRequirments.bond5}</li>
+            <li>Light: Level 10 Intimacy + {bond2}</li>
+            <li>Honor: Level 15 Intimacy + {bond3}</li>
+            <li>Toughness: Level 23 Intimacy + {bond4}</li>
+            <li>Strength: Level 25 Intimacy + {bond5}</li>
           </>
         )}
         {bondRequirments && bondRequirments.relatedBonds.length > 0 && (
           <>
             <p className="pt-5 font-bold">Related Bonds</p>
             {bondRequirments.relatedBonds.map((bond) => (
-              <li>
+              <li key={bond.name}>
                 <a href={"/heroes/" + bond.name} className="underline">
                   {bond.prettyName}
                 </a>
