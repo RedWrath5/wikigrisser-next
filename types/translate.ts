@@ -58,5 +58,29 @@ export interface TranslateEquipmentMap {
 
 export interface TranslateEquipment {
   name: string;
-  description: string;
+  effect: string;
+}
+
+// Class
+
+export interface TranslateClassLanguageMap {
+  [key: string]: TranslateClassMap;
+}
+
+export interface TranslateClassMap {
+  [key: string]: TranslateClass;
+}
+
+export interface TranslateClass {
+  name: string;
+}
+
+// UI
+
+export interface TranslateUILanguageMap {
+  [key: string]: TranslateUIMap;
+}
+
+export interface TranslateUIMap {
+  [key: string]: string;
 }

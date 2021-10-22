@@ -1,5 +1,6 @@
 import React from "react";
 import { Equipment } from "../../types/hero";
+import { useEquipmentTranslateContext } from "../context/EquipmentTranslateContext";
 
 export function EquipmentSection({
   equipment,
@@ -8,6 +9,8 @@ export function EquipmentSection({
   equipment: Equipment;
   isExclusive: boolean;
 }) {
+  const { getEquipmentInfo } = useEquipmentTranslateContext();
+  const { name, effect } = getEquipmentInfo(equipment);
   return (
     <>
       <div className="grid grid-cols-12 items-center mt-2 mb-2">
@@ -24,9 +27,9 @@ export function EquipmentSection({
         <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
           <p className="text-2xl">
             {isExclusive && "Exclusive Equipment: "}
-            {equipment.name}
+            {name}
           </p>
-          <p className="whitespace-pre-line">{equipment.effect}</p>
+          <p className="whitespace-pre-line">{effect}</p>
         </div>
       </div>
     </>

@@ -1,7 +1,10 @@
 import { BoundedColumn } from "../layout/BoundedColumn";
 import React from "react";
+import { useClassTranslateContext } from "../context/ClassTranslateContext";
 
 export function HeroIcon({ name }: { name: string }) {
+  const { getClassInfo } = useClassTranslateContext();
+  const translatedName = getClassInfo(name);
   return (
     <div className="flex flex-row bg-gray-200 justify-center">
       <BoundedColumn>
@@ -14,7 +17,7 @@ export function HeroIcon({ name }: { name: string }) {
               height={75}
             ></img>
             <div>
-              <div className="ml-2 text-2xl">{name}</div>
+              <div className="ml-2 text-2xl">{translatedName}</div>
             </div>
           </div>
         </div>

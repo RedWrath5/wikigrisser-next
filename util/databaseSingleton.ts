@@ -11,13 +11,19 @@ import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
 import { TranslateSoldiersLoader } from "./loaders/TranslateSoldiersLoader";
 import {
+  TranslateClassLanguageMap,
+  TranslateEquipmentLanguageMap,
   TranslateHeroLanguageMap,
   TranslateSkillsLanguageMap,
   TranslateSkillsMap,
   TranslateSoldiersLanguageMap,
+  TranslateUILanguageMap,
 } from "../types/translate";
 import { TranslateSkillsLoader } from "./loaders/TranslateSkillsLoader";
 import { TranslateHeroLoader } from "./loaders/TranslateHeroLoader";
+import { TranslateEquipmentLoader } from "./loaders/TranslateEquipmentLoader";
+import { TranslateClassLoader } from "./loaders/TranslateClassLoader";
+import { TranslateUILoader } from "./loaders/TranslateUILoader";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -45,6 +51,9 @@ export class DBSingleton {
   private equipment = new EquipmentLoader(this.workBook).load();
   private training = new TrainingLoader(this.workBook).load();
   private soldier = new SoldierLoader(this.workBook, this.training).load();
+
+  private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
+
   private translateSoldiersMap: TranslateSoldiersLanguageMap = {
     russian: new TranslateSoldiersLoader(this.russian).load(),
   };
@@ -54,11 +63,19 @@ export class DBSingleton {
   private translateHeroMap: TranslateHeroLanguageMap<HeroMap> = {
     russian: new TranslateHeroLoader(this.russian).load(),
   };
-  private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
+  private translateEquipmentMap: TranslateEquipmentLanguageMap = {
+    russian: new TranslateEquipmentLoader(this.russian).load(),
+  };
 
-  constructor() {
-    console.log(this.heroMap,"this.heroMap");
-  }
+  private translateClassMap: TranslateClassLanguageMap = {
+    russian: new TranslateClassLoader(this.russian).load(),
+  };
+
+  private translateUIMap: TranslateUILanguageMap = {
+    russian: new TranslateUILoader(this.russian).load(),
+  };
+
+  constructor() {}
 
   getWorkBook() {
     return this.workBook;
@@ -120,6 +137,18 @@ export class DBSingleton {
 
   getTranslateHeroMap() {
     return this.translateHeroMap;
+  }
+
+  getTranslateEquipmentMap() {
+    return this.translateEquipmentMap;
+  }
+
+  getTranslateClassMap() {
+    return this.translateClassMap;
+  }
+
+  getTranslateUIMap() {
+    return this.translateUIMap;
   }
 }
 

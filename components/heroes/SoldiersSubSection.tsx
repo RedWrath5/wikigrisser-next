@@ -1,5 +1,6 @@
 import { Class } from "../../types/hero";
 import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
+import { useClassTranslateContext } from "../context/ClassTranslateContext";
 
 export function SoldiersSubSection({
   heroClass,
@@ -15,6 +16,8 @@ export function SoldiersSubSection({
   if (isSpClass) flagUrl = "/unitTypeFlag/" + heroClass.heroType + " SP.png";
 
   const { getSoldierInfo } = useSoldierTranslateContext();
+  const { getClassInfo } = useClassTranslateContext();
+  const className = getClassInfo(heroClass.name);
 
   return (
     <>
@@ -33,7 +36,7 @@ export function SoldiersSubSection({
           <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
             <p className="text-2xl">
               {isStarting && "Training Ground "}
-              {!isStarting && heroClass.name}
+              {!isStarting && className}
             </p>
             <p>
               Soldiers:{" "}

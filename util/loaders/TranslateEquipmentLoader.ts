@@ -1,19 +1,19 @@
 import { Loader } from "./Loader";
 import { WorkBook } from "xlsx";
-import { TranslateSoldiersMap } from "../../types/translate";
+import { TranslateEquipmentMap } from "../../types/translate";
 
-export class TranslateSoldiersLoader extends Loader<TranslateSoldiersMap> {
+export class TranslateEquipmentLoader extends Loader<TranslateEquipmentMap> {
   constructor(workBook: WorkBook) {
     super(workBook);
   }
 
-  load(): TranslateSoldiersMap {
-    const sheet = this.workBook.Sheets.Soldiers;
-    const translateSoldiersMap: TranslateSoldiersMap = {};
+  load(): TranslateEquipmentMap {
+    const sheet = this.workBook.Sheets.Equipment;
+    const translateEquipmentMap: TranslateEquipmentMap = {};
     let rowCounter = 2;
 
     while (this.getCellValue(sheet["A" + rowCounter])) {
-      translateSoldiersMap[
+      translateEquipmentMap[
         this.getCellValue(sheet["A" + rowCounter]) as string
       ] = {
         name: this.getCellValue(sheet["B" + rowCounter]) as string,
@@ -21,6 +21,6 @@ export class TranslateSoldiersLoader extends Loader<TranslateSoldiersMap> {
       };
       rowCounter++;
     }
-    return translateSoldiersMap;
+    return translateEquipmentMap;
   }
 }
