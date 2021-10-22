@@ -15,7 +15,7 @@ export function TalentSection({
 }: {
   hero: Hero;
 }) {
-  const { getHeroInfo } = useHeroTranslateContext();
+  const { getHeroInfo, getRelatedBond } = useHeroTranslateContext();
   const { talentName, talentDescription, bond2, bond3, bond4, bond5 } =
     getHeroInfo(name);
 
@@ -74,19 +74,23 @@ export function TalentSection({
             <li>Strength: Level 25 Intimacy + {bond5}</li>
           </>
         )}
+
         {bondRequirments && bondRequirments.relatedBonds.length > 0 && (
           <>
             <p className="pt-5 font-bold">Related Bonds</p>
-            {bondRequirments.relatedBonds.map((bond) => (
-              <li key={bond.name}>
-                <a href={"/heroes/" + bond.name} className="underline">
-                  {bond.prettyName}
-                </a>
-                <span className="ml-1">
-                  {bond.type}: {bond.text}
-                </span>
-              </li>
-            ))}
+            {bondRequirments.relatedBonds.map((bond) => {
+              const { name, prettyName, type, text } = getRelatedBond(bond);
+              return (
+                <li key={name}>
+                  <a href={"/heroes/" + name} className="underline">
+                    {prettyName}
+                  </a>
+                  <span className="ml-1">
+                    {type}: {text}
+                  </span>
+                </li>
+              );
+            })}
           </>
         )}
         {maxStats.length > 0 && (

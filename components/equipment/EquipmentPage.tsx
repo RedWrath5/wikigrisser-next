@@ -135,6 +135,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
                 <BoundedColumn>
                   {equips.map((equip) => (
                     <EquipmentSection
+                      key={equip.name}
                       equipment={equip}
                       isExclusive={false}
                     ></EquipmentSection>

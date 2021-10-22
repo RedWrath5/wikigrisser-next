@@ -7,12 +7,13 @@ import {
   TranslateSkillsLanguageMap,
   TranslateSkillsMap,
 } from "../../types/translate";
-import { Hero, SkillsMap } from "../../types/hero";
+import { Hero, RelatedBond, SkillsMap } from "../../types/hero";
 import { HeroMap } from "../../util/databaseSingleton";
 
 export interface HeroTranslateContextInterface {
   getSkillInfo: (name: string) => TranslateSkills;
   getHeroInfo: (name: string) => TranslateHero;
+  getRelatedBond: (data: RelatedBond) => RelatedBond;
 }
 export const HeroTranslateContext =
   createContext<HeroTranslateContextInterface>(
@@ -73,9 +74,38 @@ export function HeroTranslateWrapper({
     }
   };
 
+  const getRelatedBond = (relatedBond: RelatedBond): RelatedBond => {
+    try {
+      let text = relatedBond.text;
+      if (
+        relatedBond.type === "ATK" &&
+        translateHeroMap[language][relatedBond.name]?.bond5
+      )
+        text = translateHeroMap[language][relatedBond.name]?.bond5;
+      else if (
+        relatedBond.type === "DEF" &&
+        translateHeroMap[language][relatedBond.name]?.bond4
+      )
+        text = translateHeroMap[language][relatedBond.name]?.bond4;
+
+      return {
+        prettyName: translateHeroMap[language][relatedBond.name].name,
+        name: relatedBond.name,
+        text: text,
+        type: relatedBond.type,
+      };
+    } catch {
+      return relatedBond;
+    }
+  };
+
   return (
     <HeroTranslateContext.Provider
-      value={{ getSkillInfo: getSkillInfo, getHeroInfo: getHeroInfo }}
+      value={{
+        getSkillInfo,
+        getHeroInfo,
+        getRelatedBond,
+      }}
     >
       {children}
     </HeroTranslateContext.Provider>

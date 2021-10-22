@@ -18,6 +18,8 @@ export function ClassTranslateWrapper({
 }>) {
   const { language } = useLanguageSwitchContext();
   const getClassInfo = (name: string): string => {
+    if (!name) return "";
+
     if (translateMap[language] && translateMap[language][name])
       return translateMap[language][name].name;
 
