@@ -4,6 +4,7 @@ import React from "react";
 import { DBSingleton, Patch, PatchMap } from "../util/databaseSingleton";
 import { PatchSection } from "../components/patch/PatchSection";
 import { TranslateUILanguageMap } from "../types/translate";
+import { TranslateWrapper } from "../components/context/TranslateContext";
 
 const Home = ({
   patchMap,
@@ -27,23 +28,25 @@ const Home = ({
   const cnPatch: Patch = majorPatches.pop()!;
 
   return (
-    <Layout translateUIMap={translateUIMap}>
-      <div className="flex flex-grow flex-col bg-black">
-        <div className="flex flex-row justify-center">
-          <img
-            src={"/web/banner.jpg"}
-            className="inline"
-            width={2300}
-            height={850}
-          ></img>
-        </div>
+    <TranslateWrapper translateMap={translateUIMap}>
+      <Layout>
+        <div className="flex flex-grow flex-col bg-black">
+          <div className="flex flex-row justify-center">
+            <img
+              src={"/web/banner.jpg"}
+              className="inline"
+              width={2300}
+              height={850}
+            ></img>
+          </div>
 
-        <div className="flex flex-col justify-center text-center">
-          <PatchSection patch={globalPatch}></PatchSection>
-          <PatchSection patch={cnPatch}></PatchSection>
+          <div className="flex flex-col justify-center text-center">
+            <PatchSection patch={globalPatch}></PatchSection>
+            <PatchSection patch={cnPatch}></PatchSection>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </TranslateWrapper>
   );
 };
 

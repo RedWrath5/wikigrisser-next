@@ -8,6 +8,7 @@ import {
 } from "../../types/translate";
 import { SkillsMap } from "../../types/hero";
 import { GalleryTranslateWrapper } from "../../components/context/GalleryTranslateContext";
+import { TranslateWrapper } from "../../components/context/TranslateContext";
 
 const HeroGalleryPage = ({
   heroes,
@@ -18,11 +19,13 @@ const HeroGalleryPage = ({
   translateUIMap: TranslateUILanguageMap;
   translateHeroMap: TranslateHeroLanguageMap<SkillsMap>;
 }>) => (
-  <GalleryTranslateWrapper translateHeroMap={translateHeroMap}>
-    <Layout translateUIMap={translateUIMap}>
-      <HeroGallery heroMap={heroes}></HeroGallery>
-    </Layout>
-  </GalleryTranslateWrapper>
+  <TranslateWrapper translateMap={translateUIMap}>
+    <GalleryTranslateWrapper translateHeroMap={translateHeroMap}>
+      <Layout>
+        <HeroGallery heroMap={heroes}></HeroGallery>
+      </Layout>
+    </GalleryTranslateWrapper>
+  </TranslateWrapper>
 );
 
 export const getStaticProps = async () => {

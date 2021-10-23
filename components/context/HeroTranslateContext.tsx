@@ -1,5 +1,5 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
-import { useLanguageSwitchContext } from "./LanguageSwitchContext";
+
 import {
   TranslateHero,
   TranslateHeroLanguageMap,
@@ -9,6 +9,7 @@ import {
 } from "../../types/translate";
 import { Hero, RelatedBond, SkillsMap } from "../../types/hero";
 import { HeroMap } from "../../util/databaseSingleton";
+import { useTranslateContext } from "./TranslateContext";
 
 export interface HeroTranslateContextInterface {
   getSkillInfo: (name: string) => TranslateSkills;
@@ -34,7 +35,7 @@ export function HeroTranslateWrapper({
   threeCostSkillMap: TranslateSkillsMap<SkillsMap>;
   translateHeroMap: TranslateHeroLanguageMap<HeroMap>;
 }>) {
-  const { language } = useLanguageSwitchContext();
+  const { language } = useTranslateContext();
 
   const getSkillInfo = (name: keyof SkillsMap): TranslateSkills => {
     if (translateSkillMap[language] && translateSkillMap[language][name])

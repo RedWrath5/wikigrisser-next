@@ -3,6 +3,7 @@ import { DBSingleton, PatchMap } from "../util/databaseSingleton";
 import { Layout } from "../components/Layout";
 import { NewsPage } from "../components/patch/NewsPage";
 import { TranslateUILanguageMap } from "../types/translate";
+import { TranslateWrapper } from "../components/context/TranslateContext";
 
 const NewsPageBase = ({
   patches,
@@ -11,9 +12,11 @@ const NewsPageBase = ({
   patches: PatchMap;
   translateUIMap: TranslateUILanguageMap;
 }>) => (
-  <Layout translateUIMap={translateUIMap}>
-    <NewsPage patches={patches}></NewsPage>
-  </Layout>
+  <TranslateWrapper translateMap={translateUIMap}>
+    <Layout>
+      <NewsPage patches={patches}></NewsPage>
+    </Layout>
+  </TranslateWrapper>
 );
 
 export const getStaticProps = async () => {

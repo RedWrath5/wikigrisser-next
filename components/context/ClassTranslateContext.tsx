@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
-import { useLanguageSwitchContext } from "./LanguageSwitchContext";
 import { TranslateClassLanguageMap } from "../../types/translate";
+import {useTranslateContext} from "./TranslateContext";
 
 export interface ClassTranslateContextInterface {
   getClassInfo: (name: string) => string;
@@ -16,7 +16,7 @@ export function ClassTranslateWrapper({
 }: PropsWithChildren<{
   translateMap: TranslateClassLanguageMap;
 }>) {
-  const { language } = useLanguageSwitchContext();
+  const { language } = useTranslateContext();
   const getClassInfo = (name: string): string => {
     if (!name) return "";
 

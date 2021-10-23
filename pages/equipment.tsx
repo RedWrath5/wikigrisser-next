@@ -8,6 +8,7 @@ import {
   TranslateUILanguageMap,
 } from "../types/translate";
 import { EquipmentTranslateWrapper } from "../components/context/EquipmentTranslateContext";
+import { TranslateWrapper } from "../components/context/TranslateContext";
 
 const EquipmentGalleryPage = ({
   equipment,
@@ -18,11 +19,13 @@ const EquipmentGalleryPage = ({
   translateUIMap: TranslateUILanguageMap;
   translateEquipmentMap: TranslateEquipmentLanguageMap;
 }>) => (
-  <Layout translateUIMap={translateUIMap}>
-    <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
-      <EquipmentPage equipment={equipment} />
-    </EquipmentTranslateWrapper>
-  </Layout>
+  <TranslateWrapper translateMap={translateUIMap}>
+    <Layout>
+      <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
+        <EquipmentPage equipment={equipment} />
+      </EquipmentTranslateWrapper>
+    </Layout>
+  </TranslateWrapper>
 );
 
 export const getStaticProps = async () => {

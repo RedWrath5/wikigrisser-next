@@ -4,16 +4,9 @@ import React from "react";
 import "tailwindcss/tailwind.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../styles.css";
-import {
-  LanguageSwitchContextWrapper,
-} from "../components/context/LanguageSwitchContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <LanguageSwitchContextWrapper>
-      <Component {...pageProps} />
-    </LanguageSwitchContextWrapper>
-  );
+  return <Component {...pageProps} />;
 }
 
 // Only uncomment this method if you have blocking data requirements for

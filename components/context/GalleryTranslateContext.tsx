@@ -1,8 +1,8 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
-import { useLanguageSwitchContext } from "./LanguageSwitchContext";
 import { TranslateHeroLanguageMap } from "../../types/translate";
 import { SkillsMap } from "../../types/hero";
 import { HeroMap } from "../../util/databaseSingleton";
+import {useTranslateContext} from "./TranslateContext";
 
 export interface GalleryTranslateContextInterface {
   getHeroInfo: (name: keyof HeroMap) => keyof HeroMap | null;
@@ -18,7 +18,7 @@ export function GalleryTranslateWrapper({
 }: PropsWithChildren<{
   translateHeroMap: TranslateHeroLanguageMap<SkillsMap>;
 }>) {
-  const { language } = useLanguageSwitchContext();
+  const { language } = useTranslateContext();
 
   const getHeroInfo = (name: keyof HeroMap): keyof HeroMap | null => {
     if (translateHeroMap[language] && translateHeroMap[language][name])

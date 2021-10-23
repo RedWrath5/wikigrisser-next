@@ -1,13 +1,12 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { MenuItem, Select } from "@material-ui/core";
-import { useLanguageSwitchContext } from "./context/LanguageSwitchContext";
 import { SettingsOutlined } from "@material-ui/icons";
-import { useUITranslateContext } from "./context/UITranslateContext";
+import { useTranslateContext } from "./context/TranslateContext";
 
 export function Header() {
   const [showSettings, setShowSettings] = useState(false);
-  const { translate } = useUITranslateContext();
+  const { translate } = useTranslateContext();
   // https://ttntm.me/blog/tailwind-responsive-menu/
   useEffect(() => {
     var nav = document.getElementById("site-menu");
@@ -31,6 +30,7 @@ export function Header() {
     btn?.classList.toggle("open");
     nav?.classList.toggle("flex");
     nav?.classList.toggle("hidden");
+    setShowSettings(false);
   }
 
   return (
@@ -95,7 +95,7 @@ function SettingsMenu() {
     { key: "russian", name: "Русский" },
   ];
 
-  const { language, setLanguage } = useLanguageSwitchContext();
+  const { language, setLanguage } = useTranslateContext();
 
   const handleChangeLanguage = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
@@ -104,9 +104,13 @@ function SettingsMenu() {
   };
 
   return (
-    <div className="bg-black sm:text-right w-full h-screen text-white px-4 sm:px-6 flex flex-col items-start gap-2">
+    <div className="bg-black w-full h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2">
       <p className="text-gray-300 font-bold">Language</p>
-      <Select value={language} onChange={handleChangeLanguage} style={{color : 'white', padding : 0}}>
+      <Select
+        value={language}
+        onChange={handleChangeLanguage}
+        style={{ color: "white", padding: 0 }}
+      >
         {languages.map((v) => (
           <MenuItem key={v.key} value={v.key}>
             <div className="flex items-center">

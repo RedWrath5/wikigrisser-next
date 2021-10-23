@@ -23,7 +23,7 @@ import {
 import { SoldierTranslateWrapper } from "../../components/context/SoldierTranslateContext";
 import { EquipmentTranslateWrapper } from "../../components/context/EquipmentTranslateContext";
 import { ClassTranslateWrapper } from "../../components/context/ClassTranslateContext";
-import { UITranslateWrapper } from "../../components/context/UITranslateContext";
+import { TranslateWrapper } from "../../components/context/TranslateContext";
 
 const HeroPage = ({
   heroData,
@@ -52,28 +52,30 @@ const HeroPage = ({
 }) => {
   return (
     <>
-      <HeroTranslateWrapper
-        translateSkillMap={translateSkillsMap}
-        skillsMap={skillsMap}
-        translateHeroMap={translateHeroMap}
-        threeCostSkillMap={threeCostSkillMap}
-        hero={heroData}
-      >
-        <SoldierTranslateWrapper
-          translateMap={translateSoldiersMap}
-          soldierMap={soldierMap}
+      <TranslateWrapper translateMap={translateUIMap}>
+        <HeroTranslateWrapper
+          translateSkillMap={translateSkillsMap}
+          skillsMap={skillsMap}
+          translateHeroMap={translateHeroMap}
+          threeCostSkillMap={threeCostSkillMap}
+          hero={heroData}
         >
-          <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
-            <ClassTranslateWrapper translateMap={translateClassMap}>
-              <skillToHeroContext.Provider value={skillsToHeroMap}>
-                <Layout translateUIMap={translateUIMap}>
-                  <HeroComponent hero={heroData}></HeroComponent>
-                </Layout>
-              </skillToHeroContext.Provider>
-            </ClassTranslateWrapper>
-          </EquipmentTranslateWrapper>
-        </SoldierTranslateWrapper>
-      </HeroTranslateWrapper>
+          <SoldierTranslateWrapper
+            translateMap={translateSoldiersMap}
+            soldierMap={soldierMap}
+          >
+            <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
+              <ClassTranslateWrapper translateMap={translateClassMap}>
+                <skillToHeroContext.Provider value={skillsToHeroMap}>
+                  <Layout>
+                    <HeroComponent hero={heroData}></HeroComponent>
+                  </Layout>
+                </skillToHeroContext.Provider>
+              </ClassTranslateWrapper>
+            </EquipmentTranslateWrapper>
+          </SoldierTranslateWrapper>
+        </HeroTranslateWrapper>
+      </TranslateWrapper>
     </>
   );
 };

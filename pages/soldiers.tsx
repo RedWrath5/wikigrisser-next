@@ -8,6 +8,7 @@ import {
   TranslateSoldiersLanguageMap,
   TranslateUILanguageMap,
 } from "../types/translate";
+import { TranslateWrapper } from "../components/context/TranslateContext";
 
 const SoldierGalleryPage = ({
   soldiers,
@@ -20,14 +21,16 @@ const SoldierGalleryPage = ({
   translateUIMap: TranslateUILanguageMap;
   translateSoldiersMap: TranslateSoldiersLanguageMap;
 }>) => (
-  <Layout translateUIMap={translateUIMap}>
-    <SoldierTranslateWrapper
-      translateMap={translateSoldiersMap}
-      soldierMap={soldierMap}
-    >
-      <SoldierPage soldiers={soldiers} />
-    </SoldierTranslateWrapper>
-  </Layout>
+  <TranslateWrapper translateMap={translateUIMap}>
+    <Layout>
+      <SoldierTranslateWrapper
+        translateMap={translateSoldiersMap}
+        soldierMap={soldierMap}
+      >
+        <SoldierPage soldiers={soldiers} />
+      </SoldierTranslateWrapper>
+    </Layout>
+  </TranslateWrapper>
 );
 
 export const getStaticProps = async () => {

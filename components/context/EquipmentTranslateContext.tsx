@@ -1,10 +1,10 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
-import { useLanguageSwitchContext } from "./LanguageSwitchContext";
 import {
   TranslateEquipment,
   TranslateEquipmentLanguageMap,
 } from "../../types/translate";
 import { Equipment } from "../../types/hero";
+import {useTranslateContext} from "./TranslateContext";
 
 export interface EquipmentTranslateContextInterface {
   getEquipmentInfo: (equipment: Equipment) => TranslateEquipment;
@@ -20,7 +20,7 @@ export function EquipmentTranslateWrapper({
 }: PropsWithChildren<{
   translateMap: TranslateEquipmentLanguageMap;
 }>) {
-  const { language } = useLanguageSwitchContext();
+  const { language } = useTranslateContext();
 
   const getEquipmentInfo = (equipment: Equipment): TranslateEquipment => {
     if (translateMap[language] && translateMap[language][equipment.name])

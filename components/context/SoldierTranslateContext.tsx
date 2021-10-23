@@ -1,10 +1,10 @@
 import React, { createContext, PropsWithChildren, useContext } from "react";
-import { useLanguageSwitchContext } from "./LanguageSwitchContext";
 import { SoldierMap } from "../../util/databaseSingleton";
 import {
   TranslateSoldiers,
   TranslateSoldiersLanguageMap,
 } from "../../types/translate";
+import {useTranslateContext} from "./TranslateContext";
 
 export interface SoldierTranslateContextInterface {
   getSoldierInfo: (name: string) => TranslateSoldiers;
@@ -22,7 +22,7 @@ export function SoldierTranslateWrapper({
   translateMap: TranslateSoldiersLanguageMap;
   soldierMap: SoldierMap;
 }>) {
-  const { language } = useLanguageSwitchContext();
+  const { language } = useTranslateContext();
 
   const getSoldierInfo = (name: string): TranslateSoldiers => {
     if (translateMap[language] && translateMap[language][name])
