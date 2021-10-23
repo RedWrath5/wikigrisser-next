@@ -18,15 +18,18 @@ import {
   TranslateSkillsLanguageMap,
   TranslateSkillsMap,
   TranslateSoldiersLanguageMap,
+  TranslateUILanguageMap,
 } from "../../types/translate";
 import { SoldierTranslateWrapper } from "../../components/context/SoldierTranslateContext";
 import { EquipmentTranslateWrapper } from "../../components/context/EquipmentTranslateContext";
 import { ClassTranslateWrapper } from "../../components/context/ClassTranslateContext";
+import { UITranslateWrapper } from "../../components/context/UITranslateContext";
 
 const HeroPage = ({
   heroData,
   skillsMap,
   soldierMap,
+  translateUIMap,
   skillsToHeroMap,
   translateHeroMap,
   translateClassMap,
@@ -39,6 +42,7 @@ const HeroPage = ({
   skillsMap: SkillsMap;
   soldierMap: SoldierMap;
   skillsToHeroMap: SkillToHeroMap;
+  translateUIMap: TranslateUILanguageMap;
   translateClassMap: TranslateClassLanguageMap;
   threeCostSkillMap: TranslateSkillsMap<SkillsMap>;
   translateSoldiersMap: TranslateSoldiersLanguageMap;
@@ -62,7 +66,7 @@ const HeroPage = ({
           <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
             <ClassTranslateWrapper translateMap={translateClassMap}>
               <skillToHeroContext.Provider value={skillsToHeroMap}>
-                <Layout>
+                <Layout translateUIMap={translateUIMap}>
                   <HeroComponent hero={heroData}></HeroComponent>
                 </Layout>
               </skillToHeroContext.Provider>
@@ -101,6 +105,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const soldierMap = db.getSoldierMap();
   const translateEquipmentMap = db.getTranslateEquipmentMap();
   const translateClassMap = db.getTranslateClassMap();
+  const translateUIMap = db.getTranslateUIMap();
 
   const name = context.params?.name as string;
   const heroData: Hero = heroes[name];
@@ -109,6 +114,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       heroData,
       skillsMap,
       soldierMap,
+      translateUIMap,
       skillsToHeroMap,
       translateHeroMap,
       translateClassMap,

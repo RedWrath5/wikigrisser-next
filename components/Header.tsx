@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { MenuItem, Select } from "@material-ui/core";
 import { useLanguageSwitchContext } from "./context/LanguageSwitchContext";
 import { SettingsOutlined } from "@material-ui/icons";
+import { useUITranslateContext } from "./context/UITranslateContext";
 
 export function Header() {
   const [showSettings, setShowSettings] = useState(false);
+  const { translate } = useUITranslateContext();
   // https://ttntm.me/blog/tailwind-responsive-menu/
   useEffect(() => {
     var nav = document.getElementById("site-menu");
@@ -65,7 +67,7 @@ export function Header() {
           {LINKS.map((link) => (
             <Link key={link.text} href={link.url}>
               <div className="text-gray-300 font-bold hover:text-white text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2 cursor-pointer">
-                {link.text}
+                {translate(link.text)}
               </div>
             </Link>
           ))}

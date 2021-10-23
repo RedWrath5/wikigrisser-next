@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../types/hero";
 import { HeroMap } from "../util/databaseSingleton";
 import { BoundedColumn } from "./layout/BoundedColumn";
+import { useGalleryTranslateContext } from "./context/GalleryTranslateContext";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
@@ -18,6 +19,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filters, setFilters] = useState([] as Filter[]);
   const [sort, setSort] = useState<Sort>(SORTS[1]);
   const [searchText, setSearchText] = useState("");
+  const { getHeroInfo } = useGalleryTranslateContext();
 
   useEffect(() => {
     filterAndSort(filters, sort);
@@ -146,24 +148,27 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
       <div className="flex font-sans font-normal justify-center">
         <BoundedColumn>
           <div className="flex flex-row flex-wrap gap-5 justify-center">
-            {filteredAndSortedHeroes.map((hero) => (
-              <div className="cursor-pointer" key={hero.name}>
-                <Link href={"/heroes/" + hero.name} passHref={true}>
-                  <a>
-                    <img
-                      src={"/hero cards/Card_" + hero.prettyName + ".png"}
-                      width={100}
-                      height={100}
-                    ></img>
-                  </a>
-                </Link>
-                <Link href={"/heroes/" + hero.name}>
-                  <p className="text-center" style={{ width: "100px" }}>
-                    {hero.prettyName}
-                  </p>
-                </Link>
-              </div>
-            ))}
+            {filteredAndSortedHeroes.map((hero) => {
+              const name = getHeroInfo(hero.name) || hero.prettyName;
+              return (
+                <div className="cursor-pointer" key={hero.name}>
+                  <Link href={"/heroes/" + hero.name} passHref={true}>
+                    <a>
+                      <img
+                        src={"/hero cards/Card_" + hero.prettyName + ".png"}
+                        width={100}
+                        height={100}
+                      ></img>
+                    </a>
+                  </Link>
+                  <Link href={"/heroes/" + hero.name}>
+                    <p className="text-center" style={{ width: "100px" }}>
+                      {name}
+                    </p>
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </BoundedColumn>
       </div>

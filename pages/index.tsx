@@ -3,8 +3,15 @@ import { Layout } from "../components/Layout";
 import React from "react";
 import { DBSingleton, Patch, PatchMap } from "../util/databaseSingleton";
 import { PatchSection } from "../components/patch/PatchSection";
+import { TranslateUILanguageMap } from "../types/translate";
 
-const Home = ({ patchMap }: { patchMap: PatchMap }) => {
+const Home = ({
+  patchMap,
+  translateUIMap,
+}: {
+  patchMap: PatchMap;
+  translateUIMap: TranslateUILanguageMap;
+}) => {
   const today = new Date().valueOf();
   const majorPatches: Patch[] = Object.values(patchMap).filter(
     (a: Patch) => a.type === "major"
@@ -20,7 +27,7 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
   const cnPatch: Patch = majorPatches.pop()!;
 
   return (
-    <Layout>
+    <Layout translateUIMap={translateUIMap}>
       <div className="flex flex-grow flex-col bg-black">
         <div className="flex flex-row justify-center">
           <img
@@ -42,10 +49,12 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const patchMap = DBSingleton.getInstance().getPatchMap();
+  const translateUIMap = DBSingleton.getInstance().getTranslateUIMap();
 
   return {
     props: {
       patchMap,
+      translateUIMap,
     },
   };
 };
