@@ -34,53 +34,55 @@ export function Header() {
   }
 
   return (
-    <header
-      id="top"
-      className="w-full flex flex-col fixed sm:relative bg-black pin-t pin-r pin-l z-10 text-white"
-    >
-      <nav
-        id="site-menu"
-        className="flex flex-col sm:flex-row w-full justify-between items-center px-4 sm:px-6 py-1 bg-black shadow sm:shadow-none border-t-4 border-red-900"
+    <>
+      <header
+        id="top"
+        className="w-full flex flex-col fixed sm:relative bg-black pin-t pin-r pin-l z-10 text-white"
       >
-        <div className="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
-          <Link href="/">
-            <span className="flex flex-row cursor-pointer items-center text-center">
-              <img src="/logo-big.jpg" width={50} height={50}></img>
-              <div className="ml-2">Wikigrisser Next</div>
-            </span>
-          </Link>
-
-          <button
-            id="menuBtn"
-            className="hamburger block sm:hidden focus:outline-none"
-            type="button"
-            onClick={navToggle}
-          >
-            <span className="hamburger__top-bun"></span>
-            <span className="hamburger__bottom-bun"></span>
-          </button>
-        </div>
-        <div
-          id="menu"
-          className="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden"
+        <nav
+          id="site-menu"
+          className="flex flex-col sm:flex-row w-full justify-between items-center px-4 sm:px-6 py-1 bg-black shadow sm:shadow-none border-t-4 border-red-900"
         >
-          {LINKS.map((link) => (
-            <Link key={link.text} href={link.url}>
-              <div className="text-gray-300 font-bold hover:text-white text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2 cursor-pointer">
-                {translate(link.text)}
-              </div>
+          <div className="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
+            <Link href="/">
+              <span className="flex flex-row cursor-pointer items-center text-center">
+                <img src="/logo-big.jpg" width={50} height={50}></img>
+                <div className="ml-2">Wikigrisser Next</div>
+              </span>
             </Link>
-          ))}
-          <div
-            onClick={() => setShowSettings(!showSettings)}
-            className="self-start sm:self-center"
-          >
-            <SettingsOutlined className="fill-current text-gray-300 hover:text-white cursor-pointer text-left" />
+
+            <button
+              id="menuBtn"
+              className="hamburger block sm:hidden focus:outline-none"
+              type="button"
+              onClick={navToggle}
+            >
+              <span className="hamburger__top-bun"></span>
+              <span className="hamburger__bottom-bun"></span>
+            </button>
           </div>
-          {showSettings && <SettingsMenu />}
-        </div>
-      </nav>
-    </header>
+          <div
+            id="menu"
+            className="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden"
+          >
+            {LINKS.map((link) => (
+              <Link key={link.text} href={link.url}>
+                <div className="text-gray-300 font-bold hover:text-white text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2 cursor-pointer">
+                  {translate(link.text)}
+                </div>
+              </Link>
+            ))}
+            <div
+              onClick={() => setShowSettings(!showSettings)}
+              className="self-start sm:self-center"
+            >
+              <SettingsOutlined className="fill-current text-gray-300 hover:text-white cursor-pointer text-left" />
+            </div>
+          </div>
+        </nav>
+        {showSettings && <SettingsMenu />}
+      </header>
+    </>
   );
 }
 
@@ -102,8 +104,9 @@ function SettingsMenu() {
   };
 
   return (
-    <div className="rounded bg-white px-2 ml-0 mt-2 sm:ml-2 sm:mt-0 self-start">
-      <Select value={language} onChange={handleChangeLanguage}>
+    <div className="bg-black sm:text-right w-full h-screen text-white px-4 sm:px-6 flex flex-col items-start gap-2">
+      <p className="text-gray-300 font-bold">Language</p>
+      <Select value={language} onChange={handleChangeLanguage} style={{color : 'white', padding : 0}}>
         {languages.map((v) => (
           <MenuItem key={v.key} value={v.key}>
             <div className="flex items-center">
