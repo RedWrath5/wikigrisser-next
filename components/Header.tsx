@@ -12,7 +12,7 @@ export function Header() {
     var nav = document.getElementById("site-menu");
     var header = document.getElementById("top");
     window.addEventListener("scroll", function () {
-      if (window.scrollY >= 400) {
+      if (window.scrollY >= 60) {
         // adjust this value based on site structure and header image height
         nav?.classList.add("nav-sticky");
         header?.classList.add("pt-scroll");
@@ -103,8 +103,15 @@ function SettingsMenu() {
     setLanguage(event.target.value as string);
   };
 
+  /*
+  position fixed
+right: 0
+top: 62px
+height: 100vh
+width: 200 px
+  * */
   return (
-    <div className="bg-black w-full h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2">
+    <div className="bg-black fixed right-0 w-4/5 sm:w-1/4 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2" style={{top : '62px'}}>
       <p className="text-gray-300 font-bold">Language</p>
       <Select
         value={language}
