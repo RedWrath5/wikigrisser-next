@@ -6,7 +6,7 @@ import { useTranslateContext } from "./context/TranslateContext";
 
 export function Header() {
   const [showSettings, setShowSettings] = useState(false);
-  const { translate } = useTranslateContext();
+  const { t } = useTranslateContext();
   // https://ttntm.me/blog/tailwind-responsive-menu/
   useEffect(() => {
     var nav = document.getElementById("site-menu");
@@ -68,7 +68,7 @@ export function Header() {
             {LINKS.map((link) => (
               <Link key={link.text} href={link.url}>
                 <div className="text-gray-300 font-bold hover:text-white text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2 cursor-pointer">
-                  {translate(link.text)}
+                  {t(link.text)}
                 </div>
               </Link>
             ))}
@@ -95,7 +95,7 @@ function SettingsMenu() {
     { key: "russian", name: "Русский" },
   ];
 
-  const { language, setLanguage } = useTranslateContext();
+  const { language, setLanguage, t } = useTranslateContext();
 
   const handleChangeLanguage = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
@@ -103,16 +103,12 @@ function SettingsMenu() {
     setLanguage(event.target.value as string);
   };
 
-  /*
-  position fixed
-right: 0
-top: 62px
-height: 100vh
-width: 200 px
-  * */
   return (
-    <div className="bg-black fixed right-0 w-4/5 sm:w-1/4 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2" style={{top : '62px'}}>
-      <p className="text-gray-300 font-bold">Language</p>
+    <div
+      className="bg-black fixed right-0 w-4/5 sm:w-1/4 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2"
+      style={{ top: "62px" }}
+    >
+      <p className="text-gray-300 font-bold">{t("Language")}</p>
       <Select
         value={language}
         onChange={handleChangeLanguage}

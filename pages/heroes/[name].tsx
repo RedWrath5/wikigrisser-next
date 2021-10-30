@@ -1,7 +1,4 @@
 import React from "react";
-import { Layout } from "../../components/Layout";
-import { Hero, SkillsMap } from "../../types/hero";
-import { HeroComponent } from "../../components/heroes/HeroComponent";
 import { GetStaticPaths, GetStaticProps } from "next";
 import {
   DBSingleton,
@@ -9,8 +6,6 @@ import {
   SkillToHeroMap,
   SoldierMap,
 } from "../../util/databaseSingleton";
-import skillToHeroContext from "../../util/skillToHeroContext";
-import { HeroTranslateWrapper } from "../../components/context/HeroTranslateContext";
 import {
   TranslateClassLanguageMap,
   TranslateEquipmentLanguageMap,
@@ -20,10 +15,17 @@ import {
   TranslateSoldiersLanguageMap,
   TranslateUILanguageMap,
 } from "../../types/translate";
+
+import { Layout } from "../../components/Layout";
+import { Hero, SkillsMap } from "../../types/hero";
+import { composeWrappers } from "../../util/composeWrappers";
+import { HeroComponent } from "../../components/heroes/HeroComponent";
+import { TranslateWrapper } from "../../components/context/TranslateContext";
+import skillToHeroContext from "../../components/context/skillToHeroContext";
+import { HeroTranslateWrapper } from "../../components/context/HeroTranslateContext";
+import { ClassTranslateWrapper } from "../../components/context/ClassTranslateContext";
 import { SoldierTranslateWrapper } from "../../components/context/SoldierTranslateContext";
 import { EquipmentTranslateWrapper } from "../../components/context/EquipmentTranslateContext";
-import { ClassTranslateWrapper } from "../../components/context/ClassTranslateContext";
-import { TranslateWrapper } from "../../components/context/TranslateContext";
 
 const HeroPage = ({
   heroData,
@@ -50,32 +52,53 @@ const HeroPage = ({
   translateEquipmentMap: TranslateEquipmentLanguageMap;
   translateSkillsMap: TranslateSkillsLanguageMap<SkillsMap>;
 }) => {
+  const MasterProvider = composeWrappers([
+    (props) => (
+      <TranslateWrapper translateMap={translateUIMap}>
+        {props.children}
+      </TranslateWrapper>
+    ),
+    (props) => (
+      <HeroTranslateWrapper
+        translateSkillMap={translateSkillsMap}
+        skillsMap={skillsMap}
+        translateHeroMap={translateHeroMap}
+        threeCostSkillMap={threeCostSkillMap}
+        hero={heroData}
+      >
+        {props.children}
+      </HeroTranslateWrapper>
+    ),
+    (props) => (
+      <SoldierTranslateWrapper
+        translateMap={translateSoldiersMap}
+        soldierMap={soldierMap}
+      >
+        {props.children}
+      </SoldierTranslateWrapper>
+    ),
+    (props) => (
+      <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
+        {props.children}
+      </EquipmentTranslateWrapper>
+    ),
+    (props) => (
+      <ClassTranslateWrapper translateMap={translateClassMap}>
+        {props.children}
+      </ClassTranslateWrapper>
+    ),
+    (props) => (
+      <skillToHeroContext.Provider value={skillsToHeroMap}>
+        {props.children}
+      </skillToHeroContext.Provider>
+    ),
+    (props) => <Layout>{props.children}</Layout>,
+  ]);
   return (
     <>
-      <TranslateWrapper translateMap={translateUIMap}>
-        <HeroTranslateWrapper
-          translateSkillMap={translateSkillsMap}
-          skillsMap={skillsMap}
-          translateHeroMap={translateHeroMap}
-          threeCostSkillMap={threeCostSkillMap}
-          hero={heroData}
-        >
-          <SoldierTranslateWrapper
-            translateMap={translateSoldiersMap}
-            soldierMap={soldierMap}
-          >
-            <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
-              <ClassTranslateWrapper translateMap={translateClassMap}>
-                <skillToHeroContext.Provider value={skillsToHeroMap}>
-                  <Layout>
-                    <HeroComponent hero={heroData}></HeroComponent>
-                  </Layout>
-                </skillToHeroContext.Provider>
-              </ClassTranslateWrapper>
-            </EquipmentTranslateWrapper>
-          </SoldierTranslateWrapper>
-        </HeroTranslateWrapper>
-      </TranslateWrapper>
+      <MasterProvider>
+        <HeroComponent hero={heroData}></HeroComponent>
+      </MasterProvider>
     </>
   );
 };

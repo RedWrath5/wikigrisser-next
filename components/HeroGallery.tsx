@@ -11,8 +11,15 @@ import { Factions, Hero } from "../types/hero";
 import { HeroMap } from "../util/databaseSingleton";
 import { BoundedColumn } from "./layout/BoundedColumn";
 import { useGalleryTranslateContext } from "./context/GalleryTranslateContext";
+import { useTranslateContext } from "./context/TranslateContext";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
+  const { t } = useTranslateContext();
+  const SORTS: Sort[] = [
+    { value: "rarity", prettyValue: t("Rarity") },
+    { value: "alphabetically", prettyValue: t("Alphabetically") },
+  ];
+
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
     Object.values(heroMap)
   );
@@ -90,12 +97,12 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
-        Heroes
+        {t("Heroes")}
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">
         <div className="mr-4">
           <FormControl>
-            <InputLabel>Search</InputLabel>
+            <InputLabel>{t("Search")}</InputLabel>
             <Input
               value={searchText}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +113,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
         </div>
 
         <FormControl>
-          <InputLabel>Sort</InputLabel>
+          <InputLabel>{t("Sort")}</InputLabel>
           <Select
             value={sort.value}
             onChange={(sortValue) => handleSortChange(sortValue)}
@@ -185,11 +192,6 @@ type Sort = {
   value: "alphabetically" | "rarity";
   prettyValue: string;
 };
-
-const SORTS: Sort[] = [
-  { value: "rarity", prettyValue: "Rarity" },
-  { value: "alphabetically", prettyValue: "Alphabetically" },
-];
 
 function compareByName(a: Hero, b: Hero) {
   if (a.prettyName < b.prettyName) {

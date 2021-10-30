@@ -10,6 +10,7 @@ import { TalentSection } from "./TalentSection";
 import { Tabs, Tab } from "@material-ui/core";
 import { MaterialSection } from "./MaterialSection";
 import { useHeroTranslateContext } from "../context/HeroTranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   {
@@ -21,6 +22,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
   };
 
   const { getHeroInfo } = useHeroTranslateContext();
+  const { t } = useTranslateContext();
   const { name } = getHeroInfo(hero.name);
 
   return (
@@ -53,8 +55,8 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex flex-col">
         <div className="flex flex-wrap justify-center">
           <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label="Class & Soldiers" value="main" />
-            <Tab label="Materials" value="materials" />
+            <Tab label={t("Class & Soldiers")} value="main" />
+            <Tab label={t("Materials")} value="materials" />
           </Tabs>
         </div>
 

@@ -9,7 +9,7 @@ import React, {
 import { TranslateUILanguageMap } from "../../types/translate";
 
 export interface UITranslateContextInterface {
-  translate: (name: string) => string;
+  t: (name: string) => string;
   language: string;
   setLanguage: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -41,7 +41,7 @@ export function TranslateWrapper({
     return name;
   };
   return (
-    <TranslateContext.Provider value={{ translate, language, setLanguage }}>
+    <TranslateContext.Provider value={{ t: translate, language, setLanguage }}>
       {children}
     </TranslateContext.Provider>
   );

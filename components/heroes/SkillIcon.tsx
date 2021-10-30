@@ -1,7 +1,7 @@
 import { Popover } from "@material-ui/core";
 import React from "react";
 import { Skill } from "../../types/hero";
-import skillToHeroContext from "../../util/skillToHeroContext";
+import skillToHeroContext from "../context/skillToHeroContext";
 
 export function SkillIcon({ skill }: { skill: Skill }) {
   const db = React.useContext(skillToHeroContext);
