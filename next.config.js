@@ -1,4 +1,5 @@
-const isProd = process.env.NODE_ENV === "production";
+// const isProd = process.env.NODE_ENV === "production";
+const isProd = false;
 
 module.exports = {
   basePath: isProd ? "/wikigrisser-next" : "",
