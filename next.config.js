@@ -1,4 +1,4 @@
-const isProd = process.env.NODE_ENV === "production";
+const isProd = false; //process.env.NODE_ENV === "production";
 
 module.exports = {
   assetPrefix: isProd ? "/wikigrisser-next/" : "",
