@@ -105,7 +105,7 @@ function SettingsMenu() {
 
   return (
     <div
-      className="bg-black fixed right-0 w-4/5 sm:w-1/4 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2"
+      className="bg-black fixed right-0 w-11/12 sm:w-1/12 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2"
       style={{ top: "62px" }}
     >
       <p className="text-gray-300 font-bold">{t("Language")}</p>

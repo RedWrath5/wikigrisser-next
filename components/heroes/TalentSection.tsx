@@ -1,7 +1,7 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
 import { useHeroTranslateContext } from "../context/HeroTranslateContext";
-import {useTranslateContext} from "../context/TranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function TalentSection({
   hero: {
@@ -16,9 +16,8 @@ export function TalentSection({
 }: {
   hero: Hero;
 }) {
-
   const { getHeroInfo, getRelatedBond } = useHeroTranslateContext();
-  const {t} = useTranslateContext()
+  const { t } = useTranslateContext();
   const { talentName, talentDescription, bond2, bond3, bond4, bond5 } =
     getHeroInfo(name);
 
@@ -69,19 +68,26 @@ export function TalentSection({
         )}
         {bondRequirments && (
           <>
-            <p className="pt-5 font-bold">{t('Bond Requirement')}:</p>
-            <li>{`${t('Glory')}: ${t('Level')} 5 ${t('Intimacy')}`}</li>
-            <li>{`${t('Light')}: ${t('Level')} 10 ${t('Intimacy')} + ${bond2}`}</li>
-            <li>{`${t('Honor')}: ${t('Level')} 15 ${t('Intimacy')} + ${bond3}`}</li>
-            <li>{`${t('Toughness')}: ${t('Level')} 23 ${t('Intimacy')} + ${bond4}`}</li>
-            <li>{`${t('Strength')}: ${t('Level')} 25 ${t('Intimacy')} + ${bond5}`}</li>
-
+            <p className="pt-5 font-bold">{t("Bond Requirement")}:</p>
+            <li>{`${t("Glory")}: ${t("Level")} 5 ${t("Intimacy")}`}</li>
+            <li>{`${t("Light")}: ${t("Level")} 10 ${t(
+              "Intimacy"
+            )} + ${bond2}`}</li>
+            <li>{`${t("Honor")}: ${t("Level")} 15 ${t(
+              "Intimacy"
+            )} + ${bond3}`}</li>
+            <li>{`${t("Toughness")}: ${t("Level")} 23 ${t(
+              "Intimacy"
+            )} + ${bond4}`}</li>
+            <li>{`${t("Strength")}: ${t("Level")} 25 ${t(
+              "Intimacy"
+            )} + ${bond5}`}</li>
           </>
         )}
 
         {bondRequirments && bondRequirments.relatedBonds.length > 0 && (
           <>
-            <p className="pt-5 font-bold">{t('Related Bonds')}</p>
+            <p className="pt-5 font-bold">{t("Related Bonds")}</p>
             {bondRequirments.relatedBonds.map((bond) => {
               const { name, prettyName, type, text } = getRelatedBond(bond);
               return (
@@ -98,24 +104,26 @@ export function TalentSection({
           </>
         )}
         {maxStats.length > 0 && (
-          <p className="pt-5 font-bold">{t('Level 70 Max Stats')}:</p>
+          <p className="pt-5 font-bold">{t("Level 70 Max Stats")}:</p>
         )}
         {maxStats.map((maxStats) => (
           <li key={maxStats.className}>
             <span>{t(maxStats.className)}: </span>
             <span>
-              {t('HP')}: {maxStats.stats.hp} | {t('ATK')}: {maxStats.stats.atk} | {t('INT')}:{" "}
-              {maxStats.stats.int} | {t('DEF')}: {maxStats.stats.def} | {t('MDEF')}:
-              {maxStats.stats.mdef} | {t('SKL')}: {maxStats.stats.skill}
+              {t("HP")}: {maxStats.stats.hp} | {t("ATK")}: {maxStats.stats.atk}{" "}
+              | {t("INT")}: {maxStats.stats.int} | {t("DEF")}:{" "}
+              {maxStats.stats.def} | {t("MDEF")}:{maxStats.stats.mdef} |{" "}
+              {t("SKL")}: {maxStats.stats.skill}
             </span>
           </li>
         ))}
         {soldierBonus && (
           <>
-            <p className="pt-5 font-bold">{t('Soldier Bonus')}:</p>
+            <p className="pt-5 font-bold">{t("Soldier Bonus")}:</p>
             <li>
-              {t('HP')}: {soldierBonus.hp}% | {t('ATK')}: {soldierBonus.atk}% | {t('DEF')}:{" "}
-              {soldierBonus.def}% | {t('MDEF')}: {soldierBonus.mdef}%
+              {t("HP")}: {soldierBonus.hp}% | {t("ATK")}: {soldierBonus.atk}% |{" "}
+              {t("DEF")}: {soldierBonus.def}% | {t("MDEF")}: {soldierBonus.mdef}
+              %
             </li>
           </>
         )}

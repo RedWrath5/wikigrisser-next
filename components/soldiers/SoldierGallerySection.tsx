@@ -3,9 +3,7 @@ import { Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
 import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
-import {
-  ArrowDropDownCircleOutlined,
-} from "@material-ui/icons";
+import { ArrowDropDownCircleOutlined } from "@material-ui/icons";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
@@ -43,13 +41,9 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
           <button onClick={handleShowMoreButton} className="">
             {
               <ArrowDropDownCircleOutlined
-                className="text-4xl -mt-6 bg-white"
-                //tailwind classes not working here. mui overwrite it
-                style={
-                  !showMore
-                    ? { fontSize: "2.5rem" }
-                    : { fontSize: "2.5rem", transform: "rotate(180deg)" }
-                }
+                className={`-mt-6 bg-white + ${showMore ? "transform rotate-180" : ''}`}
+                fontSize="large"
+
               />
             }
           </button>

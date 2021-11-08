@@ -9,6 +9,7 @@ import {
 } from "../types/translate";
 import { EquipmentTranslateWrapper } from "../components/context/EquipmentTranslateContext";
 import { TranslateWrapper } from "../components/context/TranslateContext";
+import { composeWrappers } from "../util/composeWrappers";
 
 const EquipmentGalleryPage = ({
   equipment,
@@ -18,15 +19,27 @@ const EquipmentGalleryPage = ({
   equipment: Equipment[];
   translateUIMap: TranslateUILanguageMap;
   translateEquipmentMap: TranslateEquipmentLanguageMap;
-}>) => (
-  <TranslateWrapper translateMap={translateUIMap}>
-    <Layout>
+}>) => {
+  const MasterProvider = composeWrappers([
+    (props) => (
+      <TranslateWrapper translateMap={translateUIMap}>
+        {props.children}
+      </TranslateWrapper>
+    ),
+    (props) => (
       <EquipmentTranslateWrapper translateMap={translateEquipmentMap}>
-        <EquipmentPage equipment={equipment} />
+        {props.children}
       </EquipmentTranslateWrapper>
-    </Layout>
-  </TranslateWrapper>
-);
+    ),
+    (props) => <Layout>{props.children}</Layout>,
+  ]);
+
+  return (
+    <MasterProvider>
+      <EquipmentPage equipment={equipment} />
+    </MasterProvider>
+  );
+};
 
 export const getStaticProps = async () => {
   var workbook = DBSingleton.getInstance();
