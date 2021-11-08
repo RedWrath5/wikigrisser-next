@@ -69,19 +69,11 @@ export function TalentSection({
         {bondRequirments && (
           <>
             <p className="pt-5 font-bold">{t("Bond Requirement")}:</p>
-            <li>{`${t("Glory")}: ${t("Level")} 5 ${t("Intimacy")}`}</li>
-            <li>{`${t("Light")}: ${t("Level")} 10 ${t(
-              "Intimacy"
-            )} + ${bond2}`}</li>
-            <li>{`${t("Honor")}: ${t("Level")} 15 ${t(
-              "Intimacy"
-            )} + ${bond3}`}</li>
-            <li>{`${t("Toughness")}: ${t("Level")} 23 ${t(
-              "Intimacy"
-            )} + ${bond4}`}</li>
-            <li>{`${t("Strength")}: ${t("Level")} 25 ${t(
-              "Intimacy"
-            )} + ${bond5}`}</li>
+            <li>{`${t("Glory: Level 5 Intimacy.")}`}</li>
+            <li>{`${t("Light: Level 10 Intimacy")} + ${bond2}`}</li>
+            <li>{`${t("Honor: Level 15 Intimacy")} + ${bond3}`}</li>
+            <li>{`${t("Toughness: Level 23 Intimacy")} + ${bond4}`}</li>
+            <li>{`${t("Strength: Level 25 Intimacy")} + ${bond5}`}</li>
           </>
         )}
 

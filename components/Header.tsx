@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { MenuItem, Select } from "@material-ui/core";
+import { FormControl, MenuItem, Select } from "@material-ui/core";
 import { SettingsOutlined } from "@material-ui/icons";
 import { useTranslateContext } from "./context/TranslateContext";
 
@@ -110,6 +110,7 @@ function SettingsMenu() {
     >
       <p className="text-gray-300 font-bold">{t("Language")}</p>
       <Select
+        MenuProps={{ disableScrollLock: true }}
         value={language}
         onChange={handleChangeLanguage}
         style={{ color: "white", padding: 0 }}
