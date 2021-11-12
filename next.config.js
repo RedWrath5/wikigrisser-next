@@ -1,12 +1,6 @@
-const isGhPages = process.env.ENV === "gh-pages";
-
-console.log("-------------------------------------------------");
-console.log("isGhPages", isGhPages);
-console.log("-------------------------------------------------");
-
 module.exports = {
-  basePath: isGhPages ? "/wikigrisser-next" : "",
-  assetPrefix: isGhPages ? "/wikigrisser-next" : "",
+  basePath: "",
+  assetPrefix: "",
   future: {
     webpack5: true,
   },
