@@ -1,9 +1,8 @@
-// const isProd = process.env.NODE_ENV === "production";
-const isProd = false;
+const isGhPages = process.env.ENV === "gh-pages";
 
 module.exports = {
-  basePath: isProd ? "/wikigrisser-next" : "",
-  assetPrefix: isProd ? "/wikigrisser-next" : "",
+  basePath: isGhPages ? "/wikigrisser-next" : "",
+  assetPrefix: isGhPages ? "/wikigrisser-next" : "",
   future: {
     webpack5: true,
   },
