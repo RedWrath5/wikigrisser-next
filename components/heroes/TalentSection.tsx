@@ -74,7 +74,7 @@ export function TalentSection({
           <>
             <p className="pt-5 font-bold">Related Bonds</p>
             {bondRequirments.relatedBonds.map((bond) => (
-              <li>
+              <li key={bond.name}>
                 <a href={"/heroes/" + bond.name} className="underline">
                   {bond.prettyName}
                 </a>
