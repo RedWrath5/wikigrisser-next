@@ -332,9 +332,7 @@ export class HeroLoader extends Loader<HeroMap> {
       this.maxStats.find(
         (stats) => stats.class === name && stats.name === heroName
       )?.stats || null;
-    const classInstance = Object.entries(this.classesMap).find(
-      (entry) => entry[0].indexOf(name) > -1
-    )?.[1];
+    const classInstance = this.classesMap[name];
 
     let classes: Class[] = [
       {
