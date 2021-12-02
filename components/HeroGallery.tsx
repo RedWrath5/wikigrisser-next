@@ -80,9 +80,13 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   }
 
   function search(text: string) {
-    let heroArray = Object.values(heroMap).filter((hero) =>
-      hero.name.toLocaleLowerCase().includes(text.toLocaleLowerCase())
-    );
+    let heroArray = Object.values(heroMap).filter((hero) => {
+      for (const keyword of hero.searchKeywords) {
+        if (keyword.includes(text.toLocaleLowerCase())) return true;
+      }
+      return false;
+    });
+
     setFilteredAndSortedHeroes(heroArray);
   }
 

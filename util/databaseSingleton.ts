@@ -75,7 +75,15 @@ export class DBSingleton {
     russian: new TranslateUILoader(this.russian).load(),
   };
 
-  constructor() {}
+  private languages = ["russian"];
+
+  constructor() {
+    this.heroMap = this._addSearchKeywordsIntoHero({
+      heroMap: this.heroMap,
+      translateHeroMap: this.translateHeroMap,
+      languages: this.languages,
+    });
+  }
 
   getWorkBook() {
     return this.workBook;
@@ -149,6 +157,29 @@ export class DBSingleton {
 
   getTranslateUIMap() {
     return this.translateUIMap;
+  }
+
+  private _addSearchKeywordsIntoHero({
+    heroMap,
+    languages,
+    translateHeroMap,
+  }: {
+    heroMap: HeroMap;
+    languages: string[];
+    translateHeroMap: TranslateHeroLanguageMap<HeroMap>;
+  }) {
+    for (const key of Object.keys(heroMap)) {
+      heroMap[key].searchKeywords.push(key);
+
+      for (const language of languages) {
+        if (translateHeroMap[language][key]?.name)
+          heroMap[key].searchKeywords.push(
+            translateHeroMap[language][key].name.toLowerCase()
+          );
+      }
+    }
+
+    return heroMap;
   }
 }
 

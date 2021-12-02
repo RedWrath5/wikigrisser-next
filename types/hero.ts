@@ -1,4 +1,4 @@
-import {Material} from "./spreedsheet";
+import { Material } from "./spreedsheet";
 
 export interface Hero {
   name: string;
@@ -14,6 +14,7 @@ export interface Hero {
   soldierBonus: SoldierBonus | null;
   exclusiveEquipment: Equipment | null;
   skinCount: number;
+  searchKeywords: string[];
 }
 
 export interface RelatedBond {
@@ -187,5 +188,5 @@ export interface TrainingMaterial {
 }
 
 export interface SkillsMap {
-    [name: string]: Skill;
+  [name: string]: Skill;
 }

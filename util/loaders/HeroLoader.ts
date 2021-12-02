@@ -1,15 +1,16 @@
 import { WorkBook } from "xlsx/types";
 import {
-    BondRequirements,
-    Class,
-    Equipment,
-    Factions,
-    Hero,
-    Skill, SkillsMap,
-    SoldierBonus,
-    SPClass,
-    Talent,
-    UnitType,
+  BondRequirements,
+  Class,
+  Equipment,
+  Factions,
+  Hero,
+  Skill,
+  SkillsMap,
+  SoldierBonus,
+  SPClass,
+  Talent,
+  UnitType,
 } from "../../types/hero";
 import { MaxStatsWorkbookRow } from "../../types/spreedsheet";
 import { HERO_COLUMN_HEADERS, HERO_COLUMN_IDS } from "../columnHeaders";
@@ -176,6 +177,7 @@ export class HeroLoader extends Loader<HeroMap> {
       exclusiveEquipment,
       spClass,
       skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
+      searchKeywords: [],
     };
   };
 
@@ -245,10 +247,9 @@ export class HeroLoader extends Loader<HeroMap> {
     heroColumnMappings: HERO_COLUMN_IDS
   ): Class {
     const soldiers =
-      this.getHeroRowValue(
-        rowNumber,
-        heroColumnMappings.trainingGroundUnlocks
-      )?.split(",").map(v=>v.trim()) || [];
+      this.getHeroRowValue(rowNumber, heroColumnMappings.trainingGroundUnlocks)
+        ?.split(",")
+        .map((v) => v.trim()) || [];
     const name = this.getHeroRowValue(
       rowNumber,
       heroColumnMappings.startingClassName
