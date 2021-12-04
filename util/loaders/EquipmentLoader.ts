@@ -32,6 +32,7 @@ export class EquipmentLoader extends Loader<Equipment[]> {
         stat1: this.getEquipmentRowValue(rowCounter, ecm.stat1),
         stat2: this.getEquipmentRowValue(rowCounter, ecm.stat2),
         type: this.getEquipmentRowValue(rowCounter, ecm.type) as any,
+        searchKeywords: [],
       };
       equipmentArr.push(equipment);
       rowCounter++;

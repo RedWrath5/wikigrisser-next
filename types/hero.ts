@@ -116,6 +116,7 @@ export interface Equipment {
   effect: string;
   stat1: string | null;
   stat2: string | null;
+  searchKeywords?: string[];
 }
 
 export enum EquipmentSlot {
@@ -150,6 +151,7 @@ export interface Soldier {
   baseDef: number;
   baseMdef: number;
   trainingSkill: TrainingSkill | null;
+  searchKeywords: string[];
 }
 
 export interface TrainingSkillMap {

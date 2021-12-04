@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FormControl, MenuItem, Select } from "@material-ui/core";
+import { MenuItem, Select } from "@material-ui/core";
 import { SettingsOutlined } from "@material-ui/icons";
 import { useTranslateContext } from "./context/TranslateContext";
 
@@ -105,8 +105,8 @@ function SettingsMenu() {
 
   return (
     <div
-      className="bg-black fixed right-0 w-11/12 sm:w-1/12 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2"
-      style={{ top: "62px" }}
+      className="bg-black shadow-2xl fixed right-0 w-11/12 sm:w-48 h-screen text-white px-4 sm:px-6 flex flex-col items-start sm:items-end gap-2"
+      style={{ top: "60px" }}
     >
       <p className="text-gray-300 font-bold">{t("Language")}</p>
       <Select

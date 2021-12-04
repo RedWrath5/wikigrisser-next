@@ -24,6 +24,9 @@ import { TranslateHeroLoader } from "./loaders/TranslateHeroLoader";
 import { TranslateEquipmentLoader } from "./loaders/TranslateEquipmentLoader";
 import { TranslateClassLoader } from "./loaders/TranslateClassLoader";
 import { TranslateUILoader } from "./loaders/TranslateUILoader";
+import { SearchKeywordsToHeroTransformer } from "./transformers/SearchKeywordsToHeroTransformer";
+import { SearchKeywordsToEquipmentTransformer } from "./transformers/SearchKeywordsToEquipmentTransformer";
+import { SearchKeywordsToSoldierTransformer } from "./transformers/SearchKeywordsToSoldierTransformer";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -78,11 +81,23 @@ export class DBSingleton {
   private languages = ["russian"];
 
   constructor() {
-    this.heroMap = this._addSearchKeywordsIntoHero({
-      heroMap: this.heroMap,
-      translateHeroMap: this.translateHeroMap,
-      languages: this.languages,
-    });
+    this.heroMap = new SearchKeywordsToHeroTransformer(
+      this.heroMap,
+      this.translateHeroMap,
+      this.languages
+    ).transform();
+
+    this.equipment = new SearchKeywordsToEquipmentTransformer(
+      this.equipment,
+      this.translateEquipmentMap,
+      this.languages
+    ).transform();
+
+    this.soldier = new SearchKeywordsToSoldierTransformer(
+      this.soldier,
+      this.translateSoldiersMap,
+      this.languages
+    ).transform();
   }
 
   getWorkBook() {
@@ -157,29 +172,6 @@ export class DBSingleton {
 
   getTranslateUIMap() {
     return this.translateUIMap;
-  }
-
-  private _addSearchKeywordsIntoHero({
-    heroMap,
-    languages,
-    translateHeroMap,
-  }: {
-    heroMap: HeroMap;
-    languages: string[];
-    translateHeroMap: TranslateHeroLanguageMap<HeroMap>;
-  }) {
-    for (const key of Object.keys(heroMap)) {
-      heroMap[key].searchKeywords.push(key);
-
-      for (const language of languages) {
-        if (translateHeroMap[language][key]?.name)
-          heroMap[key].searchKeywords.push(
-            translateHeroMap[language][key].name.toLowerCase()
-          );
-      }
-    }
-
-    return heroMap;
   }
 }
 

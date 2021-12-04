@@ -11,7 +11,7 @@ import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
 import { EquipmentSection } from "./EquipmentSection";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { TransitionGroup } from "react-transition-group";
-import {useTranslateContext} from "../context/TranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   const { t } = useTranslateContext();
@@ -59,9 +59,14 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
 
   function search(text: string) {
     const filteredAndGrouped = equipment
-      .filter((equip) =>
-        equip.name.toLowerCase().includes(text.toLocaleLowerCase())
-      )
+      .filter((equip) => {
+        if (!equip.searchKeywords) return false;
+
+        for (const keyword of equip.searchKeywords) {
+          if (keyword.includes(text.toLocaleLowerCase())) return true;
+        }
+        return false;
+      })
       .reduce(
         (accumlator, equip) => {
           accumlator[equip.type ?? ""].push(equip);
@@ -89,6 +94,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   ) => {
     setSlot(event.target.value as EquipmentSlot);
   };
+
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
