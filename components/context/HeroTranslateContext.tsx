@@ -52,9 +52,9 @@ export function HeroTranslateWrapper({
           description: threeCostSkillMap[name].description || "",
         };
     }
-    // Just for TS check. He dont know, we always find what we need.
+
     return {
-      name: "",
+      name: name.toString(),
       description: "",
     };
   };

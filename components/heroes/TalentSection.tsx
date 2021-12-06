@@ -20,13 +20,21 @@ export function TalentSection({
   const { t } = useTranslateContext();
   const { talentName, talentDescription, bond2, bond3, bond4, bond5 } =
     getHeroInfo(name);
+  let spTalentName = "",
+    spTalentDescription = "";
 
   let maxStats = findMaxStats(startingClass);
-  if (spClass)
+  if (spClass) {
     maxStats = maxStats.concat({
       className: spClass.name,
       stats: spClass.maxStats || STATSTEMP,
     });
+
+    const spTranslate = getHeroInfo(spClass.name.toLowerCase());
+    spTalentDescription = spTranslate.talentDescription;
+    spTalentName = spTranslate.talentName;
+  }
+  
   return (
     <div className="mb-2 p-4 grid grid-cols-12 gap-2">
       <div className="col-span-12 sm:col-span-1 text-center align-middle">
@@ -62,8 +70,10 @@ export function TalentSection({
         <p className="whitespace-pre-line">{talentDescription}</p>
         {spClass && (
           <>
-            <p className="text-2xl mt-3">SP Talent: {spClass.talent?.name}</p>
-            <p className="whitespace-pre-line">{spClass.talent?.description}</p>
+            <p className="text-2xl mt-3">
+              {t("SP Talent")}: {spTalentName}
+            </p>
+            <p className="whitespace-pre-line">{spTalentDescription}</p>
           </>
         )}
         {bondRequirments && (

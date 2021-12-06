@@ -4,7 +4,7 @@ import {
   TranslateSoldiers,
   TranslateSoldiersLanguageMap,
 } from "../../types/translate";
-import {useTranslateContext} from "./TranslateContext";
+import { useTranslateContext } from "./TranslateContext";
 
 export interface SoldierTranslateContextInterface {
   getSoldierInfo: (name: string) => TranslateSoldiers;
@@ -34,9 +34,9 @@ export function SoldierTranslateWrapper({
           effect: soldierMap[name].effect,
         };
     }
-    // Just for TS check. He dont know, we always find what we need.
+
     return {
-      name: "",
+      name: name,
       effect: "",
     };
   };
