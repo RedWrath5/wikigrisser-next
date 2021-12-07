@@ -4,12 +4,13 @@ import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
 import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
 import { ArrowDropDownCircleOutlined } from "@material-ui/icons";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
   const { getSoldierInfo } = useSoldierTranslateContext();
   const { name, effect } = getSoldierInfo(soldier.name);
-
+  const { t } = useTranslateContext();
   const handleShowMoreButton = () => {
     setShowMore(!showMore);
   };
@@ -27,11 +28,11 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
         <p className="text-2xl">{name}</p>
         <p>
-          HP: {soldier.baseHp} / ATK: {soldier.baseAtk} / DEF: {soldier.baseDef}{" "}
-          / MDEF: {soldier.baseMdef}
+          {t("HP")}: {soldier.baseHp} / {t("ATK")}: {soldier.baseAtk} /{" "}
+          {t("DEF")}: {soldier.baseDef} / {t("MDEF")}: {soldier.baseMdef}
         </p>
         <p>
-          Move: {soldier.move} / Range: {soldier.range}
+          {t("Move")}: {soldier.move} / {t("Range")}: {soldier.range}
         </p>
         <p className="whitespace-pre-line">{effect}</p>
       </div>
@@ -41,9 +42,10 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
           <button onClick={handleShowMoreButton} className="">
             {
               <ArrowDropDownCircleOutlined
-                className={`-mt-6 bg-white + ${showMore ? "transform rotate-180" : ''}`}
+                className={`-mt-6 bg-white + ${
+                  showMore ? "transform rotate-180" : ""
+                }`}
                 fontSize="large"
-
               />
             }
           </button>

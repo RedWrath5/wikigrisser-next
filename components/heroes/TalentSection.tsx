@@ -1,5 +1,6 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
+import { useClassTranslateContext } from "../context/ClassTranslateContext";
 import { useHeroTranslateContext } from "../context/HeroTranslateContext";
 import { useTranslateContext } from "../context/TranslateContext";
 
@@ -17,6 +18,7 @@ export function TalentSection({
   hero: Hero;
 }) {
   const { getHeroInfo, getRelatedBond } = useHeroTranslateContext();
+  const { getClassInfo } = useClassTranslateContext();
   const { t } = useTranslateContext();
   const { talentName, talentDescription, bond2, bond3, bond4, bond5 } =
     getHeroInfo(name);
@@ -34,7 +36,7 @@ export function TalentSection({
     spTalentDescription = spTranslate.talentDescription;
     spTalentName = spTranslate.talentName;
   }
-  
+
   return (
     <div className="mb-2 p-4 grid grid-cols-12 gap-2">
       <div className="col-span-12 sm:col-span-1 text-center align-middle">
@@ -66,7 +68,9 @@ export function TalentSection({
         )}
       </div>
       <div className="col-span-12 sm:col-span-9 pt-2">
-        <p className="text-2xl">Talent: {talentName}</p>
+        <p className="text-2xl">
+          {t("Talent")}: {talentName}
+        </p>
         <p className="whitespace-pre-line">{talentDescription}</p>
         {spClass && (
           <>
@@ -108,17 +112,20 @@ export function TalentSection({
         {maxStats.length > 0 && (
           <p className="pt-5 font-bold">{t("Level 70 Max Stats")}:</p>
         )}
-        {maxStats.map((maxStats) => (
-          <li key={maxStats.className}>
-            <span>{t(maxStats.className)}: </span>
-            <span>
-              {t("HP")}: {maxStats.stats.hp} | {t("ATK")}: {maxStats.stats.atk}{" "}
-              | {t("INT")}: {maxStats.stats.int} | {t("DEF")}:{" "}
-              {maxStats.stats.def} | {t("MDEF")}:{maxStats.stats.mdef} |{" "}
-              {t("SKL")}: {maxStats.stats.skill}
-            </span>
-          </li>
-        ))}
+        {maxStats.map((maxStats) => {
+          const className = getClassInfo(maxStats.className);
+          return (
+            <li key={maxStats.className}>
+              <span>{t(className)}: </span>
+              <span>
+                {t("HP")}: {maxStats.stats.hp} | {t("ATK")}:{" "}
+                {maxStats.stats.atk} | {t("INT")}: {maxStats.stats.int} |{" "}
+                {t("DEF")}: {maxStats.stats.def} | {t("MDEF")}:
+                {maxStats.stats.mdef} | {t("SKL")}: {maxStats.stats.skill}
+              </span>
+            </li>
+          );
+        })}
         {soldierBonus && (
           <>
             <p className="pt-5 font-bold">{t("Soldier Bonus")}:</p>

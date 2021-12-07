@@ -55,7 +55,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex flex-col">
         <div className="flex flex-wrap justify-center">
           <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label={t("Class & Soldiers")} value="main" />
+            <Tab label={t("Classes & Soldiers")} value="main" />
             <Tab label={t("Materials")} value="materials" />
           </Tabs>
         </div>

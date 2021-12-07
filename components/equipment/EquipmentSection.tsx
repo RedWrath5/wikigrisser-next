@@ -1,6 +1,7 @@
 import React from "react";
 import { Equipment } from "../../types/hero";
 import { useEquipmentTranslateContext } from "../context/EquipmentTranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function EquipmentSection({
   equipment,
@@ -11,6 +12,7 @@ export function EquipmentSection({
 }) {
   const { getEquipmentInfo } = useEquipmentTranslateContext();
   const { name, effect } = getEquipmentInfo(equipment);
+  const { t } = useTranslateContext();
   return (
     <>
       <div className="grid grid-cols-12 items-center mt-2 mb-2">
@@ -26,7 +28,7 @@ export function EquipmentSection({
         </div>
         <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
           <p className="text-2xl">
-            {isExclusive && "Exclusive Equipment: "}
+            {isExclusive && t("Exclusive Equipment") + ": "}
             {name}
           </p>
           <p className="whitespace-pre-line">{effect}</p>
