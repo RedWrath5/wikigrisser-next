@@ -36,6 +36,7 @@ export class SoldierLoader extends Loader<Soldier[]> {
         baseHp: +this.getSoldierRowValue(rowCounter, scm.baseHp),
         baseMdef: +this.getSoldierRowValue(rowCounter, scm.baseMdef),
         trainingSkill: null,
+        moveType: this.getSoldierRowValue(rowCounter, scm.moveType),
       };
       soldierArr.push(soldier);
       rowCounter++;

@@ -77,6 +77,7 @@ export const SOLDIER_COLUMN_HEADERS = {
   baseAtk: ["Base\nATK"],
   baseDef: ["Base\nDEF"],
   baseMdef: ["Base\nMDEF"],
+  moveType: ["Move Type"],
 };
 
 export const TRAINING_HEADERS = {

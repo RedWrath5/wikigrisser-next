@@ -150,6 +150,7 @@ export interface Soldier {
   baseDef: number;
   baseMdef: number;
   trainingSkill: TrainingSkill | null;
+  moveType: string;
 }
 
 export interface TrainingSkillMap {
