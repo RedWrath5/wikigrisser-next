@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Equipment } from "../../types/hero";
 
-export function EquipmentSection({
-  equipment,
-  isExclusive,
-}: {
-  equipment: Equipment;
-  isExclusive: boolean;
-}) {
+export function EquipmentSection({ equipment }: { equipment: Equipment }) {
   return (
     <>
       <div className="grid grid-cols-12 items-center mt-2 mb-2">
@@ -18,11 +12,7 @@ export function EquipmentSection({
           />
         </div>
         <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
-          <p className="text-2xl mb-2">
-            {isExclusive && "Exclusive Equipment: "}
-            {equipment.name}
-          </p>
-
+          <p className="text-2xl mb-2">{equipment.name}</p>
           <EffectList equipment={equipment} />
         </div>
       </div>

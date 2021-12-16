@@ -1,5 +1,4 @@
-import { ClassWorkbookRow, Material } from "./spreedsheet";
-import { ANIKI_DROP_HEADERS } from "../util/columnHeaders";
+import { Material } from "./spreedsheet";
 
 export interface Hero {
   name: string;
@@ -13,7 +12,7 @@ export interface Hero {
   heroImageUrl?: string;
   bondRequirments: BondRequirements | null;
   soldierBonus: SoldierBonus | null;
-  exclusiveEquipment: Equipment | null;
+  exclusiveEquipment: ExclusiveEquipment | null;
   skinCount: number;
 }
 
@@ -117,6 +116,12 @@ export interface Equipment {
   stat1: EquipmentStat | null;
   stat2: EquipmentStat | null;
   notes: string;
+}
+
+export interface ExclusiveEquipment {
+  name: string;
+  slot: string;
+  effect: string;
 }
 
 export interface EquipmentStat {

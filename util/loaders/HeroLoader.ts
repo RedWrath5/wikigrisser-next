@@ -2,7 +2,7 @@ import { WorkBook } from "xlsx/types";
 import {
   BondRequirements,
   Class,
-  Equipment,
+  ExclusiveEquipment,
   Factions,
   Hero,
   Skill,
@@ -151,13 +151,10 @@ export class HeroLoader extends Loader<HeroMap> {
 
     if (soldierBonus.hp === undefined) soldierBonus = null;
 
-    let exclusiveEquipment: Equipment | null = {
+    let exclusiveEquipment: ExclusiveEquipment | null = {
       name: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentName),
       slot: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentType) as any,
       effect: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentEffect),
-      stat1: null,
-      stat2: null,
-      type: "",
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
