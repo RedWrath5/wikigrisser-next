@@ -113,15 +113,34 @@ export interface Equipment {
   name: string;
   slot: EquipmentSlot;
   type: EquipmentType;
-  effect: string;
-  stat1: string | null;
-  stat2: string | null;
+  effect: EquipmentEffect;
+  stat1: EquipmentStat | null;
+  stat2: EquipmentStat | null;
+  notes: string;
+}
+
+export interface EquipmentStat {
+  type: string;
+  lvl1: string;
+  lvl10: string;
+  lvl20: string;
+  lvl30: string;
+  lvl40: string;
+  lvl50: string;
+}
+export interface EquipmentEffect {
+  lvl1: string;
+  lvl10: string;
+  lvl20: string;
+  lvl30: string;
+  lvl40: string;
+  lvl50: string;
 }
 
 export enum EquipmentSlot {
-  Head = "Head",
-  Body = "Body",
   Weapon = "Weapon",
+  Body = "Body",
+  Head = "Head",
   Accessory = "Accessory",
 }
 
