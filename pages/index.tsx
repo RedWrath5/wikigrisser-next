@@ -18,7 +18,7 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
   });
 
   const cnPatch: Patch = majorPatches.pop()!;
-
+  console.log(new Date(globalPatch.releaseDate));
   return (
     <Layout>
       <div className="flex flex-grow flex-col bg-black">
@@ -32,8 +32,22 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
         </div>
 
         <div className="flex flex-col justify-center text-center">
-          <PatchSection patch={globalPatch}></PatchSection>
-          <PatchSection patch={cnPatch}></PatchSection>
+          <PatchSection
+            patch={globalPatch}
+            header={`Most Recent Global Patch (${
+              !isNaN(Date.parse(globalPatch.releaseDate))
+                ? new Date(globalPatch.releaseDate).toLocaleDateString()
+                : globalPatch.releaseDate
+            })`}
+          />
+          <PatchSection
+            patch={cnPatch}
+            header={`Most Recent CN Patch (${
+              !isNaN(Date.parse(cnPatch.cnReleaseDate))
+                ? new Date(cnPatch.cnReleaseDate).toLocaleDateString()
+                : cnPatch.cnReleaseDate
+            })`}
+          />
         </div>
       </div>
     </Layout>

@@ -137,7 +137,7 @@ export const ANIKI_DROP_HEADERS = {
 
 export const PATCHES_HEADERS = {
   id: ["ID"],
-  date: ["Date"],
+  cnReleaseDate: ["CN Release Date"],
   info: ["Info"],
   globalReleaseDate: ["Global Release Date"],
   patchType: ["Patch Type (major/minor)"],
