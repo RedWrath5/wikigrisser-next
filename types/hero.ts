@@ -41,6 +41,7 @@ export interface Class {
 
 export interface SPClass extends Class {
   talent?: Talent;
+  soldierBonus: SoldierBonus;
 }
 
 export interface Skill {
@@ -48,9 +49,9 @@ export interface Skill {
   description?: string;
   descriptionMarkdown?: string;
   cost: "•" | "••" | "•••";
-  cd?: number;
-  range?: number;
-  span?: number;
+  cd?: string;
+  range?: string;
+  span?: string;
 }
 
 export interface HeroStats {

@@ -74,7 +74,7 @@ export function TalentSection({
           <>
             <p className="pt-5 font-bold">Related Bonds</p>
             {bondRequirments.relatedBonds.map((bond) => (
-              <li key={bond.name}>
+              <li key={bond.name + bond.text}>
                 <a href={"/heroes/" + bond.name} className="underline">
                   {bond.prettyName}
                 </a>
@@ -88,23 +88,54 @@ export function TalentSection({
         {maxStats.length > 0 && (
           <p className="pt-5 font-bold">Level 70 Max Stats:</p>
         )}
-        {maxStats.map((maxStats) => (
-          <li key={maxStats.className}>
-            <span>{maxStats.className}: </span>
-            <span>
-              HP: {maxStats.stats.hp} | ATK: {maxStats.stats.atk} | INT:{" "}
-              {maxStats.stats.int} | DEF: {maxStats.stats.def} | MDEF:
-              {maxStats.stats.mdef} | SKL: {maxStats.stats.skill}
-            </span>
-          </li>
-        ))}
+        <table>
+          <tbody>
+            {maxStats.map((maxStats) => (
+              <tr key={maxStats.className} className="list-disc">
+                <td>
+                  <li className="mr-2">{maxStats.className}</li>
+                </td>
+                <td>
+                  HP: {maxStats.stats.hp} | ATK: {maxStats.stats.atk} | INT:{" "}
+                  {maxStats.stats.int} | DEF: {maxStats.stats.def} | MDEF:
+                  {maxStats.stats.mdef} | SKL: {maxStats.stats.skill}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
         {soldierBonus && (
           <>
             <p className="pt-5 font-bold">Soldier Bonus:</p>
-            <li>
-              HP: {soldierBonus.hp}% | ATK: {soldierBonus.atk}% | DEF:{" "}
-              {soldierBonus.def}% | MDEF: {soldierBonus.mdef}%
-            </li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <li className="mr-2">
+                      {maxStats
+                        .map((stat) => stat.className)
+                        .filter((className) => className !== spClass?.name)
+                        .join(" / ")}
+                    </li>
+                  </td>
+                  <td>
+                    HP: {soldierBonus.hp}% | ATK: {soldierBonus.atk}% | DEF:{" "}
+                    {soldierBonus.def}% | MDEF: {soldierBonus.mdef}%
+                  </td>
+                </tr>
+                {spClass && (
+                  <tr>
+                    <td>
+                      <li className="mr-2">{spClass.name}</li>
+                    </td>
+                    <td>
+                      {`HP: ${spClass.soldierBonus.hp}% | ATK: ${spClass.soldierBonus.atk}% | DEF: ${soldierBonus.def}% | MDEF: ${soldierBonus.mdef}%`}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </>
         )}
       </div>

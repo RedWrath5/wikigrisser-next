@@ -116,9 +116,9 @@ export class HeroLoader extends Loader<HeroMap> {
 
     let threeCostSkill: Skill | null = {
       name: this.getHeroRowValue(rowNumber, hcm.awakeningSkillName),
-      cd: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillCD),
-      range: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillRange),
-      span: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillSpan),
+      cd: this.getHeroRowValue(rowNumber, hcm.awakeningSkillCD),
+      range: this.getHeroRowValue(rowNumber, hcm.awakeningSkillRange),
+      span: this.getHeroRowValue(rowNumber, hcm.awakeningSkillSpan),
       description: this.getHeroRowValue(rowNumber, hcm.awakeningSkillEffect),
       cost: "•••",
     };
@@ -385,6 +385,12 @@ export class HeroLoader extends Loader<HeroMap> {
       children: [],
       maxStats,
       materials: [],
+      soldierBonus: {
+        hp: this.getworkBookSpClassRowValue(rowNumber, "AC"),
+        atk: this.getworkBookSpClassRowValue(rowNumber, "AD"),
+        def: this.getworkBookSpClassRowValue(rowNumber, "AE"),
+        mdef: this.getworkBookSpClassRowValue(rowNumber, "AF"),
+      },
     };
   }
 }
