@@ -7,7 +7,6 @@ export function PatchSection({
   patch: Patch;
   header: string;
 }) {
-  console.log(patch);
   return (
     <div className="justify-center text-white grid grid-cols-2 items-center pl-5 pr-5 pb-5">
       <img
