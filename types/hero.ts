@@ -109,9 +109,7 @@ export enum UnitType {
   Dragon = "Dragon",
 }
 
-export interface Equipment {
-  name: string;
-  slot: EquipmentSlot;
+export interface Equipment extends BaseEquipment {
   type: EquipmentType;
   effect: EquipmentEffect;
   stat1: EquipmentStat | null;
@@ -119,22 +117,20 @@ export interface Equipment {
   notes: string;
 }
 
-export interface ExclusiveEquipment {
-  name: string;
-  slot: string;
+export interface ExclusiveEquipment extends BaseEquipment {
   effect: string;
 }
 
-export interface EquipmentStat {
-  type: string;
-  lvl1: string;
-  lvl10: string;
-  lvl20: string;
-  lvl30: string;
-  lvl40: string;
-  lvl50: string;
+interface BaseEquipment {
+  name: string;
+  slot: EquipmentSlot;
 }
-export interface EquipmentEffect {
+export interface EquipmentStat extends EquipmentLevelBased {
+  type: string;
+}
+export interface EquipmentEffect extends EquipmentLevelBased {}
+
+interface EquipmentLevelBased {
   lvl1: string;
   lvl10: string;
   lvl20: string;

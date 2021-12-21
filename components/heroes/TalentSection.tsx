@@ -1,5 +1,6 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
+import SoldierBonusSection from "./SoldierBonusSection";
 
 export function TalentSection({
   hero: {
@@ -110,29 +111,19 @@ export function TalentSection({
             <p className="pt-5 font-bold">Soldier Bonus:</p>
             <table>
               <tbody>
-                <tr>
-                  <td>
-                    <li className="mr-2">
-                      {maxStats
-                        .map((stat) => stat.className)
-                        .filter((className) => className !== spClass?.name)
-                        .join(" / ")}
-                    </li>
-                  </td>
-                  <td>
-                    HP: {soldierBonus.hp}% | ATK: {soldierBonus.atk}% | DEF:{" "}
-                    {soldierBonus.def}% | MDEF: {soldierBonus.mdef}%
-                  </td>
-                </tr>
+                <SoldierBonusSection
+                  name={maxStats
+                    .map((stat) => stat.className)
+                    .filter((className) => className !== spClass?.name)
+                    .join(" / ")}
+                  bonus={soldierBonus}
+                />
+
                 {spClass && (
-                  <tr>
-                    <td>
-                      <li className="mr-2">{spClass.name}</li>
-                    </td>
-                    <td>
-                      {`HP: ${spClass.soldierBonus.hp}% | ATK: ${spClass.soldierBonus.atk}% | DEF: ${soldierBonus.def}% | MDEF: ${soldierBonus.mdef}%`}
-                    </td>
-                  </tr>
+                  <SoldierBonusSection
+                    name={spClass.name}
+                    bonus={spClass.soldierBonus}
+                  />
                 )}
               </tbody>
             </table>

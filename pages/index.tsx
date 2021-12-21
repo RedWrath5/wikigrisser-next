@@ -3,6 +3,7 @@ import { Layout } from "../components/Layout";
 import React from "react";
 import { DBSingleton, Patch, PatchMap } from "../util/databaseSingleton";
 import { PatchSection } from "../components/patch/PatchSection";
+import formatDate from "../util/formatDate.fn";
 
 const Home = ({ patchMap }: { patchMap: PatchMap }) => {
   const today = new Date().valueOf();
@@ -18,7 +19,6 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
   });
 
   const cnPatch: Patch = majorPatches.pop()!;
-  console.log(new Date(globalPatch.releaseDate));
   return (
     <Layout>
       <div className="flex flex-grow flex-col bg-black">
@@ -34,19 +34,15 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
         <div className="flex flex-col justify-center text-center">
           <PatchSection
             patch={globalPatch}
-            header={`Most Recent Global Patch (${
-              !isNaN(Date.parse(globalPatch.releaseDate))
-                ? new Date(globalPatch.releaseDate).toLocaleDateString()
-                : globalPatch.releaseDate
-            })`}
+            header={`Most Recent Global Patch (${formatDate(
+              globalPatch.releaseDate
+            )})`}
           />
           <PatchSection
             patch={cnPatch}
-            header={`Most Recent CN Patch (${
-              !isNaN(Date.parse(cnPatch.cnReleaseDate))
-                ? new Date(cnPatch.cnReleaseDate).toLocaleDateString()
-                : cnPatch.cnReleaseDate
-            })`}
+            header={`Most Recent CN Patch (${formatDate(
+              cnPatch.cnReleaseDate
+            )})`}
           />
         </div>
       </div>

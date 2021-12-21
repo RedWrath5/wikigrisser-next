@@ -21,16 +21,20 @@ export function EquipmentSection({ equipment }: { equipment: Equipment }) {
 }
 
 function EffectList({ equipment }: { equipment: Equipment }) {
-  const [currentKey, setCurrentKey] = useState("lvl50");
-  const [text, setText] = useState(equipment.effect.lvl50);
-  const [stat1, setStat1] = useState(equipment.stat1?.lvl50);
-  const [stat2, setStat2] = useState(equipment.stat2?.lvl50);
+  const [equipmentText, setEquipmentText] = useState({
+    key: "lvl50",
+    effect: equipment.effect.lvl50,
+    stat1: equipment.stat1?.lvl50,
+    stat2: equipment.stat2?.lvl50,
+  });
 
   const handleClick = (key: EffectKeys) => {
-    setText(equipment.effect[key]);
-    setCurrentKey(key);
-    equipment.stat1 && setStat1(equipment.stat1[key]);
-    equipment.stat2 && setStat2(equipment.stat2[key]);
+    setEquipmentText({
+      key: key,
+      effect: equipment.effect[key],
+      stat1: equipment.stat1 ? equipment.stat1[key] : undefined,
+      stat2: equipment.stat2 ? equipment.stat2[key] : undefined,
+    });
   };
 
   return (
@@ -44,7 +48,7 @@ function EffectList({ equipment }: { equipment: Equipment }) {
               height={28}
               width={28}
             />
-            {stat1}
+            {equipmentText.stat1}
           </>
         )}
 
@@ -56,18 +60,18 @@ function EffectList({ equipment }: { equipment: Equipment }) {
               height={28}
               width={28}
             />
-            {stat2}
+            {equipmentText.stat2}
           </>
         )}
       </div>
 
-      <p className="whitespace-pre-line">{text}</p>
+      <p className="whitespace-pre-line">{equipmentText.effect}</p>
       <p className="italic mb-1">{equipment.notes}</p>
       <ul className="flex justify-center sm:justify-start">
         {levelButtons.map((button) => (
           <li
             className={`mr-2 px-1 border-gray-600 border-2 rounded cursor-pointer ${
-              button.key === currentKey ? "font-bold" : ""
+              button.key === equipmentText.key ? "font-bold" : ""
             }`}
             key={button.key}
             onClick={() => handleClick(button.key)}

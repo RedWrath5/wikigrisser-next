@@ -1,18 +1,13 @@
 import { Patch } from "../../util/databaseSingleton";
+import formatDate from "../../util/formatDate.fn";
 
 export function PatchSectionSmall({ patch }: { patch: Patch }) {
   return (
     <div className="flex flex-col items-center">
       <div className="font-bold">
-        {`${
-          !isNaN(Date.parse(patch.releaseDate))
-            ? new Date(patch.releaseDate).toLocaleDateString()
-            : patch.releaseDate
-        } (CN ${
-          !isNaN(Date.parse(patch.cnReleaseDate))
-            ? new Date(patch.cnReleaseDate).toLocaleDateString()
-            : patch.cnReleaseDate
-        })`}
+        {`${formatDate(patch.releaseDate)} (CN ${formatDate(
+          patch.cnReleaseDate
+        )})`}
       </div>
       <img
         src={"/banners/" + patch.id + ".png"}
