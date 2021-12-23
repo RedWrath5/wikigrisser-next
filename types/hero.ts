@@ -1,5 +1,4 @@
-import { ClassWorkbookRow, Material } from "./spreedsheet";
-import { ANIKI_DROP_HEADERS } from "../util/columnHeaders";
+import { Material } from "./spreedsheet";
 
 export interface Hero {
   name: string;
@@ -13,7 +12,7 @@ export interface Hero {
   heroImageUrl?: string;
   bondRequirments: BondRequirements | null;
   soldierBonus: SoldierBonus | null;
-  exclusiveEquipment: Equipment | null;
+  exclusiveEquipment: ExclusiveEquipment | null;
   skinCount: number;
 }
 
@@ -42,6 +41,7 @@ export interface Class {
 
 export interface SPClass extends Class {
   talent?: Talent;
+  soldierBonus: SoldierBonus;
 }
 
 export interface Skill {
@@ -49,9 +49,9 @@ export interface Skill {
   description?: string;
   descriptionMarkdown?: string;
   cost: "•" | "••" | "•••";
-  cd?: number;
-  range?: number;
-  span?: number;
+  cd?: string;
+  range?: string;
+  span?: string;
 }
 
 export interface HeroStats {
@@ -109,19 +109,40 @@ export enum UnitType {
   Dragon = "Dragon",
 }
 
-export interface Equipment {
+export interface Equipment extends BaseEquipment {
+  type: EquipmentType;
+  effect: EquipmentEffect;
+  stat1: EquipmentStat | null;
+  stat2: EquipmentStat | null;
+  notes: string;
+}
+
+export interface ExclusiveEquipment extends BaseEquipment {
+  effect: string;
+}
+
+interface BaseEquipment {
   name: string;
   slot: EquipmentSlot;
-  type: EquipmentType;
-  effect: string;
-  stat1: string | null;
-  stat2: string | null;
+}
+export interface EquipmentStat extends EquipmentLevelBased {
+  type: string;
+}
+export interface EquipmentEffect extends EquipmentLevelBased {}
+
+interface EquipmentLevelBased {
+  lvl1: string;
+  lvl10: string;
+  lvl20: string;
+  lvl30: string;
+  lvl40: string;
+  lvl50: string;
 }
 
 export enum EquipmentSlot {
-  Head = "Head",
-  Body = "Body",
   Weapon = "Weapon",
+  Body = "Body",
+  Head = "Head",
   Accessory = "Accessory",
 }
 
@@ -150,6 +171,7 @@ export interface Soldier {
   baseDef: number;
   baseMdef: number;
   trainingSkill: TrainingSkill | null;
+  moveType: string;
 }
 
 export interface TrainingSkillMap {

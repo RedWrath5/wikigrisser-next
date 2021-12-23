@@ -14,20 +14,58 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
     <div className="grid grid-cols-12 items-center mt-2 mb-2 w-full">
       <div className="col-span-12 text-center sm:col-span-1">
         <img
-          src={"/soldier card/" + soldier.name + ".png"}
+          src={"/soldier sprite/" + soldier.name + ".png"}
           className="inline"
-          width={70}
-          height={70}
         ></img>
       </div>
-      <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
-        <p className="text-2xl">{soldier.name}</p>
-        <p>
-          HP: {soldier.baseHp} / ATK: {soldier.baseAtk} / DEF: {soldier.baseDef}{" "}
-          / MDEF: {soldier.baseMdef}
+      <div className="col-span-12 text-center sm:col-span-11 sm:text-left ml-2">
+        <p className="text-2xl mb-2">{soldier.name}</p>
+
+        <p className="flex text-xl mb-1">
+          <img
+            src={"/stats/HP.png"}
+            className="inline mr-1"
+            height={28}
+            width={28}
+          ></img>
+          {soldier.baseHp}
+          <img
+            src={"/stats/ATK.png"}
+            className="inline mr-1 ml-2"
+            height={28}
+            width={28}
+          ></img>
+          {soldier.baseAtk}
+          <img
+            src={"/stats/DEF.png"}
+            className="inline mr-1 ml-2"
+            height={28}
+            width={28}
+          ></img>
+          {soldier.baseDef}
+          <img
+            src={"/stats/MDEF.png"}
+            className="inline mr-1 ml-2"
+            height={28}
+            width={28}
+          ></img>
+          {soldier.baseMdef}
         </p>
-        <p>
-          Move: {soldier.move} / Range: {soldier.range}
+        <p className="flex lext-left text-xl mb-2">
+          <img
+            src={"/stats/Move_" + soldier.moveType + ".png"}
+            className="inline mr-1"
+            height={28}
+            width={28}
+          ></img>
+          {soldier.move}{" "}
+          <img
+            src={"/stats/Range.png"}
+            className="inline mr-1 ml-5"
+            height={28}
+            width={28}
+          ></img>
+          {soldier.range}
         </p>
         <p className="whitespace-pre-line">{soldier.effect}</p>
       </div>

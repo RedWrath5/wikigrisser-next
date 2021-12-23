@@ -12,7 +12,7 @@ export function SkillSection({
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2">
       <div className="col-span-12 text-center sm:col-span-1">
-        <SkillIcon skill={skill}></SkillIcon>
+        <SkillIcon skill={skill} />
       </div>
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
         <p className="text-2xl">
@@ -20,7 +20,7 @@ export function SkillSection({
           {skill.name}
         </p>
         <p>
-          Cost: {skill.cost} / CD:{skill.cd} / Range:{skill.range} / Span:
+          Cost: {skill.cost} / CD: {skill.cd} / Range: {skill.range} / Span:{" "}
           {skill.span}
         </p>
         <p className="whitespace-pre-line">{skill.description}</p>

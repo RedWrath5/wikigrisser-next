@@ -1,5 +1,6 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
+import SoldierBonusSection from "./SoldierBonusSection";
 
 export function TalentSection({
   hero: {
@@ -74,7 +75,7 @@ export function TalentSection({
           <>
             <p className="pt-5 font-bold">Related Bonds</p>
             {bondRequirments.relatedBonds.map((bond) => (
-              <li key={bond.name}>
+              <li key={bond.name + bond.text}>
                 <a href={"/heroes/" + bond.name} className="underline">
                   {bond.prettyName}
                 </a>
@@ -88,23 +89,44 @@ export function TalentSection({
         {maxStats.length > 0 && (
           <p className="pt-5 font-bold">Level 70 Max Stats:</p>
         )}
-        {maxStats.map((maxStats) => (
-          <li key={maxStats.className}>
-            <span>{maxStats.className}: </span>
-            <span>
-              HP: {maxStats.stats.hp} | ATK: {maxStats.stats.atk} | INT:{" "}
-              {maxStats.stats.int} | DEF: {maxStats.stats.def} | MDEF:
-              {maxStats.stats.mdef} | SKL: {maxStats.stats.skill}
-            </span>
-          </li>
-        ))}
+        <table>
+          <tbody>
+            {maxStats.map((maxStats) => (
+              <tr key={maxStats.className} className="list-disc">
+                <td>
+                  <li className="mr-2">{maxStats.className}</li>
+                </td>
+                <td>
+                  HP: {maxStats.stats.hp} | ATK: {maxStats.stats.atk} | INT:{" "}
+                  {maxStats.stats.int} | DEF: {maxStats.stats.def} | MDEF:
+                  {maxStats.stats.mdef} | SKL: {maxStats.stats.skill}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
         {soldierBonus && (
           <>
             <p className="pt-5 font-bold">Soldier Bonus:</p>
-            <li>
-              HP: {soldierBonus.hp}% | ATK: {soldierBonus.atk}% | DEF:{" "}
-              {soldierBonus.def}% | MDEF: {soldierBonus.mdef}%
-            </li>
+            <table>
+              <tbody>
+                <SoldierBonusSection
+                  name={maxStats
+                    .map((stat) => stat.className)
+                    .filter((className) => className !== spClass?.name)
+                    .join(" / ")}
+                  bonus={soldierBonus}
+                />
+
+                {spClass && (
+                  <SoldierBonusSection
+                    name={spClass.name}
+                    bonus={spClass.soldierBonus}
+                  />
+                )}
+              </tbody>
+            </table>
           </>
         )}
       </div>

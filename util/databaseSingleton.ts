@@ -87,8 +87,8 @@ export interface SoldierMap {
 
 export interface Patch {
   id: number;
+  cnReleaseDate: string;
   releaseDate: string;
-  formattedDate: string;
   type: "major" | "minor";
   newHeroes: string[];
   info: string;

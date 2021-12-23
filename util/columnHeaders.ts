@@ -61,9 +61,28 @@ export const EQUIPMENT_COLUMN_HEADERS = {
   user2: ["User 2"],
   user3: ["User 3"],
   user4: ["User 4"],
-  stat1: ["Level 50 Flat Stat 1"],
-  stat2: ["Level 50 Flat Stat 2"],
-  equipSkill: ["Equip Skill Lv50"],
+  stat1Type: ["Flat Stat 1"],
+  stat1Lvl1Value: ["Level 1 Flat Stat 1"],
+  stat1Lvl10Value: ["Level 20 Flat Stat 1"],
+  stat1Lvl20Value: ["Level 20 Flat Stat 1"],
+  stat1Lvl30Value: ["Level 30 Flat Stat 1"],
+  stat1Lvl40Value: ["Level 40 Flat Stat 1"],
+  stat1Lvl50Value: ["Level 50 Flat Stat 1"],
+
+  stat2Type: ["Flat Stat 2"],
+  stat2Lvl1Value: ["Level 1 Flat Stat 2"],
+  stat2Lvl10Value: ["Level 10 Flat Stat 2"],
+  stat2Lvl20Value: ["Level 20 Flat Stat 2"],
+  stat2Lvl30Value: ["Level 30 Flat Stat 2"],
+  stat2Lvl40Value: ["Level 40 Flat Stat 2"],
+  stat2Lvl50Value: ["Level 50 Flat Stat 2"],
+
+  equipSkill10: ["Equip Skill Lv10"],
+  equipSkill20: ["Equip Skill Lv20"],
+  equipSkill30: ["Equip Skill Lv30"],
+  equipSkill40: ["Equip Skill Lv40"],
+  equipSkill50: ["Equip Skill Lv50"],
+  notes: ["Notes"],
 };
 
 export const SOLDIER_COLUMN_HEADERS = {
@@ -77,6 +96,7 @@ export const SOLDIER_COLUMN_HEADERS = {
   baseAtk: ["Base\nATK"],
   baseDef: ["Base\nDEF"],
   baseMdef: ["Base\nMDEF"],
+  moveType: ["Move Type"],
 };
 
 export const TRAINING_HEADERS = {
@@ -117,7 +137,7 @@ export const ANIKI_DROP_HEADERS = {
 
 export const PATCHES_HEADERS = {
   id: ["ID"],
-  date: ["Date"],
+  cnReleaseDate: ["CN Release Date"],
   info: ["Info"],
   globalReleaseDate: ["Global Release Date"],
   patchType: ["Patch Type (major/minor)"],
