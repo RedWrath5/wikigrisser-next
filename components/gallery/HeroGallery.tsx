@@ -5,11 +5,11 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Factions, Hero } from "../types/hero";
-import { HeroMap } from "../util/databaseSingleton";
-import { BoundedColumn } from "./layout/BoundedColumn";
+import { Factions, Hero } from "../../types/hero";
+import { HeroMap } from "../../util/databaseSingleton";
+import { BoundedColumn } from "../layout/BoundedColumn";
+import { HeroLink } from "./HeroLink";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
@@ -147,22 +147,11 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
         <BoundedColumn>
           <div className="flex flex-row flex-wrap gap-5 justify-center">
             {filteredAndSortedHeroes.map((hero) => (
-              <div className="cursor-pointer" key={hero.name}>
-                <Link href={"/heroes/" + hero.name} passHref={true}>
-                  <a>
-                    <img
-                      src={"/hero cards/Card_" + hero.prettyName + ".png"}
-                      width={100}
-                      height={100}
-                    ></img>
-                  </a>
-                </Link>
-                <Link href={"/heroes/" + hero.name}>
-                  <p className="text-center" style={{ width: "100px" }}>
-                    {hero.prettyName}
-                  </p>
-                </Link>
-              </div>
+              <HeroLink
+                key={hero.name}
+                name={hero.name}
+                prettyName={hero.prettyName}
+              />
             ))}
           </div>
         </BoundedColumn>
