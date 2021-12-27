@@ -172,6 +172,7 @@ export interface Soldier {
   baseMdef: number;
   trainingSkill: TrainingSkill | null;
   moveType: string;
+  relatedHeroes: string[];
 }
 
 export interface TrainingSkillMap {

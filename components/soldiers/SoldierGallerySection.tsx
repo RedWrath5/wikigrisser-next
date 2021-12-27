@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
+import { RelatedHeroesSection } from "./RelatedHeroesSection";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
@@ -89,6 +90,7 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
       <div className="mt-2 col-span-12 sm:col-span-11">
         {soldier.trainingSkill && (
           <Collapse timeout={750} key={soldier.name} in={showMore}>
+            <RelatedHeroesSection heroNames={soldier.relatedHeroes} />
             <TrainingSkillSection trainingSkill={soldier.trainingSkill} />
           </Collapse>
         )}

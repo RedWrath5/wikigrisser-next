@@ -8,11 +8,14 @@ export function TrainingSkillSection({
 }) {
   const { levels } = trainingSkill;
   return (
-    <ul>
-      {levels.map((level) => (
-        <TrainingSkillRow level={level} key={level.level} />
-      ))}
-    </ul>
+    <>
+      <p className="text-xl mb-2 font-bold">Upgrade materials</p>
+      <ul>
+        {levels.map((level) => (
+          <TrainingSkillRow level={level} key={level.level} />
+        ))}
+      </ul>
+    </>
   );
 }
 

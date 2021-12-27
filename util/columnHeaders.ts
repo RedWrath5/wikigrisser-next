@@ -63,7 +63,7 @@ export const EQUIPMENT_COLUMN_HEADERS = {
   user4: ["User 4"],
   stat1Type: ["Flat Stat 1"],
   stat1Lvl1Value: ["Level 1 Flat Stat 1"],
-  stat1Lvl10Value: ["Level 20 Flat Stat 1"],
+  stat1Lvl10Value: ["Level 10 Flat Stat 1"],
   stat1Lvl20Value: ["Level 20 Flat Stat 1"],
   stat1Lvl30Value: ["Level 30 Flat Stat 1"],
   stat1Lvl40Value: ["Level 40 Flat Stat 1"],

@@ -1,7 +1,7 @@
 import React, { PropsWithRef } from "react";
 import { DBSingleton, HeroMap } from "../../util/databaseSingleton";
 import { Layout } from "../../components/Layout";
-import { HeroGallery } from "../../components/HeroGallery";
+import { HeroGallery } from "../../components/gallery/HeroGallery";
 
 const HeroGalleryPage = ({ heroes }: PropsWithRef<{ heroes: HeroMap }>) => (
   <Layout>

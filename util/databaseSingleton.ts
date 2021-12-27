@@ -9,6 +9,7 @@ import { SkillsLoader } from "./loaders/SkillsLoader";
 import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
+import { SoldierToHeroTransformer } from "./transformers/SoldierToHeroTransformer";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -38,7 +39,12 @@ export class DBSingleton {
 
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
-  constructor() {}
+  constructor() {
+    this.soldier = new SoldierToHeroTransformer(
+      this.soldier,
+      this.heroMap
+    ).transform();
+  }
 
   getWorkBook() {
     return this.workBook;
