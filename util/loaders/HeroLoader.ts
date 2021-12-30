@@ -155,6 +155,8 @@ export class HeroLoader extends Loader<HeroMap> {
       name: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentName),
       slot: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentType) as any,
       effect: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentEffect),
+      stat1: "",
+      stat2: "",
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
