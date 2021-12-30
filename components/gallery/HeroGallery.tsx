@@ -5,13 +5,13 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Factions, Hero } from "../types/hero";
-import { HeroMap } from "../util/databaseSingleton";
-import { BoundedColumn } from "./layout/BoundedColumn";
-import { useGalleryTranslateContext } from "./context/GalleryTranslateContext";
-import { useTranslateContext } from "./context/TranslateContext";
+import { useGalleryTranslateContext } from "../context/GalleryTranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
+import { Factions, Hero } from "../../types/hero";
+import { HeroMap } from "../../util/databaseSingleton";
+import { BoundedColumn } from "../layout/BoundedColumn";
+import { HeroLink } from "./HeroLink";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const { t } = useTranslateContext();
@@ -159,27 +159,13 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
       <div className="flex font-sans font-normal justify-center">
         <BoundedColumn>
           <div className="flex flex-row flex-wrap gap-5 justify-center">
-            {filteredAndSortedHeroes.map((hero) => {
-              const name = getHeroInfo(hero.name) || hero.prettyName;
-              return (
-                <div className="cursor-pointer" key={hero.name}>
-                  <Link href={"/heroes/" + hero.name} passHref={true}>
-                    <a>
-                      <img
-                        src={"/hero cards/Card_" + hero.prettyName + ".png"}
-                        width={100}
-                        height={100}
-                      ></img>
-                    </a>
-                  </Link>
-                  <Link href={"/heroes/" + hero.name}>
-                    <p className="text-center" style={{ width: "100px" }}>
-                      {name}
-                    </p>
-                  </Link>
-                </div>
-              );
-            })}
+            {filteredAndSortedHeroes.map((hero) => (
+              <HeroLink
+                key={hero.name}
+                name={hero.name}
+                prettyName={hero.prettyName}
+              />
+            ))}
           </div>
         </BoundedColumn>
       </div>

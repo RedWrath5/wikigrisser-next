@@ -17,7 +17,7 @@ export function SkillSection({
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2">
       <div className="col-span-12 text-center sm:col-span-1">
-        <SkillIcon skill={skill}></SkillIcon>
+        <SkillIcon skill={skill} />
       </div>
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
         <p className="text-2xl">
@@ -25,8 +25,8 @@ export function SkillSection({
           {name}
         </p>
         <p>
-          {t("Cost")}: {skill.cost} / {t("CD")}:{skill.cd} / {t("Range")}:
-          {skill.range} / {t("Span")}:{skill.span && t(skill.span.toString())}
+          {t("Cost")}: {skill.cost} / {t("CD")}: {skill.cd} / {t("Range")}:{" "}
+          {skill.range} / {t("Span")}: {skill.span}
         </p>
         <p className="whitespace-pre-line">{description}</p>
       </div>

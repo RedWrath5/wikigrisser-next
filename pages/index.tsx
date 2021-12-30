@@ -5,6 +5,7 @@ import { DBSingleton, Patch, PatchMap } from "../util/databaseSingleton";
 import { PatchSection } from "../components/patch/PatchSection";
 import { TranslateUILanguageMap } from "../types/translate";
 import { TranslateWrapper } from "../components/context/TranslateContext";
+import formatDate from "../util/formatDate.fn";
 
 const Home = ({
   patchMap,
@@ -26,7 +27,6 @@ const Home = ({
   });
 
   const cnPatch: Patch = majorPatches.pop()!;
-
   return (
     <TranslateWrapper translateMap={translateUIMap}>
       <Layout>
@@ -41,8 +41,18 @@ const Home = ({
           </div>
 
           <div className="flex flex-col justify-center text-center">
-            <PatchSection patch={globalPatch}></PatchSection>
-            <PatchSection patch={cnPatch}></PatchSection>
+            <PatchSection
+              patch={globalPatch}
+              header={`Most Recent Global Patch (${formatDate(
+                globalPatch.releaseDate
+              )})`}
+            />
+            <PatchSection
+              patch={cnPatch}
+              header={`Most Recent CN Patch (${formatDate(
+                cnPatch.cnReleaseDate
+              )})`}
+            />
           </div>
         </div>
       </Layout>

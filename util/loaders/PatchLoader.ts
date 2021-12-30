@@ -25,7 +25,10 @@ export class PatchLoader extends Loader<PatchMap> {
 
     while (notDone) {
       const patch: Patch = {
-        formattedDate: this.getPatchRowValue(rowCounter, this.headers.date),
+        cnReleaseDate: this.getPatchRowValue(
+          rowCounter,
+          this.headers.cnReleaseDate
+        ),
         info: this.getPatchRowValue(rowCounter, this.headers.info),
         releaseDate: this.getPatchRowValue(
           rowCounter,

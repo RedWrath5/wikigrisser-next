@@ -147,8 +147,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
                     <EquipmentSection
                       key={equip.name}
                       equipment={equip}
-                      isExclusive={false}
-                    ></EquipmentSection>
+                    />
                   ))}
                 </BoundedColumn>
               </div>
