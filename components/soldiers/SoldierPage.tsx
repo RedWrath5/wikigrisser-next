@@ -11,6 +11,7 @@ import { Soldier, UnitType } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { SoldiersGallerySection } from "./SoldierGallerySection";
 import { TransitionGroup } from "react-transition-group";
+import { useTranslateContext } from "../context/TranslateContext";
 
 const tiers = [
   {
@@ -32,6 +33,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
   const [type, setType] = useState(UnitType.Infantry);
   const [tier, setTier] = useState(3);
   const [searchText, setSearchText] = useState("");
+  const { t } = useTranslateContext();
 
   useEffect(() => {
     filterSoldiers(type, tier);
@@ -44,9 +46,12 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
   }, [searchText]);
 
   function search(text: string) {
-    const filtered = soldiers.filter((soldier) =>
-      soldier.name.toLowerCase().includes(text.toLowerCase())
-    );
+    const filtered = soldiers.filter((soldier) => {
+      for (const keyword of soldier.searchKeywords) {
+        if (keyword.includes(text.toLocaleLowerCase())) return true;
+      }
+      return false;
+    });
     setFilteredSoldiers(filtered);
   }
 
@@ -54,7 +59,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
     const filtered = soldiers.filter(
       (soldier) => soldier.type === type && soldier.tier === tier
     );
-   setFilteredSoldiers(filtered);
+    setFilteredSoldiers(filtered);
   }
 
   const handleTierChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -70,12 +75,12 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
-        Soldiers
+        {t("Soldiers")}
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">
         <div className="mr-4">
           <FormControl>
-            <InputLabel>Search</InputLabel>
+            <InputLabel>{t("Search")}</InputLabel>
             <Input
               value={searchText}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +91,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
         </div>
 
         <FormControl>
-          <InputLabel>Type</InputLabel>
+          <InputLabel>{t("Type")}</InputLabel>
           <Select
             value={type}
             onChange={(slotInner) => handleSlotChange(slotInner)}
@@ -95,7 +100,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
               .filter((type) => type !== UnitType.Dragon)
               .map((typeInner) => (
                 <MenuItem key={typeInner} value={typeInner}>
-                  {typeInner}
+                  {t(typeInner)}
                 </MenuItem>
               ))}
           </Select>
@@ -103,11 +108,11 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
 
         <div className="ml-4">
           <FormControl>
-            <InputLabel>Tier</InputLabel>
+            <InputLabel>{t("Tier")}</InputLabel>
             <Select value={tier} onChange={handleTierChange}>
               {tiers.map((v) => (
                 <MenuItem key={v.name} value={v.value}>
-                  {v.name}
+                  {t(v.name)}
                 </MenuItem>
               ))}
             </Select>

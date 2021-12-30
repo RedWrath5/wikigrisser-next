@@ -3,6 +3,7 @@ import { Class } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { Material } from "../../types/spreedsheet";
 import { HeroIcon } from "./HeroIcon";
+import { useTranslateContext } from "../context/TranslateContext";
 
 {
   /* Hero class icon + material tiers list*/
@@ -37,10 +38,11 @@ function MaterialList({
   materials: Material[];
   tier: number;
 }) {
+  const { t } = useTranslateContext();
   return (
     <div className="flex- flex-row w-full">
       <p className="mb-3 text-center sm:text-left">
-        <b>{`Tier ${tier}`}</b>
+        <b>{`${t("Tier")} ${tier}`}</b>
       </p>
       <div className="flex flex-wrap justify-start mb-2">
         {materials.map((v) => (

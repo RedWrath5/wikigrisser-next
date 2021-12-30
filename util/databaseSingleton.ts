@@ -1,6 +1,6 @@
 import XLSX from "xlsx";
-import { Hero, Soldier } from "../types/hero";
-import { ClassesLoader } from "./loaders/ClassesLoader";
+import { Hero, SkillsMap, Soldier } from "../types/hero";
+import { ClassesLoader, ClassesMap } from "./loaders/ClassesLoader";
 import { EquipmentLoader } from "./loaders/EquipmentLoader";
 import { HeroLoader } from "./loaders/HeroLoader";
 import { MaxStatsLoader } from "./loaders/MaxStatsLoader";
@@ -9,6 +9,24 @@ import { SkillsLoader } from "./loaders/SkillsLoader";
 import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
+import { TranslateSoldiersLoader } from "./loaders/TranslateSoldiersLoader";
+import {
+  TranslateClassLanguageMap,
+  TranslateEquipmentLanguageMap,
+  TranslateHeroLanguageMap,
+  TranslateSkillsLanguageMap,
+  TranslateSkillsMap,
+  TranslateSoldiersLanguageMap,
+  TranslateUILanguageMap,
+} from "../types/translate";
+import { TranslateSkillsLoader } from "./loaders/TranslateSkillsLoader";
+import { TranslateHeroLoader } from "./loaders/TranslateHeroLoader";
+import { TranslateEquipmentLoader } from "./loaders/TranslateEquipmentLoader";
+import { TranslateClassLoader } from "./loaders/TranslateClassLoader";
+import { TranslateUILoader } from "./loaders/TranslateUILoader";
+import { SearchKeywordsToHeroTransformer } from "./transformers/SearchKeywordsToHeroTransformer";
+import { SearchKeywordsToEquipmentTransformer } from "./transformers/SearchKeywordsToEquipmentTransformer";
+import { SearchKeywordsToSoldierTransformer } from "./transformers/SearchKeywordsToSoldierTransformer";
 import { SoldierToHeroTransformer } from "./transformers/SoldierToHeroTransformer";
 
 export class DBSingleton {
@@ -23,6 +41,7 @@ export class DBSingleton {
   }
 
   private workBook = XLSX.readFile("data/database.xlsx");
+  private russian = XLSX.readFile("data/russian.xlsx");
   private skillsMap = new SkillsLoader(this.workBook).load();
   private maxStats = new MaxStatsLoader(this.workBook).load();
   private classesMap = new ClassesLoader(this.workBook).load();
@@ -39,7 +58,47 @@ export class DBSingleton {
 
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
+  private translateSoldiersMap: TranslateSoldiersLanguageMap = {
+    russian: new TranslateSoldiersLoader(this.russian).load(),
+  };
+  private translateSkillsMap: TranslateSkillsLanguageMap<ClassesMap> = {
+    russian: new TranslateSkillsLoader(this.russian).load(),
+  };
+  private translateHeroMap: TranslateHeroLanguageMap<HeroMap> = {
+    russian: new TranslateHeroLoader(this.russian).load(),
+  };
+  private translateEquipmentMap: TranslateEquipmentLanguageMap = {
+    russian: new TranslateEquipmentLoader(this.russian).load(),
+  };
+
+  private translateClassMap: TranslateClassLanguageMap = {
+    russian: new TranslateClassLoader(this.russian).load(),
+  };
+
+  private translateUIMap: TranslateUILanguageMap = {
+    russian: new TranslateUILoader(this.russian).load(),
+  };
+
+  private languages = ["russian"];
+
   constructor() {
+    this.heroMap = new SearchKeywordsToHeroTransformer(
+      this.heroMap,
+      this.translateHeroMap,
+      this.languages
+    ).transform();
+
+    this.equipment = new SearchKeywordsToEquipmentTransformer(
+      this.equipment,
+      this.translateEquipmentMap,
+      this.languages
+    ).transform();
+
+    this.soldier = new SearchKeywordsToSoldierTransformer(
+      this.soldier,
+      this.translateSoldiersMap,
+      this.languages
+    ).transform();
     this.soldier = new SoldierToHeroTransformer(
       this.soldier,
       this.heroMap
@@ -74,8 +133,50 @@ export class DBSingleton {
     return this.soldier;
   }
 
+  getSoldierMap(): SoldierMap {
+    const soldierMap: SoldierMap = {};
+    this.soldier.map((v) => (soldierMap[v.name] = v));
+    return soldierMap;
+  }
+
+  get3cSkillsMap(): TranslateSkillsMap<SkillsMap> {
+    return Object.keys(this.heroMap).reduce((accumulator, key) => {
+      if (this.heroMap[key].threeCostSkill) {
+        accumulator[this.heroMap[key].threeCostSkill?.name as string] = {
+          name: this.heroMap[key].threeCostSkill?.name as string,
+          description: this.heroMap[key].threeCostSkill?.description as string,
+        };
+      }
+      return accumulator;
+    }, {} as TranslateSkillsMap<SkillsMap>);
+  }
+
   getTraining() {
     return this.training;
+  }
+
+  getTranslateSoldiersMap() {
+    return this.translateSoldiersMap;
+  }
+
+  getTranslateSkillsMap() {
+    return this.translateSkillsMap;
+  }
+
+  getTranslateHeroMap() {
+    return this.translateHeroMap;
+  }
+
+  getTranslateEquipmentMap() {
+    return this.translateEquipmentMap;
+  }
+
+  getTranslateClassMap() {
+    return this.translateClassMap;
+  }
+
+  getTranslateUIMap() {
+    return this.translateUIMap;
   }
 }
 

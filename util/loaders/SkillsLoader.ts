@@ -1,5 +1,5 @@
 import { WorkBook } from "xlsx/types";
-import { Skill } from "../../types/hero";
+import { Skill, SkillsMap } from "../../types/hero";
 import { Loader } from "./Loader";
 
 export class SkillsLoader extends Loader<SkillsMap> {
@@ -19,7 +19,7 @@ export class SkillsLoader extends Loader<SkillsMap> {
 
     while (notDone) {
       const skill: Skill = {
-        name: skillsSheat["A" + rowCounter]?.v || null,
+        name: this.getCellValue(skillsSheat["A" + rowCounter]) as string,
         cost: skillsSheat["C" + rowCounter]?.v || null,
         cd: skillsSheat["D" + rowCounter]?.v || null,
         range: skillsSheat["E" + rowCounter]?.v || null,
@@ -37,8 +37,4 @@ export class SkillsLoader extends Loader<SkillsMap> {
 
     return skillsMap;
   }
-}
-
-export interface SkillsMap {
-  [name: string]: Skill;
 }

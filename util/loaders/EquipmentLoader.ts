@@ -30,6 +30,7 @@ export class EquipmentLoader extends Loader<Equipment[]> {
         notes: this.getEquipmentRowValue(rowCounter, ecm.notes),
         slot: this.getEquipmentRowValue(rowCounter, ecm.slot) as any,
         type: this.getEquipmentRowValue(rowCounter, ecm.type) as any,
+        searchKeywords: [],
         stat1: null,
         stat2: null,
         effect: {

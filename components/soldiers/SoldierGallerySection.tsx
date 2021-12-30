@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
+import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
+import { ArrowDropDownCircleOutlined } from "@material-ui/icons";
+import { useTranslateContext } from "../context/TranslateContext";
 import { RelatedHeroesSection } from "./RelatedHeroesSection";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
-
+  const { getSoldierInfo } = useSoldierTranslateContext();
+  const { name, effect } = getSoldierInfo(soldier.name);
+  const { t } = useTranslateContext();
   const handleShowMoreButton = () => {
     setShowMore(!showMore);
   };
@@ -68,21 +73,20 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
           ></img>
           {soldier.range}
         </p>
-        <p className="whitespace-pre-line">{soldier.effect}</p>
+        <p className="whitespace-pre-line">{effect}</p>
       </div>
 
       <div className="flex justify-center col-span-12 border-t-2 border-black border-solid mt-6">
         {soldier.trainingSkill && (
           <button onClick={handleShowMoreButton} className="">
-            <img
-              src="ui/arrow_down.svg"
-              alt="arrow image"
-              className={
-                showMore
-                  ? "transform -rotate-180 bg-white -mt-6"
-                  : "bg-white -mt-6"
-              }
-            />
+            {
+              <ArrowDropDownCircleOutlined
+                className={`-mt-6 bg-white + ${
+                  showMore ? "transform rotate-180" : ""
+                }`}
+                fontSize="large"
+              />
+            }
           </button>
         )}
       </div>

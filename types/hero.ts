@@ -14,6 +14,7 @@ export interface Hero {
   soldierBonus: SoldierBonus | null;
   exclusiveEquipment: ExclusiveEquipment | null;
   skinCount: number;
+  searchKeywords: string[];
 }
 
 export interface RelatedBond {
@@ -119,6 +120,9 @@ export interface Equipment extends BaseEquipment {
 
 export interface ExclusiveEquipment extends BaseEquipment {
   effect: string;
+  stat1: string | null;
+  stat2: string | null;
+  searchKeywords?: string[];
 }
 
 interface BaseEquipment {
@@ -171,6 +175,7 @@ export interface Soldier {
   baseDef: number;
   baseMdef: number;
   trainingSkill: TrainingSkill | null;
+  searchKeywords: string[];
   moveType: string;
   relatedHeroes: string[];
 }
@@ -208,4 +213,8 @@ export interface TrainingSkillLevel {
 export interface TrainingMaterial {
   name: string;
   count: string;
+}
+
+export interface SkillsMap {
+  [name: string]: Skill;
 }

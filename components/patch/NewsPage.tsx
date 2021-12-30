@@ -8,8 +8,10 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 import { TransitionGroup } from "react-transition-group";
+import {useTranslateContext} from "../context/TranslateContext";
 
 export function NewsPage({ patches }: { patches: PatchMap }) {
+  const { t } = useTranslateContext();
   const [viewPast, setViewPast] = useState(false); // show/hide past updates
   //current date - 28 days is max possible current major patch date.
   const maxMajorPatchDate = new Date().valueOf() - 1000 * 60 * 60 * 24 * 28;
@@ -35,7 +37,7 @@ export function NewsPage({ patches }: { patches: PatchMap }) {
               name="show-past"
             />
           }
-          label="View past updates"
+          label={t("View past updates")}
         />
       </FormGroup>
       <TransitionGroup>

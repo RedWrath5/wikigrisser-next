@@ -1,4 +1,7 @@
 import { Class } from "../../types/hero";
+import { useSoldierTranslateContext } from "../context/SoldierTranslateContext";
+import { useClassTranslateContext } from "../context/ClassTranslateContext";
+import {useTranslateContext} from "../context/TranslateContext";
 
 export function SoldiersSubSection({
   heroClass,
@@ -12,6 +15,12 @@ export function SoldiersSubSection({
   let flagUrl = "/unitTypeFlag/" + heroClass.heroType + ".png";
   if (isStarting) flagUrl = "/unitTypeFlag/Aniki.png";
   if (isSpClass) flagUrl = "/unitTypeFlag/" + heroClass.heroType + " SP.png";
+
+  const { getSoldierInfo } = useSoldierTranslateContext();
+  const { getClassInfo } = useClassTranslateContext();
+  const {t} = useTranslateContext()
+  const className = getClassInfo(heroClass.name);
+
   return (
     <>
       {heroClass.soldiers.length > 0 && (
@@ -28,17 +37,20 @@ export function SoldiersSubSection({
           </div>
           <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
             <p className="text-2xl">
-              {isStarting && "Training Ground "}
-              {!isStarting && heroClass.name}
+              {isStarting && t('Training Ground') + ' '}
+              {!isStarting && className}
             </p>
             <p>
-              Soldiers:{" "}
-              {heroClass.soldiers.map((soldier, index) => (
-                <span key={soldier}>
-                  {soldier}
-                  {index < heroClass.soldiers.length - 1 && ", "}
-                </span>
-              ))}
+              {t('Soldiers') + ': '}
+              {heroClass.soldiers.map(function (soldier, index) {
+                const { name } = getSoldierInfo(soldier);
+                return (
+                  <span key={soldier}>
+                    {name}
+                    {index < heroClass.soldiers.length - 1 && ", "}
+                  </span>
+                );
+              })}
             </p>
           </div>
         </div>

@@ -9,6 +9,8 @@ import { SoldiersSection } from "./SoldiersSection";
 import { TalentSection } from "./TalentSection";
 import { Tabs, Tab } from "@material-ui/core";
 import { MaterialSection } from "./MaterialSection";
+import { useHeroTranslateContext } from "../context/HeroTranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   {
@@ -19,10 +21,14 @@ export function HeroComponent({ hero }: { hero: Hero }) {
     setTab(newTab);
   };
 
+  const { getHeroInfo } = useHeroTranslateContext();
+  const { t } = useTranslateContext();
+  const { name } = getHeroInfo(hero.name);
+
   return (
     <div className="bg-white flex flex-grow justify-center flex-col">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
-        {hero.prettyName}
+        {name}
       </h1>
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4" style={{ maxWidth: "500px" }}>
@@ -48,8 +54,8 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex flex-col">
         <div className="flex flex-wrap justify-center">
           <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label="Class & Soldiers" value="main" />
-            <Tab label="Materials" value="materials" />
+            <Tab label={t("Classes & Soldiers")} value="main" />
+            <Tab label={t("Materials")} value="materials" />
           </Tabs>
         </div>
 

@@ -6,6 +6,7 @@ import {
   Factions,
   Hero,
   Skill,
+  SkillsMap,
   SoldierBonus,
   SPClass,
   Talent,
@@ -16,7 +17,6 @@ import { HERO_COLUMN_HEADERS, HERO_COLUMN_IDS } from "../columnHeaders";
 import { HeroMap } from "../databaseSingleton";
 import { ClassesMap } from "./ClassesLoader";
 import { Loader } from "./Loader";
-import { SkillsMap } from "./SkillsLoader";
 
 export class HeroLoader extends Loader<HeroMap> {
   constructor(
@@ -155,6 +155,8 @@ export class HeroLoader extends Loader<HeroMap> {
       name: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentName),
       slot: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentType) as any,
       effect: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentEffect),
+      stat1: "",
+      stat2: "",
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
@@ -174,6 +176,7 @@ export class HeroLoader extends Loader<HeroMap> {
       exclusiveEquipment,
       spClass,
       skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
+      searchKeywords: [],
     };
   };
 
@@ -243,10 +246,9 @@ export class HeroLoader extends Loader<HeroMap> {
     heroColumnMappings: HERO_COLUMN_IDS
   ): Class {
     const soldiers =
-      this.getHeroRowValue(
-        rowNumber,
-        heroColumnMappings.trainingGroundUnlocks
-      )?.split(",") || [];
+      this.getHeroRowValue(rowNumber, heroColumnMappings.trainingGroundUnlocks)
+        ?.split(",")
+        .map((v) => v.trim()) || [];
     const name = this.getHeroRowValue(
       rowNumber,
       heroColumnMappings.startingClassName

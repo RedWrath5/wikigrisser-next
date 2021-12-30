@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Equipment } from "../../types/hero";
+import { useEquipmentTranslateContext } from "../context/EquipmentTranslateContext";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function EquipmentSection({ equipment }: { equipment: Equipment }) {
+  const { getEquipmentInfo } = useEquipmentTranslateContext();
+  const { name, effect } = getEquipmentInfo(equipment);
+  const { t } = useTranslateContext();
   return (
     <>
       <div className="grid grid-cols-12 items-center mt-2 mb-2">

@@ -11,8 +11,10 @@ import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
 import { EquipmentSection } from "./EquipmentSection";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { TransitionGroup } from "react-transition-group";
+import { useTranslateContext } from "../context/TranslateContext";
 
 export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
+  const { t } = useTranslateContext();
   const [filteredAndGroupedEquipment, setFilteredAndGroupedEquipment] =
     useState({} as GroupedEquipment);
 
@@ -57,9 +59,14 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
 
   function search(text: string) {
     const filteredAndGrouped = equipment
-      .filter((equip) =>
-        equip.name.toLowerCase().includes(text.toLocaleLowerCase())
-      )
+      .filter((equip) => {
+        if (!equip.searchKeywords) return false;
+
+        for (const keyword of equip.searchKeywords) {
+          if (keyword.includes(text.toLocaleLowerCase())) return true;
+        }
+        return false;
+      })
       .reduce(
         (accumlator, equip) => {
           accumlator[equip.type ?? ""].push(equip);
@@ -87,15 +94,16 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   ) => {
     setSlot(event.target.value as EquipmentSlot);
   };
+
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
-        Equipment
+        {t("Equipment")}
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">
         <div className="mr-4">
           <FormControl>
-            <InputLabel>Search</InputLabel>
+            <InputLabel>{t("Search")}</InputLabel>
             <Input
               value={searchText}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,14 +114,14 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
         </div>
 
         <FormControl>
-          <InputLabel>Slot</InputLabel>
+          <InputLabel>{t("Slot")}</InputLabel>
           <Select
             value={slot}
             onChange={(slotInner) => handleSlotChange(slotInner)}
           >
             {Object.values(EquipmentSlot).map((slotInner) => (
               <MenuItem key={slotInner} value={slotInner}>
-                {slotInner}
+                {t(slotInner)}
               </MenuItem>
             ))}
           </Select>
@@ -127,7 +135,9 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
               <div className="flex flex-row bg-gray-200 justify-center">
                 <BoundedColumn>
                   <div className="flex mt-2 mb-2 items-center justify-center sm:justify-start">
-                    <div className="ml-2 text-2xl">{key || "Accessories"}</div>
+                    <div className="ml-2 text-2xl">
+                      {(key && t(key)) || t("Accessories")}
+                    </div>
                   </div>
                 </BoundedColumn>
               </div>
