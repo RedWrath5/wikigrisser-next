@@ -27,6 +27,7 @@ import { TranslateUILoader } from "./loaders/TranslateUILoader";
 import { SearchKeywordsToHeroTransformer } from "./transformers/SearchKeywordsToHeroTransformer";
 import { SearchKeywordsToEquipmentTransformer } from "./transformers/SearchKeywordsToEquipmentTransformer";
 import { SearchKeywordsToSoldierTransformer } from "./transformers/SearchKeywordsToSoldierTransformer";
+import { SoldierToHeroTransformer } from "./transformers/SoldierToHeroTransformer";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -97,6 +98,10 @@ export class DBSingleton {
       this.soldier,
       this.translateSoldiersMap,
       this.languages
+    ).transform();
+    this.soldier = new SoldierToHeroTransformer(
+      this.soldier,
+      this.heroMap
     ).transform();
   }
 
@@ -189,8 +194,8 @@ export interface SoldierMap {
 
 export interface Patch {
   id: number;
+  cnReleaseDate: string;
   releaseDate: string;
-  formattedDate: string;
   type: "major" | "minor";
   newHeroes: string[];
   info: string;

@@ -3,6 +3,7 @@ import { Class, Hero, HeroStats } from "../../types/hero";
 import { useClassTranslateContext } from "../context/ClassTranslateContext";
 import { useHeroTranslateContext } from "../context/HeroTranslateContext";
 import { useTranslateContext } from "../context/TranslateContext";
+import SoldierBonusSection from "./SoldierBonusSection";
 
 export function TalentSection({
   hero: {
@@ -93,16 +94,16 @@ export function TalentSection({
 
         {bondRequirments && bondRequirments.relatedBonds.length > 0 && (
           <>
-            <p className="pt-5 font-bold">{t("Related Bonds")}</p>
+            <p className="pt-5 font-bold">Related Bonds</p>
             {bondRequirments.relatedBonds.map((bond) => {
               const { name, prettyName, type, text } = getRelatedBond(bond);
               return (
-                <li key={name}>
+                <li key={name + text}>
                   <a href={"/heroes/" + name} className="underline">
                     {prettyName}
                   </a>
                   <span className="ml-1">
-                    {t(type)}: {text}
+                    {type}: {text}
                   </span>
                 </li>
               );
@@ -112,28 +113,45 @@ export function TalentSection({
         {maxStats.length > 0 && (
           <p className="pt-5 font-bold">{t("Level 70 Max Stats")}:</p>
         )}
-        {maxStats.map((maxStats) => {
-          const className = getClassInfo(maxStats.className);
-          return (
-            <li key={maxStats.className}>
-              <span>{t(className)}: </span>
-              <span>
-                {t("HP")}: {maxStats.stats.hp} | {t("ATK")}:{" "}
-                {maxStats.stats.atk} | {t("INT")}: {maxStats.stats.int} |{" "}
-                {t("DEF")}: {maxStats.stats.def} | {t("MDEF")}:
-                {maxStats.stats.mdef} | {t("SKL")}: {maxStats.stats.skill}
-              </span>
-            </li>
-          );
-        })}
+        <table>
+          <tbody>
+            {maxStats.map((maxStats) => (
+              <tr key={maxStats.className} className="list-disc">
+                <td>
+                  <li className="mr-2">{maxStats.className}</li>
+                </td>
+                <td>
+                  {t("HP")}: {maxStats.stats.hp} | {t("ATK")}:{" "}
+                  {maxStats.stats.atk} | {t("INT")}: {maxStats.stats.int} |{" "}
+                  {t("DEF")}: {maxStats.stats.def} | {t("MDEF")}:
+                  {maxStats.stats.mdef} | {t("SKL")}: {maxStats.stats.skill}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
         {soldierBonus && (
           <>
-            <p className="pt-5 font-bold">{t("Soldier Bonus")}:</p>
-            <li>
-              {t("HP")}: {soldierBonus.hp}% | {t("ATK")}: {soldierBonus.atk}% |{" "}
-              {t("DEF")}: {soldierBonus.def}% | {t("MDEF")}: {soldierBonus.mdef}
-              %
-            </li>
+            <p className="pt-5 font-bold">Soldier Bonus:</p>
+            <table>
+              <tbody>
+                <SoldierBonusSection
+                  name={maxStats
+                    .map((stat) => stat.className)
+                    .filter((className) => className !== spClass?.name)
+                    .join(" / ")}
+                  bonus={soldierBonus}
+                />
+
+                {spClass && (
+                  <SoldierBonusSection
+                    name={spClass.name}
+                    bonus={spClass.soldierBonus}
+                  />
+                )}
+              </tbody>
+            </table>
           </>
         )}
       </div>

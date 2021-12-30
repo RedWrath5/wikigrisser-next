@@ -1,7 +1,6 @@
 import React, { PropsWithRef } from "react";
 import { DBSingleton, HeroMap } from "../../util/databaseSingleton";
 import { Layout } from "../../components/Layout";
-import { HeroGallery } from "../../components/HeroGallery";
 import {
   TranslateHeroLanguageMap,
   TranslateUILanguageMap,
@@ -9,6 +8,7 @@ import {
 import { SkillsMap } from "../../types/hero";
 import { GalleryTranslateWrapper } from "../../components/context/GalleryTranslateContext";
 import { TranslateWrapper } from "../../components/context/TranslateContext";
+import { HeroGallery } from "../../components/gallery/HeroGallery";
 
 const HeroGalleryPage = ({
   heroes,

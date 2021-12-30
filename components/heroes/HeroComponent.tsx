@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { Hero } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { ClassSection } from "./ClassSection";
-import { EquipmentSection } from "../equipment/EquipmentSection";
+import ExclusiveEquipmentSection from "./ExclusiveEquipmentSection";
 import { HeroSkinCarousel } from "./HeroSkinCarousel";
 import { SkillSection } from "./SkillSection";
 import { SoldiersSection } from "./SoldiersSection";
@@ -39,10 +39,9 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         <BoundedColumn>
           <TalentSection hero={hero}></TalentSection>
           {hero.exclusiveEquipment?.name && (
-            <EquipmentSection
+            <ExclusiveEquipmentSection
               equipment={hero.exclusiveEquipment}
-              isExclusive={true}
-            ></EquipmentSection>
+            ></ExclusiveEquipmentSection>
           )}
           {hero.threeCostSkill && (
             <SkillSection

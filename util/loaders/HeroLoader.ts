@@ -2,7 +2,7 @@ import { WorkBook } from "xlsx/types";
 import {
   BondRequirements,
   Class,
-  Equipment,
+  ExclusiveEquipment,
   Factions,
   Hero,
   Skill,
@@ -116,9 +116,9 @@ export class HeroLoader extends Loader<HeroMap> {
 
     let threeCostSkill: Skill | null = {
       name: this.getHeroRowValue(rowNumber, hcm.awakeningSkillName),
-      cd: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillCD),
-      range: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillRange),
-      span: +this.getHeroRowValue(rowNumber, hcm.awakeningSkillSpan),
+      cd: this.getHeroRowValue(rowNumber, hcm.awakeningSkillCD),
+      range: this.getHeroRowValue(rowNumber, hcm.awakeningSkillRange),
+      span: this.getHeroRowValue(rowNumber, hcm.awakeningSkillSpan),
       description: this.getHeroRowValue(rowNumber, hcm.awakeningSkillEffect),
       cost: "•••",
     };
@@ -151,13 +151,12 @@ export class HeroLoader extends Loader<HeroMap> {
 
     if (soldierBonus.hp === undefined) soldierBonus = null;
 
-    let exclusiveEquipment: Equipment | null = {
+    let exclusiveEquipment: ExclusiveEquipment | null = {
       name: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentName),
       slot: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentType) as any,
       effect: this.getHeroRowValue(rowNumber, hcm.exclusiveEquipmentEffect),
-      stat1: null,
-      stat2: null,
-      type: "",
+      stat1: "",
+      stat2: "",
     };
 
     if (exclusiveEquipment.name === undefined) exclusiveEquipment = null;
@@ -388,6 +387,12 @@ export class HeroLoader extends Loader<HeroMap> {
       children: [],
       maxStats,
       materials: [],
+      soldierBonus: {
+        hp: this.getworkBookSpClassRowValue(rowNumber, "AC"),
+        atk: this.getworkBookSpClassRowValue(rowNumber, "AD"),
+        def: this.getworkBookSpClassRowValue(rowNumber, "AE"),
+        mdef: this.getworkBookSpClassRowValue(rowNumber, "AF"),
+      },
     };
   }
 }

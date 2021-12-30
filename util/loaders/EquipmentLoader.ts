@@ -20,25 +20,55 @@ export class EquipmentLoader extends Loader<Equipment[]> {
       EQUIPMENT_COLUMN_HEADERS,
       this.workBook.Sheets.Equipment
     ) as EQUIPMENT_COLUMN_IDS;
-    let notDone = true;
+
     let rowCounter = 2;
     let equipmentArr: Equipment[] = [];
 
-    while (notDone) {
+    while (this.getEquipmentRowValue(rowCounter, ecm.name)) {
       const equipment: Equipment = {
         name: this.getEquipmentRowValue(rowCounter, ecm.name),
-        effect: this.getEquipmentRowValue(rowCounter, ecm.equipSkill),
+        notes: this.getEquipmentRowValue(rowCounter, ecm.notes),
         slot: this.getEquipmentRowValue(rowCounter, ecm.slot) as any,
-        stat1: this.getEquipmentRowValue(rowCounter, ecm.stat1),
-        stat2: this.getEquipmentRowValue(rowCounter, ecm.stat2),
         type: this.getEquipmentRowValue(rowCounter, ecm.type) as any,
         searchKeywords: [],
+        stat1: null,
+        stat2: null,
+        effect: {
+          lvl1: "",
+          lvl10: this.getEquipmentRowValue(rowCounter, ecm.equipSkill10),
+          lvl20: this.getEquipmentRowValue(rowCounter, ecm.equipSkill20),
+          lvl30: this.getEquipmentRowValue(rowCounter, ecm.equipSkill30),
+          lvl40: this.getEquipmentRowValue(rowCounter, ecm.equipSkill40),
+          lvl50: this.getEquipmentRowValue(rowCounter, ecm.equipSkill50),
+        },
       };
+
+      if (this.getEquipmentRowValue(rowCounter, ecm.stat1Type)) {
+        equipment.stat1 = {
+          type: this.getEquipmentRowValue(rowCounter, ecm.stat1Type),
+          lvl1: this.getEquipmentRowValue(rowCounter, ecm.stat1Lvl1Value),
+          lvl10: this.getEquipmentRowValue(rowCounter, ecm.stat1Lvl10Value),
+          lvl20: this.getEquipmentRowValue(rowCounter, ecm.stat1Lvl20Value),
+          lvl30: this.getEquipmentRowValue(rowCounter, ecm.stat1Lvl30Value),
+          lvl40: this.getEquipmentRowValue(rowCounter, ecm.stat1Lvl40Value),
+          lvl50: this.getEquipmentRowValue(rowCounter, ecm.stat1Lvl50Value),
+        };
+      }
+
+      if (this.getEquipmentRowValue(rowCounter, ecm.stat2Type)) {
+        equipment.stat2 = {
+          type: this.getEquipmentRowValue(rowCounter, ecm.stat2Type),
+          lvl1: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl1Value),
+          lvl10: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl10Value),
+          lvl20: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl20Value),
+          lvl30: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl30Value),
+          lvl40: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl40Value),
+          lvl50: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl50Value),
+        };
+      }
+
       equipmentArr.push(equipment);
       rowCounter++;
-      if (!this.getEquipmentRowValue(rowCounter, ecm.name)) {
-        notDone = false;
-      }
     }
 
     return equipmentArr;
