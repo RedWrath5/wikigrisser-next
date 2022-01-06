@@ -1,5 +1,6 @@
 import React from "react";
 import { ExclusiveEquipment } from "../../types/hero";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 export default function ExclusiveEquipmentSection({
   equipment,
@@ -16,6 +17,7 @@ export default function ExclusiveEquipmentSection({
               className="inline"
               width={70}
               height={70}
+              onError={addDefaultSrc}
             ></img>
           </div>
         </div>

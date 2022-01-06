@@ -1,4 +1,5 @@
 import { Class } from "../../types/hero";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 export function SoldiersSubSection({
   heroClass,
@@ -23,6 +24,7 @@ export function SoldiersSubSection({
                 width={67}
                 height={72}
                 className="inline"
+                onError={addDefaultSrc}
               ></img>
             </div>
           </div>

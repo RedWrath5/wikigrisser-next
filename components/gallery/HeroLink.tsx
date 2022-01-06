@@ -1,5 +1,6 @@
-import React from "react";
+import React, { ReactEventHandler, SyntheticEvent } from "react";
 import Link from "next/link";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 export function HeroLink({
   name,
@@ -16,6 +17,7 @@ export function HeroLink({
             src={"/hero cards/Card_" + prettyName + ".png"}
             width={100}
             height={100}
+            onError={addDefaultSrc}
           ></img>
         </a>
       </Link>

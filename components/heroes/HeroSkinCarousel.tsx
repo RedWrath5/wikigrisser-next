@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Hero } from "../../types/hero";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 export function HeroSkinCarousel({ hero }: { hero: Hero }) {
   const imagesArray = [
@@ -9,6 +10,7 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
         src={`/heroes/${hero.prettyName}/${hero.prettyName}.png`}
         width={400}
         height={400}
+        onError={addDefaultSrc}
       />
     </div>,
   ];
@@ -20,6 +22,7 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
           src={`/heroes/${hero.prettyName}/${hero.prettyName} SP.png`}
           width={400}
           height={400}
+          onError={addDefaultSrc}
         ></img>
       </div>
     );
@@ -34,6 +37,7 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
           }.png`}
           width={400}
           height={400}
+          onError={addDefaultSrc}
         />
       </div>
     );

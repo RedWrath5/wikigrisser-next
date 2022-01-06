@@ -1,5 +1,6 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 import SoldierBonusSection from "./SoldierBonusSection";
 
 export function TalentSection({
@@ -42,6 +43,7 @@ export function TalentSection({
           className="inline"
           width={175}
           height={158}
+          onError={addDefaultSrc}
         ></img>
         {spClass && (
           <img
@@ -49,6 +51,7 @@ export function TalentSection({
             className="inline ml-3 sm:ml-0 sm:mt-3"
             width={175}
             height={158}
+            onError={addDefaultSrc}
           ></img>
         )}
       </div>

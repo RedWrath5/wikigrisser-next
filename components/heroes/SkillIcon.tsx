@@ -1,6 +1,7 @@
 import { Popover } from "@material-ui/core";
 import React from "react";
 import { Skill } from "../../types/hero";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 import skillToHeroContext from "../../util/skillToHeroContext";
 
 export function SkillIcon({ skill }: { skill: Skill }) {
@@ -30,6 +31,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
           height={70}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
+          onError={addDefaultSrc}
         ></img>
       </div>
       <Popover
@@ -54,6 +56,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
             className="inline"
             width={70}
             height={70}
+            onError={addDefaultSrc}
           ></img>
           {db?.[skill.name]?.map((heroName) => (
             <img
@@ -61,6 +64,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
               src={"/hero cards/Card_" + heroName + ".png"}
               width={70}
               height={70}
+              onError={addDefaultSrc}
             ></img>
           ))}
         </div>

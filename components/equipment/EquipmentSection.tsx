@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Equipment } from "../../types/hero";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 export function EquipmentSection({ equipment }: { equipment: Equipment }) {
   return (
@@ -9,6 +10,7 @@ export function EquipmentSection({ equipment }: { equipment: Equipment }) {
           <img
             src={"/equipment/" + equipment.name + ".png"}
             className="inline"
+            onError={addDefaultSrc}
           />
         </div>
         <div className="col-span-12 text-center sm:col-span-11 sm:text-left">

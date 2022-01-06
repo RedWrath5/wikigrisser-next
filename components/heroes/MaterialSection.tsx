@@ -3,6 +3,7 @@ import { Class } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { Material } from "../../types/spreedsheet";
 import { HeroIcon } from "./HeroIcon";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 {
   /* Hero class icon + material tiers list*/
@@ -63,6 +64,7 @@ function MaterialItem({ material }: { material: Material }) {
         width={70}
         height={75}
         alt={material.name}
+        onError={addDefaultSrc}
       />
       <div>
         <b>x {material.count}</b>
