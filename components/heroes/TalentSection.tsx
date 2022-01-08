@@ -43,7 +43,7 @@ export function TalentSection({
           className="inline"
           width={175}
           height={158}
-          onError={addDefaultSrc}
+          onError={(err) => addDefaultSrc(err, "/404/talents.png")}
         ></img>
         {spClass && (
           <img

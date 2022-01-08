@@ -13,7 +13,7 @@ export function HeroIcon({ name }: { name: string }) {
               className="inline"
               width={70}
               height={75}
-              onError={addDefaultSrc}
+              onError={(err) => addDefaultSrc(err, "/404/classes.png")}
             ></img>
             <div>
               <div className="ml-2 text-2xl">{name}</div>

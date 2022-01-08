@@ -31,7 +31,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
           height={70}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
-          onError={addDefaultSrc}
+          onError={(err) => addDefaultSrc(err, "/404/skills.png")}
         ></img>
       </div>
       <Popover
