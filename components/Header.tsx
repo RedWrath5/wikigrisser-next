@@ -88,4 +88,8 @@ const LINKS = [
     text: "Soldiers",
     url: "/soldiers",
   },
+  {
+    text: "TSdL",
+    url: "/tsdl",
+  },
 ];
