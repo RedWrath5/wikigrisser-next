@@ -11,7 +11,12 @@ const TsdlPage = () => (
         className="inline"
       />
       <div>
-        <div id="discordInviteBox"></div>
+        <a
+          href="https://discord.gg/kGauTDGD7V"
+          className="text-blue-800 underline text-xl"
+        >
+          Discord Server
+        </a>
       </div>
       <div>
         <p>
@@ -181,9 +186,9 @@ const TsdlPage = () => (
         </p>
         <p>
           <span>
-            Please PM <strong>{"{TBD}"}&nbsp;</strong> on discord with your in
-            game name and the amount you wish to donate before making donations
-            so we know who is donating.&nbsp;
+            Please PM <strong>Maebari#7146&nbsp;</strong> on discord with your
+            in game name and the amount you wish to donate before making
+            donations so we know who is donating.&nbsp;
           </span>
         </p>
         <p>
