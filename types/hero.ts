@@ -42,8 +42,18 @@ export interface Class {
 export interface SPClass extends Class {
   talent?: Talent;
   soldierBonus: SoldierBonus;
+  unlockRequirments: SpUnlockRequirements;
 }
 
+export interface SpUnlockRequirements {
+  stage1: SPStep[];
+  stage2: SPStep[];
+}
+
+export interface SPStep {
+  name: string;
+  requirement: string;
+}
 export interface Skill {
   name: string;
   description?: string;
