@@ -32,6 +32,10 @@ export class EquipmentLoader extends Loader<Equipment[]> {
         type: this.getEquipmentRowValue(rowCounter, ecm.type) as any,
         stat1: null,
         stat2: null,
+        exclusiveForHero: this.getEquipmentRowValue(
+          rowCounter,
+          ecm.exclusiveForHero
+        ),
         effect: {
           lvl1: "",
           lvl10: this.getEquipmentRowValue(rowCounter, ecm.equipSkill10),
@@ -66,6 +70,7 @@ export class EquipmentLoader extends Loader<Equipment[]> {
         };
       }
 
+      console.log(equipment, "equipment");
       equipmentArr.push(equipment);
       rowCounter++;
     }

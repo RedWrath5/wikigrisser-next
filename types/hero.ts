@@ -115,6 +115,7 @@ export interface Equipment extends BaseEquipment {
   stat1: EquipmentStat | null;
   stat2: EquipmentStat | null;
   notes: string;
+  exclusiveForHero: string | null;
 }
 
 export interface ExclusiveEquipment extends BaseEquipment {
@@ -157,6 +158,7 @@ export type EquipmentType =
   | "Cloth"
   | "Leather"
   | "Heavy"
+  | "Special"
   | "";
 
 export interface Soldier {

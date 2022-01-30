@@ -34,6 +34,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
       .filter((equip) => equip.slot === slot)
       .reduce(
         (accumlator, equip) => {
+          console.log(equip, "equip");
           accumlator[equip.type ?? ""].push(equip);
           return accumlator;
         },
@@ -48,6 +49,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           Leather: [],
           Staff: [],
           Sword: [],
+          Special: [],
           "": [],
         } as GroupedEquipment
       );
@@ -76,6 +78,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           Leather: [],
           Staff: [],
           Sword: [],
+          Special: [],
           "": [],
         } as GroupedEquipment
       );
@@ -134,10 +137,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
               <div className="flex flex-row bg-white justify-center">
                 <BoundedColumn>
                   {equips.map((equip) => (
-                    <EquipmentSection
-                      key={equip.name}
-                      equipment={equip}
-                    />
+                    <EquipmentSection key={equip.name} equipment={equip} />
                   ))}
                 </BoundedColumn>
               </div>
