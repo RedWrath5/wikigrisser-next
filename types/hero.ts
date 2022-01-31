@@ -122,6 +122,7 @@ export enum UnitType {
 export interface Equipment extends BaseEquipment {
   type: EquipmentType;
   effect: EquipmentEffect;
+  quality: EquipmentQuality;
   stat1: EquipmentStat | null;
   stat2: EquipmentStat | null;
   notes: string;
@@ -154,6 +155,11 @@ export enum EquipmentSlot {
   Body = "Body",
   Head = "Head",
   Accessory = "Accessory",
+}
+
+export enum EquipmentQuality {
+  SSR = "SSR",
+  EXCLUSIVE = "Exclusive",
 }
 
 export type EquipmentType =

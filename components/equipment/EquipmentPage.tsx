@@ -7,7 +7,12 @@ import {
   Select,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Equipment, EquipmentSlot, EquipmentType } from "../../types/hero";
+import {
+  Equipment,
+  EquipmentQuality,
+  EquipmentSlot,
+  EquipmentType,
+} from "../../types/hero";
 import { EquipmentSection } from "./EquipmentSection";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { TransitionGroup } from "react-transition-group";
@@ -17,12 +22,13 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
     useState({} as GroupedEquipment);
 
   const [slot, setSlot] = useState(EquipmentSlot.Weapon);
+  const [quality, setQuality] = useState(EquipmentQuality.SSR);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     filterAndGroup(slot);
     setSearchText("");
-  }, [slot]);
+  }, [slot, quality]);
 
   useEffect(() => {
     if (searchText.length > 0) search(searchText);
@@ -32,8 +38,10 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   function filterAndGroup(slot: EquipmentSlot) {
     const filteredAndGrouped = equipment
       .filter((equip) => equip.slot === slot)
+      .filter((equip) => equip.quality === quality)
       .reduce(
         (accumlator, equip) => {
+          console.log(equip.type);
           accumlator[equip.type ?? ""].push(equip);
           return accumlator;
         },
@@ -46,6 +54,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           Heavy: [],
           Lance: [],
           Leather: [],
+          Special: [],
           Staff: [],
           Sword: [],
           "": [],
@@ -87,6 +96,12 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   ) => {
     setSlot(event.target.value as EquipmentSlot);
   };
+
+  const handleQualityChange = (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    setQuality(event.target.value as EquipmentQuality);
+  };
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
@@ -105,15 +120,31 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           </FormControl>
         </div>
 
+        <div className="mr-4">
+          <FormControl>
+            <InputLabel>Slot</InputLabel>
+            <Select
+              value={slot}
+              onChange={(slotInner) => handleSlotChange(slotInner)}
+            >
+              {Object.values(EquipmentSlot).map((slotInner) => (
+                <MenuItem key={slotInner} value={slotInner}>
+                  {slotInner}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+
         <FormControl>
-          <InputLabel>Slot</InputLabel>
+          <InputLabel>Quality</InputLabel>
           <Select
-            value={slot}
-            onChange={(slotInner) => handleSlotChange(slotInner)}
+            value={quality}
+            onChange={(slotInner) => handleQualityChange(slotInner)}
           >
-            {Object.values(EquipmentSlot).map((slotInner) => (
-              <MenuItem key={slotInner} value={slotInner}>
-                {slotInner}
+            {Object.values(EquipmentQuality).map((qualityInner) => (
+              <MenuItem key={qualityInner} value={qualityInner}>
+                {qualityInner}
               </MenuItem>
             ))}
           </Select>
@@ -134,10 +165,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
               <div className="flex flex-row bg-white justify-center">
                 <BoundedColumn>
                   {equips.map((equip) => (
-                    <EquipmentSection
-                      key={equip.name}
-                      equipment={equip}
-                    />
+                    <EquipmentSection key={equip.name} equipment={equip} />
                   ))}
                 </BoundedColumn>
               </div>
