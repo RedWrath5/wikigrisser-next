@@ -70,8 +70,6 @@ export class EquipmentLoader extends Loader<Equipment[]> {
           lvl50: this.getEquipmentRowValue(rowCounter, ecm.stat2Lvl50Value),
         };
       }
-
-      console.log(equipment, "equipment");
       equipmentArr.push(equipment);
       rowCounter++;
     }

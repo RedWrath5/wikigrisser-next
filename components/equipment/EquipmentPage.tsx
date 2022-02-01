@@ -41,7 +41,6 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
       .filter((equip) => equip.quality === quality)
       .reduce(
         (accumlator, equip) => {
-          console.log(equip.type);
           accumlator[equip.type ?? ""].push(equip);
           return accumlator;
         },
@@ -83,6 +82,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           Heavy: [],
           Lance: [],
           Leather: [],
+          Special: [],
           Staff: [],
           Sword: [],
           "": [],
