@@ -67,6 +67,7 @@ function EffectList({ equipment }: { equipment: Equipment }) {
         )}
       </div>
 
+      {equipment.exclusiveForHero && <div className="mb-1"><b>[{equipment.exclusiveForHero}]</b></div>}
       <p className="whitespace-pre-line">{equipmentText.effect}</p>
       <p className="italic mb-1">{equipment.notes}</p>
       <ul className="flex justify-center sm:justify-start">

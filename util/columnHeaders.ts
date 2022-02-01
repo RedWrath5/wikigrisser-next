@@ -83,6 +83,7 @@ export const EQUIPMENT_COLUMN_HEADERS = {
   equipSkill40: ["Equip Skill Lv40"],
   equipSkill50: ["Equip Skill Lv50"],
   notes: ["Notes"],
+  exclusiveForHero: ["Exclusive"],
 };
 
 export const SOLDIER_COLUMN_HEADERS = {
