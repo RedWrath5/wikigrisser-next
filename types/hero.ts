@@ -42,8 +42,18 @@ export interface Class {
 export interface SPClass extends Class {
   talent?: Talent;
   soldierBonus: SoldierBonus;
+  unlockRequirments: SpUnlockRequirements;
 }
 
+export interface SpUnlockRequirements {
+  stage1: SPStep[];
+  stage2: SPStep[];
+}
+
+export interface SPStep {
+  name: string;
+  requirement: string;
+}
 export interface Skill {
   name: string;
   description?: string;
@@ -112,6 +122,7 @@ export enum UnitType {
 export interface Equipment extends BaseEquipment {
   type: EquipmentType;
   effect: EquipmentEffect;
+  quality: EquipmentQuality;
   stat1: EquipmentStat | null;
   stat2: EquipmentStat | null;
   notes: string;
@@ -145,6 +156,11 @@ export enum EquipmentSlot {
   Body = "Body",
   Head = "Head",
   Accessory = "Accessory",
+}
+
+export enum EquipmentQuality {
+  SSR = "SSR",
+  EXCLUSIVE = "Exclusive",
 }
 
 export type EquipmentType =

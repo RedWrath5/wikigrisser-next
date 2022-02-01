@@ -30,6 +30,7 @@ export class EquipmentLoader extends Loader<Equipment[]> {
         notes: this.getEquipmentRowValue(rowCounter, ecm.notes),
         slot: this.getEquipmentRowValue(rowCounter, ecm.slot) as any,
         type: this.getEquipmentRowValue(rowCounter, ecm.type) as any,
+        quality: this.getEquipmentRowValue(rowCounter, ecm.quality) as any,
         stat1: null,
         stat2: null,
         exclusiveForHero: this.getEquipmentRowValue(
