@@ -41,8 +41,8 @@ export const HERO_COLUMN_HEADERS = {
     "Level 7 Heart Bond Effect\n(Offensive)",
   ],
   exclusiveEquipmentName: ["Exclusive Equipment", "Name"],
-  exclusiveEquipmentType: ["Exclusive Equipment", "Slot"],
-  exclusiveEquipmentEffect: ["Exclusive Equipment", "Equip Skill Lv50"],
+  exclusiveEquipmentType: ["Exclusive Equipment", "Item Type"],
+  exclusiveEquipmentEffect: ["Exclusive Equipment", "Effect"],
   awakeningSkillName: ["Awakening Skill", "Name"],
   awakeningSkillType: ["Awakening Skill", "Type"],
   awakeningSkillCD: ["Awakening Skill", "CD"],
@@ -83,7 +83,6 @@ export const EQUIPMENT_COLUMN_HEADERS = {
   equipSkill40: ["Equip Skill Lv40"],
   equipSkill50: ["Equip Skill Lv50"],
   notes: ["Notes"],
-  exclusiveForHero: ["Exclusive"],
 };
 
 export const SOLDIER_COLUMN_HEADERS = {

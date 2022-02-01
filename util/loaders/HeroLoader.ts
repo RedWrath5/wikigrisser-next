@@ -8,6 +8,8 @@ import {
   Skill,
   SoldierBonus,
   SPClass,
+  SPStep,
+  SpUnlockRequirements,
   Talent,
   UnitType,
 } from "../../types/hero";
@@ -373,6 +375,8 @@ export class HeroLoader extends Loader<HeroMap> {
           stats.class === name && stats.name.toLocaleLowerCase() === heroName
       )?.stats || null;
 
+    const unlockRequirments = this.getSPUnlockRequirments(rowNumber);
+
     return {
       name,
       talent,
@@ -391,6 +395,32 @@ export class HeroLoader extends Loader<HeroMap> {
         def: this.getworkBookSpClassRowValue(rowNumber, "AE"),
         mdef: this.getworkBookSpClassRowValue(rowNumber, "AF"),
       },
+      unlockRequirments,
     };
+  }
+
+  getSPUnlockRequirments(rowNumber: number): SpUnlockRequirements {
+    const STAGE_1_STARTING_POSITION = "AK";
+    const STAGE_2_STARTING_POSITION = "AY";
+    return {
+      stage1: this.getSPStage(rowNumber, STAGE_1_STARTING_POSITION),
+      stage2: this.getSPStage(rowNumber, STAGE_2_STARTING_POSITION),
+    };
+  }
+
+  getSPStage(rowNumber: number, startingPosition: string) {
+    const QUEST_STEPS = 7;
+    const accumulator: SPStep[] = [];
+    let currentColumn = startingPosition;
+    for (let i = 0; i < QUEST_STEPS; i++) {
+      const nextColumn = this.getNextKey(currentColumn);
+      const quest = {
+        name: this.getworkBookSpClassRowValue(rowNumber, currentColumn),
+        requirement: this.getworkBookSpClassRowValue(rowNumber, nextColumn),
+      };
+      accumulator.push(quest);
+      currentColumn = this.getNextKey(nextColumn);
+    }
+    return accumulator;
   }
 }

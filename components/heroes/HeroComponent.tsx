@@ -9,6 +9,7 @@ import { SoldiersSection } from "./SoldiersSection";
 import { TalentSection } from "./TalentSection";
 import { Tabs, Tab } from "@material-ui/core";
 import { MaterialSection } from "./MaterialSection";
+import { SPSection } from "./SPSection";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   {
@@ -50,6 +51,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
           <Tabs value={tab} onChange={handleChangeTab}>
             <Tab label="Class & Soldiers" value="main" />
             <Tab label="Materials" value="materials" />
+            {hero.spClass && <Tab label="SP Quests" value="sp" />}
           </Tabs>
         </div>
 
@@ -65,6 +67,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
         {tab === "materials" && (
           <MaterialSection heroClass={hero.startingClass} />
         )}
+        {tab === "sp" && hero.spClass && <SPSection spClass={hero.spClass} />}
       </div>
     </div>
   );
