@@ -61,7 +61,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
           {db?.[skill.name]?.map((heroName) => (
             <img
               key={heroName}
-              src={heroName + ".png"}
+              src={"/hero cards/Card_" + heroName + ".png"}
               width={70}
               height={70}
               onError={addDefaultSrc}
