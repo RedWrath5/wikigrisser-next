@@ -14,7 +14,7 @@ export function HeroLink({
       <Link href={"/heroes/" + name} passHref={true}>
         <a>
           <img
-            src={"/hero cards/prettyName + ".png"}
+            src={"/hero cards/" + prettyName + ".png"}
             width={100}
             height={100}
             onError={addDefaultSrc}
