@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect } from "react";
+import { Img } from "./layout/Img";
 
 export function Header() {
   // https://ttntm.me/blog/tailwind-responsive-menu/
@@ -39,7 +40,7 @@ export function Header() {
         <div className="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
           <Link href="/">
             <span className="flex flex-row cursor-pointer items-center text-center">
-              <img src="/logo-big.jpg" width={50} height={50}></img>
+              <Img src="/logo-big.jpg" width={50} height={50}></Img>
               <div className="ml-2">Wikigrisser Next</div>
             </span>
           </Link>

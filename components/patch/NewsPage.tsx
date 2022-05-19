@@ -8,6 +8,8 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 import { TransitionGroup } from "react-transition-group";
+import { Img } from "../layout/Img";
+import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 
 export function NewsPage({ patches }: { patches: PatchMap }) {
   const [viewPast, setViewPast] = useState(false); // show/hide past updates
@@ -44,12 +46,15 @@ export function NewsPage({ patches }: { patches: PatchMap }) {
             <div className="flex flex-col mb-5" key={majorPatchSection[0].id}>
               <div className="flex flex-row bg-gray-200 justify-center">
                 <div className="flex flex-col text-center mt-2 mb-2 ">
-                  <img
+                  <Img
                     src={"/patchBanners/" + majorPatchSection[0].id + ".png"}
                     className="inline md:col-span-1 justify-self-center pb-2"
                     width={400}
                     height={200}
-                  ></img>
+                    onError={(err) =>
+                      addDefaultSrc(err, "/404/patchRateUp.png")
+                    }
+                  ></Img>
                   <div className="ml-2 text-2xl">
                     {majorPatchSection[0].name}
                   </div>

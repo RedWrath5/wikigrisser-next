@@ -1,6 +1,7 @@
 import React from "react";
 import { Class, Hero, HeroStats } from "../../types/hero";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
+import { Img } from "../layout/Img";
 import SoldierBonusSection from "./SoldierBonusSection";
 
 export function TalentSection({
@@ -28,31 +29,31 @@ export function TalentSection({
       <div className="col-span-12 sm:col-span-1 text-center align-middle">
         {factions.map((faction) => (
           <span key={faction}>
-            <img
+            <Img
               src={"/factions/" + faction + ".png"}
               className="inline"
               width={50}
               height={50}
-            ></img>
+            ></Img>
           </span>
         ))}
       </div>
       <div className="col-span-12 sm:col-span-2 text-center align-middle">
-        <img
+        <Img
           src={"/talents/" + prettyName + ".png"}
           className="inline"
           width={175}
           height={158}
           onError={(err) => addDefaultSrc(err, "/404/talents.png")}
-        ></img>
+        ></Img>
         {spClass && (
-          <img
+          <Img
             src={"/talents/" + prettyName + " SP.png"}
             className="inline ml-3 sm:ml-0 sm:mt-3"
             width={175}
             height={158}
             onError={addDefaultSrc}
-          ></img>
+          ></Img>
         )}
       </div>
       <div className="col-span-12 sm:col-span-9 pt-2">

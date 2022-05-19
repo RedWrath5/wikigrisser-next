@@ -4,6 +4,7 @@ import React from "react";
 import { DBSingleton, Patch, PatchMap } from "../util/databaseSingleton";
 import { PatchSection } from "../components/patch/PatchSection";
 import formatDate from "../util/formatDate.fn";
+import { Img } from "../components/layout/Img";
 
 const Home = ({ patchMap }: { patchMap: PatchMap }) => {
   const today = new Date().valueOf();
@@ -23,12 +24,12 @@ const Home = ({ patchMap }: { patchMap: PatchMap }) => {
     <Layout>
       <div className="flex flex-grow flex-col bg-black">
         <div className="flex flex-row justify-center">
-          <img
+          <Img
             src={"/web/banner.jpg"}
             className="inline"
             width={2300}
             height={850}
-          ></img>
+          ></Img>
         </div>
 
         <div className="flex flex-col justify-center text-center">

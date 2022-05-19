@@ -2,11 +2,12 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Hero } from "../../types/hero";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
+import { Img } from "../layout/Img";
 
 export function HeroSkinCarousel({ hero }: { hero: Hero }) {
   const imagesArray = [
     <div key={hero.name}>
-      <img
+      <Img
         src={`/heroes/${hero.prettyName}/${hero.prettyName}.png`}
         width={400}
         height={400}
@@ -18,12 +19,12 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
   if (hero.spClass) {
     imagesArray.push(
       <div key="sp">
-        <img
+        <Img
           src={`/heroes/${hero.prettyName}/${hero.prettyName} SP.png`}
           width={400}
           height={400}
           onError={addDefaultSrc}
-        ></img>
+        ></Img>
       </div>
     );
   }
@@ -31,7 +32,7 @@ export function HeroSkinCarousel({ hero }: { hero: Hero }) {
   Array.apply(null, Array(hero.skinCount)).forEach((element, index) => {
     imagesArray.push(
       <div key={index}>
-        <img
+        <Img
           src={`/heroes/${hero.prettyName}/${hero.prettyName} Skin ${
             index + 1
           }.png`}

@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../../types/hero";
 import { HeroMap } from "../../util/databaseSingleton";
 import { BoundedColumn } from "../layout/BoundedColumn";
+import { Img } from "../layout/Img";
 import { HeroLink } from "./HeroLink";
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
@@ -123,7 +124,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
           <div className="flex flex-row flex-wrap justify-center text-center mb-5">
             {Object.values(Factions).map((faction) => (
               <div key={faction} className="flex mr-1 cursor-pointer">
-                <img
+                <Img
                   className={
                     filters.find(
                       (filter) =>
@@ -136,7 +137,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
                   src={"/factions/" + faction + ".png"}
                   width={50}
                   height={50}
-                ></img>
+                ></Img>
               </div>
             ))}
           </div>

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Equipment } from "../../types/hero";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
+import { Img } from "../layout/Img";
 
 export function EquipmentSection({ equipment }: { equipment: Equipment }) {
   return (
     <>
       <div className="grid grid-cols-12 items-center mt-2 mb-2">
         <div className="col-span-12 text-center sm:col-span-1 flex items-center justify-center mr-3">
-          <img
+          <Img
             src={"/equipment/" + equipment.name + ".png"}
             className="inline"
             onError={addDefaultSrc}
@@ -44,7 +45,7 @@ function EffectList({ equipment }: { equipment: Equipment }) {
       <div className="flex text-xl mb-1 justify-center sm:justify-start">
         {equipment.stat1 && (
           <>
-            <img
+            <Img
               src={`/stats/${equipment.stat1.type}.png`}
               className="inline mr-1"
               height={28}
@@ -56,7 +57,7 @@ function EffectList({ equipment }: { equipment: Equipment }) {
 
         {equipment.stat2 && (
           <>
-            <img
+            <Img
               src={`/stats/${equipment.stat2.type}.png`}
               className="inline ml-3 mr-1"
               height={28}
@@ -67,7 +68,11 @@ function EffectList({ equipment }: { equipment: Equipment }) {
         )}
       </div>
 
-      {equipment.exclusiveForHero && <div className="mb-1"><b>[{equipment.exclusiveForHero}]</b></div>}
+      {equipment.exclusiveForHero && (
+        <div className="mb-1">
+          <b>[{equipment.exclusiveForHero}]</b>
+        </div>
+      )}
       <p className="whitespace-pre-line">{equipmentText.effect}</p>
       <p className="italic mb-1">{equipment.notes}</p>
       <ul className="flex justify-center sm:justify-start">

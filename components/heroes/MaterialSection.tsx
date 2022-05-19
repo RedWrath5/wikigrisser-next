@@ -4,6 +4,7 @@ import { BoundedColumn } from "../layout/BoundedColumn";
 import { Material } from "../../types/spreedsheet";
 import { HeroIcon } from "./HeroIcon";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
+import { Img } from "../layout/Img";
 
 {
   /* Hero class icon + material tiers list*/
@@ -58,7 +59,7 @@ function MaterialList({
 function MaterialItem({ material }: { material: Material }) {
   return (
     <div className="w-20 ml-1">
-      <img
+      <Img
         src={"/job material/" + material.name + ".png"}
         className="block"
         width={70}

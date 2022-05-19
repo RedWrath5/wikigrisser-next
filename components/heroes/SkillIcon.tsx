@@ -3,6 +3,7 @@ import React from "react";
 import { Skill } from "../../types/hero";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 import skillToHeroContext from "../../util/skillToHeroContext";
+import { Img } from "../layout/Img";
 
 export function SkillIcon({ skill }: { skill: Skill }) {
   const db = React.useContext(skillToHeroContext);
@@ -24,7 +25,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
   return (
     <>
       <div className="mb-3">
-        <img
+        <Img
           src={"/skills/" + skill.name + ".png"}
           className="inline"
           width={70}
@@ -32,7 +33,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
           onError={(err) => addDefaultSrc(err, "/404/skills.png")}
-        ></img>
+        ></Img>
       </div>
       <Popover
         id="mouse-over-popover"
@@ -51,21 +52,21 @@ export function SkillIcon({ skill }: { skill: Skill }) {
         disableRestoreFocus
       >
         <div className="flex flex-row items-center p-2">
-          <img
+          <Img
             src={"/skills/" + skill.name + ".png"}
             className="inline"
             width={70}
             height={70}
             onError={addDefaultSrc}
-          ></img>
+          ></Img>
           {db?.[skill.name]?.map((heroName) => (
-            <img
+            <Img
               key={heroName}
               src={"/hero cards/" + heroName + ".png"}
               width={70}
               height={70}
               onError={addDefaultSrc}
-            ></img>
+            ></Img>
           ))}
         </div>
       </Popover>

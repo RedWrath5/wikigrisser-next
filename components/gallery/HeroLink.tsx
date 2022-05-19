@@ -1,6 +1,7 @@
 import React, { ReactEventHandler, SyntheticEvent } from "react";
 import Link from "next/link";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
+import { Img } from "../layout/Img";
 
 export function HeroLink({
   name,
@@ -13,12 +14,12 @@ export function HeroLink({
     <div className="cursor-pointer" key={name}>
       <Link href={"/heroes/" + name} passHref={true}>
         <a>
-          <img
+          <Img
             src={"/hero cards/" + prettyName + ".png"}
             width={100}
             height={100}
             onError={addDefaultSrc}
-          ></img>
+          ></Img>
         </a>
       </Link>
       <Link href={"/heroes/" + name}>

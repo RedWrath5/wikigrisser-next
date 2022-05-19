@@ -3,6 +3,7 @@ import { Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
 import { Collapse } from "@material-ui/core";
 import { RelatedHeroesSection } from "./RelatedHeroesSection";
+import { Img } from "../layout/Img";
 
 export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   const [showMore, setShowMore] = useState(false);
@@ -14,58 +15,58 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2 w-full">
       <div className="col-span-12 text-center sm:col-span-1">
-        <img
+        <Img
           src={"/soldier sprite/" + soldier.name + ".png"}
           className="inline"
-        ></img>
+        ></Img>
       </div>
       <div className="col-span-12 text-center sm:col-span-11 sm:text-left ml-2">
         <p className="text-2xl mb-2">{soldier.name}</p>
 
         <p className="flex text-xl mb-1">
-          <img
+          <Img
             src={"/stats/HP.png"}
             className="inline mr-1"
             height={28}
             width={28}
-          ></img>
+          ></Img>
           {soldier.baseHp}
-          <img
+          <Img
             src={"/stats/ATK.png"}
             className="inline mr-1 ml-2"
             height={28}
             width={28}
-          ></img>
+          ></Img>
           {soldier.baseAtk}
-          <img
+          <Img
             src={"/stats/DEF.png"}
             className="inline mr-1 ml-2"
             height={28}
             width={28}
-          ></img>
+          ></Img>
           {soldier.baseDef}
-          <img
+          <Img
             src={"/stats/MDEF.png"}
             className="inline mr-1 ml-2"
             height={28}
             width={28}
-          ></img>
+          ></Img>
           {soldier.baseMdef}
         </p>
         <p className="flex lext-left text-xl mb-2">
-          <img
+          <Img
             src={"/stats/Move_" + soldier.moveType + ".png"}
             className="inline mr-1"
             height={28}
             width={28}
-          ></img>
+          ></Img>
           {soldier.move}{" "}
-          <img
+          <Img
             src={"/stats/Range.png"}
             className="inline mr-1 ml-5"
             height={28}
             width={28}
-          ></img>
+          ></Img>
           {soldier.range}
         </p>
         <p className="whitespace-pre-line">{soldier.effect}</p>
@@ -74,7 +75,7 @@ export function SoldiersGallerySection({ soldier }: { soldier: Soldier }) {
       <div className="flex justify-center col-span-12 border-t-2 border-black border-solid mt-6">
         {soldier.trainingSkill && (
           <button onClick={handleShowMoreButton} className="">
-            <img
+            <Img
               src="ui/arrow_down.svg"
               alt="arrow image"
               className={

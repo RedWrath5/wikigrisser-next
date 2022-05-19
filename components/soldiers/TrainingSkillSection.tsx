@@ -1,5 +1,6 @@
 import React from "react";
 import { TrainingSkill, TrainingSkillLevel } from "../../types/hero";
+import { Img } from "../layout/Img";
 
 export function TrainingSkillSection({
   trainingSkill,
@@ -50,7 +51,7 @@ function TrainingSkillItem({ img, count }: { img: string; count: string }) {
   return (
     <div className="w-20 ml-2">
       <div className="flex items-center h-24">
-        <img src={img} className="block" alt="material icon" />
+        <Img src={img} className="block" alt="material icon" />
       </div>
       <div className="flex justify-center">
         <b>x {count}</b>

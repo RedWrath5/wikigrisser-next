@@ -1,10 +1,11 @@
 import React from "react";
 import { Layout } from "../components/Layout";
+import { Img } from "../components/layout/Img";
 
 const TsdlPage = () => (
   <Layout>
     <div className="flex flex-col text-center items-center justify-self-center w-full px-2">
-      <img
+      <Img
         src={"tsdl/origins.jpg"}
         width={200}
         height={200}
