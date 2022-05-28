@@ -22,7 +22,7 @@ export function HeroComponent({ hero }: { hero: Hero }) {
 
   return (
     <div className="bg-white flex flex-grow justify-center flex-col">
-      <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
+      <h1 className="text-6xl text-center mt-5 mb-10 font-thin text-gray-600">
         {hero.prettyName}
       </h1>
       <div className="flex flex-wrap justify-center">

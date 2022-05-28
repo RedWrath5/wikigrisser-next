@@ -104,7 +104,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   };
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
-      <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
+      <h1 className="text-6xl text-center mt-5 mb-10 font-thin text-gray-600">
         Equipment
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">

@@ -54,7 +54,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
     const filtered = soldiers.filter(
       (soldier) => soldier.type === type && soldier.tier === tier
     );
-   setFilteredSoldiers(filtered);
+    setFilteredSoldiers(filtered);
   }
 
   const handleTierChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -69,7 +69,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
 
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
-      <h1 className="text-6xl text-center mb-10 font-thin text-gray-600">
+      <h1 className="text-6xl text-center mt-5 mb-10 font-thin text-gray-600">
         Soldiers
       </h1>
       <div className="flex flex-wrap justify-center text-center mb-5">
