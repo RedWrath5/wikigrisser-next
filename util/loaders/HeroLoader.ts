@@ -91,6 +91,8 @@ export class HeroLoader extends Loader<HeroMap> {
   private fixMatthew(hero: Hero, heroMap: HeroMap): Hero {
     if (hero.name.includes("matthew")) {
       const masterMatthew = heroMap["matthew (cavalry)"];
+      const classTree = { ...masterMatthew.startingClass };
+      classTree.children = hero.startingClass.children;
       return {
         ...hero,
         bondRequirments: masterMatthew.bondRequirments,
@@ -99,6 +101,8 @@ export class HeroLoader extends Loader<HeroMap> {
         threeCostSkill: masterMatthew.threeCostSkill,
         soldierBonus: masterMatthew.soldierBonus,
         exclusiveEquipment: masterMatthew.exclusiveEquipment,
+        factions: masterMatthew.factions,
+        startingClass: classTree,
       };
     }
     return hero;

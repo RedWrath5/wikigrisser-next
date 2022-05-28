@@ -20,8 +20,8 @@ export function SkillSection({
           {skill.name}
         </p>
         <p>
-          Cost: {skill.cost} / CD: {skill.cd} / Range: {skill.range} / Span:{" "}
-          {skill.span}
+          Cost: {skill.cost} / CD: {skill.cd || 0} / Range: {skill.range} /
+          Span: {skill.span}
         </p>
         <p className="whitespace-pre-line">{skill.description}</p>
       </div>

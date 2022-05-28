@@ -6,7 +6,7 @@ const TsdlPage = () => (
   <Layout>
     <div className="flex flex-col text-center items-center justify-self-center w-full px-2">
       <Img
-        src={"tsdl/origins.jpg"}
+        src={"tsdl/banner.png"}
         width={200}
         height={200}
         className="inline"
@@ -227,7 +227,7 @@ const TsdlPage = () => (
           />
         </form>
       </div>
-      <div>
+      {/* <div>
         <table>
           <tr>
             <th>Support our Streamers!</th>
@@ -240,7 +240,7 @@ const TsdlPage = () => (
             </th>
           </tr>
         </table>
-      </div>
+      </div> */}
       <div>
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSeoC_OKtEpIYRL1cHv5nywrMn0kL_KZpcXuFlOCKJp85e7mew/viewform?embedded=true"
