@@ -5,6 +5,7 @@ import {
   ExclusiveEquipment,
   Factions,
   Hero,
+  Inscription,
   Skill,
   SoldierBonus,
   SPClass,
@@ -167,6 +168,16 @@ export class HeroLoader extends Loader<HeroMap> {
 
     let spClass = this.getSpClass(name) || null;
 
+    const inscription: Inscription = {
+      weaponStat: this.getHeroRowValue(rowNumber, hcm.inscriptionWeaponStat),
+      weapon1: this.getHeroRowValue(rowNumber, hcm.inscriptionWeapon1),
+      weapon2: this.getHeroRowValue(rowNumber, hcm.inscriptionWeapon2),
+      armor: this.getHeroRowValue(rowNumber, hcm.inscriptionArmor),
+      helm: this.getHeroRowValue(rowNumber, hcm.inscriptionHelm),
+      skillName: this.getHeroRowValue(rowNumber, hcm.inscriptionSkillName),
+      skillEffect: this.getHeroRowValue(rowNumber, hcm.inscriptionSkillEffect),
+    };
+
     return {
       name,
       prettyName: this.getHeroRowValue(rowNumber, hcm.name),
@@ -180,6 +191,7 @@ export class HeroLoader extends Loader<HeroMap> {
       exclusiveEquipment,
       spClass,
       skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
+      inscription,
     };
   };
 

@@ -50,6 +50,13 @@ export const HERO_COLUMN_HEADERS = {
   awakeningSkillSpan: ["Awakening Skill", "Span"],
   awakeningSkillEffect: ["Awakening Skill", "Effect"],
   skinCount: ["Skin Count"],
+  inscriptionWeaponStat: ["Inscription", "Inscription Weapon Stat"],
+  inscriptionWeapon1: ["Inscription", "Inscription Weapon 1"],
+  inscriptionWeapon2: ["Inscription", "Inscription Weapon 2"],
+  inscriptionArmor: ["Inscription", "Inscription Armor"],
+  inscriptionHelm: ["Inscription", "Inscription Helm"],
+  inscriptionSkillName: ["Inscription", "Inscription Skill Name"],
+  inscriptionSkillEffect: ["Inscription", "Inscription Skill Effect"],
 };
 
 export const EQUIPMENT_COLUMN_HEADERS = {
