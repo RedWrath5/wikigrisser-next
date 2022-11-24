@@ -10,6 +10,7 @@ import { TalentSection } from "./TalentSection";
 import { Tabs, Tab } from "@material-ui/core";
 import { MaterialSection } from "./MaterialSection";
 import { SPSection } from "./SPSection";
+import InscriptionSection from "./InscriptionSection";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   {
@@ -43,6 +44,9 @@ export function HeroComponent({ hero }: { hero: Hero }) {
               skill={hero.threeCostSkill}
               isAwakening={true}
             ></SkillSection>
+          )}
+          {hero.inscription?.skillName && (
+            <InscriptionSection inscription={hero.inscription} />
           )}
         </BoundedColumn>
       </div>

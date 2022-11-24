@@ -14,6 +14,7 @@ export interface Hero {
   soldierBonus: SoldierBonus | null;
   exclusiveEquipment: ExclusiveEquipment | null;
   skinCount: number;
+  inscription: Inscription;
 }
 
 export interface RelatedBond {
@@ -226,4 +227,14 @@ export interface TrainingSkillLevel {
 export interface TrainingMaterial {
   name: string;
   count: string;
+}
+
+export interface Inscription {
+  weaponStat: string;
+  weapon1: string;
+  weapon2: string;
+  armor: string;
+  helm: string;
+  skillName?: string;
+  skillEffect?: string;
 }
