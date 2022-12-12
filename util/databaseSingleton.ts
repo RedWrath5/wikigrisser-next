@@ -10,6 +10,7 @@ import { SoldierLoader } from "./loaders/SoldierLoader";
 import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
 import { SoldierToHeroTransformer } from "./transformers/SoldierToHeroTransformer";
+import { SkinsLoader } from "./loaders/SkinsLoader";
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -26,11 +27,13 @@ export class DBSingleton {
   private skillsMap = new SkillsLoader(this.workBook).load();
   private maxStats = new MaxStatsLoader(this.workBook).load();
   private classesMap = new ClassesLoader(this.workBook).load();
+  private skinsMap = new SkinsLoader(this.workBook).load();
   private heroMap = new HeroLoader(
     this.workBook,
     this.skillsMap,
     this.maxStats,
-    this.classesMap
+    this.classesMap,
+    this.skinsMap
   ).load();
   private patchMap = new PatchLoader(this.workBook).load();
   private equipment = new EquipmentLoader(this.workBook).load();

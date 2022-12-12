@@ -15,6 +15,7 @@ export interface Hero {
   exclusiveEquipment: ExclusiveEquipment | null;
   skinCount: number;
   inscription: Inscription;
+  skins: Skin[] | null;
 }
 
 export interface RelatedBond {
@@ -237,4 +238,16 @@ export interface Inscription {
   helm: string;
   skillName?: string;
   skillEffect?: string;
+}
+
+export interface SkinsMap {
+  [key: string]: Skin[];
+}
+
+export interface Skin {
+  index: string;
+  name: string | null;
+  source: string | null;
+  cost: string | null;
+  notes: string | null;
 }

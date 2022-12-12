@@ -173,6 +173,14 @@ export const PATCHES_HEADERS = {
   exclusive3: ["Exclusive 3"],
 };
 
+export const SKINS_HEADERS = {
+  hero: ["Hero Name"],
+  index: ["Index"],
+  name: ["Skin Name"],
+  source: ["Source"],
+  cost: ["Cost"],
+  notes: ["Notes"],
+};
 export const FINAL_COL_KEY = "FINAL_COLUMN";
 
 export const CLASS_UPGDARE_MATERIALS_COLUMN_HEADERS = [
@@ -306,4 +314,8 @@ export type PATCHES_IDS = {
 
 export type ANIKI_DROP_HEADERS_IDS = {
   [key in keyof typeof ANIKI_DROP_HEADERS]: string;
+};
+
+export type SKINS_IDS = {
+  [key in keyof typeof SKINS_HEADERS]: string;
 };
