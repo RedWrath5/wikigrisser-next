@@ -11,6 +11,7 @@ import { Tabs, Tab } from "@material-ui/core";
 import { MaterialSection } from "./MaterialSection";
 import { SPSection } from "./SPSection";
 import InscriptionSection from "./InscriptionSection";
+import { SkinsSection } from "./SkinsSection";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   {
@@ -53,9 +54,10 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex flex-col">
         <div className="flex flex-wrap justify-center">
           <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label="Class & Soldiers" value="main" />
+            <Tab label="Class" value="main" />
             <Tab label="Materials" value="materials" />
             {hero.spClass && <Tab label="SP Quests" value="sp" />}
+            {hero.skins && <Tab label="Skins" value="skins" />}
           </Tabs>
         </div>
 
@@ -72,6 +74,9 @@ export function HeroComponent({ hero }: { hero: Hero }) {
           <MaterialSection heroClass={hero.startingClass} />
         )}
         {tab === "sp" && hero.spClass && <SPSection spClass={hero.spClass} />}
+        {tab === "skins" && hero.skins && (
+          <SkinsSection hero={hero.prettyName} skins={hero.skins} />
+        )}
       </div>
     </div>
   );

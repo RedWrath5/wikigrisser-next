@@ -7,6 +7,7 @@ import {
   Hero,
   Inscription,
   Skill,
+  SkinsMap,
   SoldierBonus,
   SPClass,
   SPStep,
@@ -26,7 +27,8 @@ export class HeroLoader extends Loader<HeroMap> {
     workBook: WorkBook,
     private skillsMap: SkillsMap,
     private maxStats: MaxStatsWorkbookRow[],
-    private classesMap: ClassesMap
+    private classesMap: ClassesMap,
+    private skinsMap: SkinsMap
   ) {
     super(workBook);
   }
@@ -104,6 +106,7 @@ export class HeroLoader extends Loader<HeroMap> {
         exclusiveEquipment: masterMatthew.exclusiveEquipment,
         factions: masterMatthew.factions,
         startingClass: classTree,
+        skins: this.skinsMap["matthew"],
       };
     }
     return hero;
@@ -192,6 +195,7 @@ export class HeroLoader extends Loader<HeroMap> {
       spClass,
       skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
       inscription,
+      skins: this.skinsMap[name] ?? null,
     };
   };
 
