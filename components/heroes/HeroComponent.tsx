@@ -12,15 +12,21 @@ import { MaterialSection } from "./MaterialSection";
 import { SPSection } from "./SPSection";
 import InscriptionSection from "./InscriptionSection";
 import { SkinsSection } from "./SkinsSection";
+import HeartBondSection from "./HeartBondSection";
 
 export function HeroComponent({ hero }: { hero: Hero }) {
   {
     /* tab value*/
   }
   const [tab, setTab] = useState("main");
+
   const handleChangeTab = (event: React.ChangeEvent<{}>, newTab: string) => {
     setTab(newTab);
   };
+
+  const label = (text: string) => (
+    <span className="font-semibold text-lg">{text}</span>
+  );
 
   return (
     <div className="bg-white flex flex-grow justify-center flex-col">
@@ -35,6 +41,9 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex bg-gray-900 text-white font-sans font-normal justify-center">
         <BoundedColumn>
           <TalentSection hero={hero}></TalentSection>
+          {(hero.heartBond.lvl4 || hero.heartBond.lvl7) && (
+            <HeartBondSection heartBond={hero.heartBond} />
+          )}
           {hero.exclusiveEquipment?.name && (
             <ExclusiveEquipmentSection
               equipment={hero.exclusiveEquipment}
@@ -54,10 +63,10 @@ export function HeroComponent({ hero }: { hero: Hero }) {
       <div className="flex flex-col">
         <div className="flex flex-wrap justify-center">
           <Tabs value={tab} onChange={handleChangeTab}>
-            <Tab label="Class" value="main" />
-            <Tab label="Materials" value="materials" />
-            {hero.spClass && <Tab label="SP Quests" value="sp" />}
-            {hero.skins && <Tab label="Skins" value="skins" />}
+            <Tab label={label("Class")} value="main" />
+            <Tab label={label("Materials")} value="materials" />
+            {hero.spClass && <Tab label={label("SP Quests")} value="sp" />}
+            {hero.skins && <Tab label={label("Skins")} value="skins" />}
           </Tabs>
         </div>
 

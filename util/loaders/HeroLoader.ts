@@ -4,6 +4,7 @@ import {
   Class,
   ExclusiveEquipment,
   Factions,
+  HeartBond,
   Hero,
   Inscription,
   Skill,
@@ -181,6 +182,11 @@ export class HeroLoader extends Loader<HeroMap> {
       skillEffect: this.getHeroRowValue(rowNumber, hcm.inscriptionSkillEffect),
     };
 
+    const heartBond: HeartBond = {
+      lvl4: this.getHeroRowValue(rowNumber, hcm.heartBondsLevel4String),
+      lvl7: this.getHeroRowValue(rowNumber, hcm.heartBondsLevel7String),
+    };
+
     return {
       name,
       prettyName: this.getHeroRowValue(rowNumber, hcm.name),
@@ -196,6 +202,7 @@ export class HeroLoader extends Loader<HeroMap> {
       skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
       inscription,
       skins: this.skinsMap[name] ?? null,
+      heartBond,
     };
   };
 

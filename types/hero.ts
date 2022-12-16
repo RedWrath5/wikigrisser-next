@@ -16,6 +16,7 @@ export interface Hero {
   skinCount: number;
   inscription: Inscription;
   skins: Skin[] | null;
+  heartBond: HeartBond;
 }
 
 export interface RelatedBond {
@@ -127,6 +128,7 @@ export interface Equipment extends BaseEquipment {
   quality: EquipmentQuality;
   stat1: EquipmentStat | null;
   stat2: EquipmentStat | null;
+  classTypes: string[];
   notes: string;
   exclusiveForHero: string | null;
 }
@@ -250,4 +252,9 @@ export interface Skin {
   source: string | null;
   cost: string | null;
   notes: string | null;
+}
+
+export interface HeartBond {
+  lvl4: string | null;
+  lvl7: string | null;
 }
