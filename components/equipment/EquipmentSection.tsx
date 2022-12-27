@@ -16,6 +16,24 @@ export function EquipmentSection({ equipment }: { equipment: Equipment }) {
         </div>
         <div className="col-span-12 text-center sm:col-span-11 sm:text-left">
           <p className="text-2xl mb-2">{equipment.name}</p>
+
+          <div className="mb-2 flex flex-row font-semibold justify-center sm:justify-start ">
+            <div className=" mr-1">Class:</div>
+            {equipment.classTypes.length === 1 ? (
+              <div className="=">{equipment.classTypes[0]}</div>
+            ) : (
+              equipment.classTypes.map((type) => (
+                <Img
+                  src={`/unitTypeFlag/${type}.png`}
+                  className="inline mr-1"
+                  height={28}
+                  width={28}
+                  onError={addDefaultSrc}
+                />
+              ))
+            )}
+          </div>
+
           <EffectList equipment={equipment} />
         </div>
       </div>

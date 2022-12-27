@@ -25,6 +25,17 @@ export class EquipmentLoader extends Loader<Equipment[]> {
     let equipmentArr: Equipment[] = [];
 
     while (this.getEquipmentRowValue(rowCounter, ecm.name)) {
+      const classTypes: string[] = [];
+
+      for (let i = 1; i <= 4; i++) {
+        // @ts-ignore
+        const field = ecm[`user${i}`];
+        const value = this.getEquipmentRowValue(rowCounter, field);
+        if (value) {
+          classTypes.push(value);
+        }
+      }
+
       const equipment: Equipment = {
         name: this.getEquipmentRowValue(rowCounter, ecm.name),
         notes: this.getEquipmentRowValue(rowCounter, ecm.notes),
@@ -45,6 +56,7 @@ export class EquipmentLoader extends Loader<Equipment[]> {
           lvl40: this.getEquipmentRowValue(rowCounter, ecm.equipSkill40),
           lvl50: this.getEquipmentRowValue(rowCounter, ecm.equipSkill50),
         },
+        classTypes,
       };
 
       if (this.getEquipmentRowValue(rowCounter, ecm.stat1Type)) {
