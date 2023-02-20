@@ -6,7 +6,7 @@ const TsdlPage = () => (
   <Layout>
     <div className="flex flex-col text-center items-center justify-self-center w-full px-2 mt-5">
       <Img
-        src={"tsdl/banner.png"}
+        src={"tsdl/goddess.png"}
         width={200}
         height={200}
         className="inline"
@@ -149,12 +149,12 @@ const TsdlPage = () => (
         <ul>
           <li>
             <span>
-              1st Place<strong>&nbsp;- $100</strong>
+              1st Place<strong>&nbsp;- $300</strong>
             </span>
           </li>
           <li>
             <span>
-              2nd Place <strong>- $75</strong>
+              2nd Place <strong>- $150</strong>
             </span>
           </li>
           <li>
@@ -196,9 +196,7 @@ const TsdlPage = () => (
           <em>
             <span>
               We will publicly announce your name to thank you (unless you wish
-              to stay anonymous). All donations will be added to the prize pool
-              unless stated otherwise (Please specify if you choose to donate to
-              streamers/organizers).
+              to stay anonymous).
             </span>
           </em>
         </p>
@@ -227,23 +225,9 @@ const TsdlPage = () => (
           />
         </form>
       </div>
-      {/* <div>
-        <table>
-          <tr>
-            <th>Support our Streamers!</th>
-          </tr>
-          <tr>
-            <th>
-              <a href="https://www.youtube.com/channel/UCbWF4lzQm6Z4izzyRT9wGKQ">
-                SweetDango
-              </a>
-            </th>
-          </tr>
-        </table>
-      </div> */}
       <div>
         <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeoC_OKtEpIYRL1cHv5nywrMn0kL_KZpcXuFlOCKJp85e7mew/viewform?embedded=true"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdUrHuOQTQ87g7jLb6_aGv548OAJXLV49-b0XREOHmsZ5vVYg/viewform?embedded=true"
           className="flex"
           style={{ minHeight: 2500, overflow: "hidden" }}
           scrolling="no"
