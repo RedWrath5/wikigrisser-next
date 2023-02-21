@@ -100,42 +100,6 @@ const TsdlPage = () => (
             finals will be Best of 5.
           </span>
         </p>
-        <p>
-          <span>Rules:&nbsp;</span>
-        </p>
-        <ol>
-          <li>
-            <span>
-              You <strong>MUST</strong> play the account that you registered
-              with. <strong>No subbing or team work allowed.</strong>&nbsp;
-            </span>
-          </li>
-          <li>
-            <span>
-              You <strong>MUST</strong> use discord to schedule games.
-            </span>
-          </li>
-          <li>
-            <span>
-              Players can switch units between games during Stage 1.{" "}
-              <strong>You may switch gears and class.</strong>
-            </span>
-          </li>
-          <li>
-            <span>
-              You will be given<strong>&nbsp;at least 2 days</strong> to
-              complete your match.<strong>&nbsp;NO SHOW</strong> will result in
-              an automatic concede. You must notify one of the admins and you
-              may be given an extended time to reschedule (as long as it doesnt
-              affect the tournament schedule).&nbsp;
-            </span>
-          </li>
-          <li>
-            <span>
-              Any misconduct will result in a ban from the current and future
-              tournaments.&nbsp;
-            </span>
-          </li>
           <li>
             <strong>
               <span>Top 8 players&nbsp;</span>
