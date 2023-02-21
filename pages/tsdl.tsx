@@ -106,7 +106,6 @@ const TsdlPage = () => (
             </strong>
             <span>will be seeded in the next season!</span>
           </li>
-        </ol>
         <p>
           <span>Prizes:</span>
         </p>
