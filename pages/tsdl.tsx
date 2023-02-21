@@ -189,17 +189,13 @@ const TsdlPage = () => (
         </form>
       </div>
       <div>
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSdUrHuOQTQ87g7jLb6_aGv548OAJXLV49-b0XREOHmsZ5vVYg/viewform?embedded=true"
-          className="flex"
-          style={{ minHeight: 2500, overflow: "hidden" }}
-          scrolling="no"
-          onLoad={(event) =>
-            (event.currentTarget.width = screen.width.toString())
-          }
-        >
-          Loading…
-        </iframe>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUrHuOQTQ87g7jLb6_aGv548OAJXLV49-b0XREOHmsZ5vVYg/viewform?embedded=true"
+                    width="640"
+                    height="1741"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0">Loading…
+       </iframe>
       </div>
     </div>
   </Layout>
