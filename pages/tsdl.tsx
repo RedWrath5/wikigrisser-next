@@ -6,7 +6,7 @@ const TsdlPage = () => (
   <Layout>
     <div className="flex flex-col text-center items-center justify-self-center w-full px-2 mt-5">
       <Img
-        src={"tsdl/banner.png"}
+        src={"tsdl/goddess.png"}
         width={200}
         height={200}
         className="inline"
@@ -100,61 +100,24 @@ const TsdlPage = () => (
             finals will be Best of 5.
           </span>
         </p>
-        <p>
-          <span>Rules:&nbsp;</span>
-        </p>
-        <ol>
-          <li>
-            <span>
-              You <strong>MUST</strong> play the account that you registered
-              with. <strong>No subbing or team work allowed.</strong>&nbsp;
-            </span>
-          </li>
-          <li>
-            <span>
-              You <strong>MUST</strong> use discord to schedule games.
-            </span>
-          </li>
-          <li>
-            <span>
-              Players can switch units between games during Stage 1.{" "}
-              <strong>You may switch gears and class.</strong>
-            </span>
-          </li>
-          <li>
-            <span>
-              You will be given<strong>&nbsp;at least 2 days</strong> to
-              complete your match.<strong>&nbsp;NO SHOW</strong> will result in
-              an automatic concede. You must notify one of the admins and you
-              may be given an extended time to reschedule (as long as it doesnt
-              affect the tournament schedule).&nbsp;
-            </span>
-          </li>
-          <li>
-            <span>
-              Any misconduct will result in a ban from the current and future
-              tournaments.&nbsp;
-            </span>
-          </li>
           <li>
             <strong>
               <span>Top 8 players&nbsp;</span>
             </strong>
             <span>will be seeded in the next season!</span>
           </li>
-        </ol>
         <p>
           <span>Prizes:</span>
         </p>
         <ul>
           <li>
             <span>
-              1st Place<strong>&nbsp;- $100</strong>
+              1st Place<strong>&nbsp;- $300</strong>
             </span>
           </li>
           <li>
             <span>
-              2nd Place <strong>- $75</strong>
+              2nd Place <strong>- $150</strong>
             </span>
           </li>
           <li>
@@ -196,9 +159,7 @@ const TsdlPage = () => (
           <em>
             <span>
               We will publicly announce your name to thank you (unless you wish
-              to stay anonymous). All donations will be added to the prize pool
-              unless stated otherwise (Please specify if you choose to donate to
-              streamers/organizers).
+              to stay anonymous).
             </span>
           </em>
         </p>
@@ -227,23 +188,9 @@ const TsdlPage = () => (
           />
         </form>
       </div>
-      {/* <div>
-        <table>
-          <tr>
-            <th>Support our Streamers!</th>
-          </tr>
-          <tr>
-            <th>
-              <a href="https://www.youtube.com/channel/UCbWF4lzQm6Z4izzyRT9wGKQ">
-                SweetDango
-              </a>
-            </th>
-          </tr>
-        </table>
-      </div> */}
       <div>
         <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeoC_OKtEpIYRL1cHv5nywrMn0kL_KZpcXuFlOCKJp85e7mew/viewform?embedded=true"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdUrHuOQTQ87g7jLb6_aGv548OAJXLV49-b0XREOHmsZ5vVYg/viewform?embedded=true"
           className="flex"
           style={{ minHeight: 2500, overflow: "hidden" }}
           scrolling="no"
