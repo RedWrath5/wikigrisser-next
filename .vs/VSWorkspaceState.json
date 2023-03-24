@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\components",
+    "\\components\\gallery",
+    "\\components\\heroes",
+    "\\components\\layout",
+    "\\components\\patch",
+    "\\pages",
+    "\\public",
+    "\\public\\tsdl"
+  ],
+  "PreviewInSolutionExplorer": false
+}
