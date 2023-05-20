@@ -41,7 +41,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const heroes = DBSingleton.getInstance().getHeroesMap();
   const skillsToHeroMap = DBSingleton.getInstance().getSkillsToHeroMap();
-
   const name = context.params?.name as string;
   const heroData: Hero = heroes[name];
   return {
@@ -51,6 +50,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   };
 };
-const title = "Wikigrisser"
-document.title = 'Wikigrisser:' + heroes[name] ;
 export default HeroPage;
