@@ -2,8 +2,6 @@ import React, { PropsWithRef } from "react";
 import { DBSingleton, HeroMap } from "../../util/databaseSingleton";
 import { Layout } from "../../components/Layout";
 import { HeroGallery } from "../../components/gallery/HeroGallery";
-
-document.title = "Wikigrisser: Heroes";
 const HeroGalleryPage = ({ heroes }: PropsWithRef<{ heroes: HeroMap }>) => (
   <Layout>
     <HeroGallery heroMap={heroes}></HeroGallery>
