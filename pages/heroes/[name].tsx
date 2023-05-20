@@ -50,7 +50,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       skillsToHeroMap,
     },
   };
+  const title = "Wikigrisser: "
+  document.title = title.concat(name);
 };
-const title = "Wikigrisser: "
-document.title = title.concat(name);
+
 export default HeroPage;
