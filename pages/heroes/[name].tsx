@@ -5,7 +5,6 @@ import { HeroComponent } from "../../components/heroes/HeroComponent";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { DBSingleton, SkillToHeroMap } from "../../util/databaseSingleton";
 import skillToHeroContext from "../../util/skillToHeroContext";
-
 const HeroPage = ({
   heroData,
   skillsToHeroMap,
@@ -52,5 +51,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   };
 };
-
+const title = "Wikigrisser: "
+document.title = title.concat(name);
 export default HeroPage;
