@@ -5,8 +5,6 @@ import { HeroComponent } from "../../components/heroes/HeroComponent";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { DBSingleton, SkillToHeroMap } from "../../util/databaseSingleton";
 import skillToHeroContext from "../../util/skillToHeroContext";
-
-
 const HeroPage = ({
   heroData,
   skillsToHeroMap,
@@ -24,7 +22,6 @@ const HeroPage = ({
     </>
   );
 };
-
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const heroes = DBSingleton.getInstance().getHeroesMap();
@@ -44,9 +41,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const heroes = DBSingleton.getInstance().getHeroesMap();
   const skillsToHeroMap = DBSingleton.getInstance().getSkillsToHeroMap();
-  const title = "Wikigrisser: "
+
   const name = context.params?.name as string;
-  document.title = title.concat(name);
   const heroData: Hero = heroes[name];
   return {
     props: {
@@ -55,5 +51,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   };
 };
-
+const title = "Wikigrisser"
+document.title = 'Wikigrisser:' + heroes[name] ;
 export default HeroPage;
