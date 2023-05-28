@@ -5,7 +5,6 @@ import { HeroComponent } from "../../components/heroes/HeroComponent";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { DBSingleton, SkillToHeroMap } from "../../util/databaseSingleton";
 import skillToHeroContext from "../../util/skillToHeroContext";
-
 const HeroPage = ({
   heroData,
   skillsToHeroMap,
@@ -42,7 +41,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const heroes = DBSingleton.getInstance().getHeroesMap();
   const skillsToHeroMap = DBSingleton.getInstance().getSkillsToHeroMap();
-
   const name = context.params?.name as string;
   const heroData: Hero = heroes[name];
   return {
@@ -52,5 +50,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
     },
   };
 };
-
 export default HeroPage;
