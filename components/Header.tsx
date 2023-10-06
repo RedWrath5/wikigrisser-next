@@ -41,7 +41,7 @@ export function Header() {
           <Link href="/">
             <span className="flex flex-row cursor-pointer items-center text-center">
               <Img src="/logo-big.jpg" width={50} height={50}></Img>
-              <div className="ml-2">Wikigrisser Next </div> <div> Message DC - Wikigrisser in the official Discord with errors </div>
+              <div className="ml-2">Wikigrisser Next</div>
             </span>
           </Link>
 
