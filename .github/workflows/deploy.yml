@@ -7,20 +7,13 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          
-      - name: Use NPM 7
-        run: npm i -g npm@latest
+          node-version: 16
+      - run: npm ci
 
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -30,10 +23,12 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
+
       - name: Build
         run: |
           npm ci --legacy-peer-deps
           npm run export
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
