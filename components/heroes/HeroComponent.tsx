@@ -7,7 +7,7 @@ import { HeroSkinCarousel } from "./HeroSkinCarousel";
 import { SkillSection } from "./SkillSection";
 import { SoldiersSection } from "./SoldiersSection";
 import { TalentSection } from "./TalentSection";
-import { Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab } from "@mui/material";
 import { MaterialSection } from "./MaterialSection";
 import { SPSection } from "./SPSection";
 import InscriptionSection from "./InscriptionSection";

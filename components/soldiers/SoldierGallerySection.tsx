@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Soldier } from "../../types/hero";
 import { TrainingSkillSection } from "./TrainingSkillSection";
-import { Collapse } from "@material-ui/core";
+import { Collapse } from "@mui/material";
 import { RelatedHeroesSection } from "./RelatedHeroesSection";
 import { Img } from "../layout/Img";
 

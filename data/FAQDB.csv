@@ -1,0 +1,29 @@
+﻿Id,Question,Answer,
+1,Who is the author?,"I'm Aezyx on the Rocky Valley server (Guild: Dominion). I've made various RPG guides in the past. You can reach me by messaging Arth#4851 on Discord. I also go by Arthellinus on GameFAQs, Reddit, and YouTube, although I don't check those frequently.",
+2,Why do some descriptions not match the game?,The game updates its text frequently and sometimes I don't catch all the changes. I've also simplified or streamlined some of the descriptions to be more straightforward and accurate. But I'm sure there are some errors (apologies in advance).,
+3,Can you explain the color schemes?,"I tried to adhere to the game's colors for different unit types (infantry, lancer, etc.) but otherwise it's mostly arbitrary. There's just so much info and I wanted to make different sections visually distinct. Alternating columns are to help you keep your place in tracking down entries for each hero.",
+,How do I read the hero talent descriptions?,"Talents power up with star upgrades. I have listed the parameters that increase; all conditions hold unless stated otherwise. For example, Cherie's damage reduction always requires no allies within 2 spaces; her Cooldown decreases to 3 upon reaching 4*; and it stays at 3 going from 4* to 5*.",
+4,What do you mean by a hero's soldier bonuses?,"All characters grant specific stat bonuses to their soldiers. These are base percentage values that can be improved additively through developing their Bonds 1 and 3. The sum total of base bonus values is dependent only on the character's rarity: 20% total for R characters, 25% total for SR characters, and 30% total for SSR characters. Max values are (Base+25)% for a character's two ""favored"" stats (usually but not always the two highest bases) and (Base+10)% for the other two stats.",
+5,How did you determine the max stats for soldiers?,"I derived the formula at Level 70. It is:
+
+ROUND( [ Base Value * ((Hero Level + 4) * 0.1)] * [1 + (Training % Bonus + Soldier Level Bonus) / 100 ] + Training Raw Bonus )
+
+- Soldier Level Bonus is the percentage value from the soldier training nodes
+- Training Raw Bonus is the raw value from the ""Basic"" and ""Advanced"" training nodes (max 55 for HP/ATK and 33 for DEF/MDEF)
+- Training % Bonus is the percentage value from the ""Overall,"" ""Core,"" and ""Joint"" training nodes (max 70)
+
+Based on this formula, you can see that the percentage increases are much more important; therefore, you should prioritize Overall and Core upgrades.
+
+The values you see in the columns under the Soldiers sheet are before any hero bonuses are factored in.",
+6,Do you have any general tips?,"I'd like to maintain this purely as a reference document, but I haven't ruled out strategy-based content in the future. If you want to ask me about anything just send me a message (see above).",
+7,Did you do all this yourself?,"Mostly yes, but with significant assistance from my guildmates (Rocky Valley): Spiff, Cyouni, DealDoePrincess, Qtaru, and Blightbow. Generally, I don't add things I can't verify myself. If anything is incorrect or missing, please feel free to contact me (see above).
+
+Other contributors: u/IrynaWright (Reddit), mill2k (Discord)",
+8,What are your sources?,"The game itself, as well as English and Chinese wikis. I also used this excellent mastery guide to fill out most material requirements: →→
+This document differs in its presentation of mastery requirements in that it goes by class, not hero. All heroes have the same requirements for the same class (e.g. every Swordsman has identical requirements for mastery).",link
+,Is there any significant information that is not included here?,"I've now filled in all available max stats for heroes, but there is a more sortable table here if you wish:                                                     →→→
+There are a few max stat values missing, most notably for the newer characters, but I'll work on this at a later time.",link
+9,How about an equipment guide?,"Someone else has already made a good reference for this, so I don't feel like I have much to contribute for now. See here:                 →→→",link
+,,,
+,,,
+,← Back to Index,,

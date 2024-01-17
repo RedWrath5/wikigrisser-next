@@ -11,6 +11,10 @@ import { SkillToHeroTransformer } from "./transformers/SkillToHeroTransformer";
 import { TrainingLoader } from "./loaders/TrainingLoader";
 import { SoldierToHeroTransformer } from "./transformers/SoldierToHeroTransformer";
 import { SkinsLoader } from "./loaders/SkinsLoader";
+import { FaqLoader } from './loaders/FaqLoader';
+import { FAQ } from '../types/faq';
+import faqDataRaw from '../data/FAQ.json';
+const faqData: FAQ[] = faqDataRaw as FAQ[];
 
 export class DBSingleton {
   private static instance: DBSingleton;
@@ -39,7 +43,7 @@ export class DBSingleton {
   private equipment = new EquipmentLoader(this.workBook).load();
   private training = new TrainingLoader(this.workBook).load();
   private soldier = new SoldierLoader(this.workBook, this.training).load();
-
+  private faqs: FAQ[] = faqData;
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
   constructor() {
@@ -79,6 +83,10 @@ export class DBSingleton {
 
   getTraining() {
     return this.training;
+  }
+
+  getFaqs(): FAQ[] {
+    return this.faqs;
   }
 }
 

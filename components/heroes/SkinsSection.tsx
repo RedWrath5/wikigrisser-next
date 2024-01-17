@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Skin } from "../../types/hero";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
 import { Img } from "../layout/Img";
-import { Collapse } from "@material-ui/core";
+import { Collapse } from "@mui/material";
 import { TransitionGroup } from "react-transition-group";
 
 export function SkinsSection({ hero, skins }: { hero: string; skins: Skin[] }) {
