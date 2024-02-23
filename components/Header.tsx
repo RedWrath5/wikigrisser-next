@@ -93,8 +93,4 @@ const LINKS = [
     text: "TSdL",
     url: "/tsdl",
   },
-  {
-    text: "FAQ",
-    url: "/faq",
-  },
 ];
