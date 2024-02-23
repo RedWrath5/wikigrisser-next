@@ -4,6 +4,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../../types/hero";
@@ -11,7 +12,6 @@ import { HeroMap } from "../../util/databaseSingleton";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { Img } from "../layout/Img";
 import { HeroLink } from "./HeroLink";
-import { SelectChangeEvent } from '@mui/material/Select';
 
 export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   const [filteredAndSortedHeroes, setFilteredAndSortedHeroes] = useState(
@@ -79,10 +79,13 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
     setFilteredAndSortedHeroes(heroArray);
   }
 
-  const handleSortChange = (event: SelectChangeEvent) => {
-    const newSortValue = event.target.value as "alphabetically" | "rarity";
-    setSort(SORTS.find((sort) => sort.value === newSortValue) || SORTS[0]);
-  };  
+  const handleSortChange = (
+    event: SelectChangeEvent<"alphabetically" | "rarity">
+  ) => {
+    setSort(
+      SORTS.find((sort) => sort.value === event.target.value) || SORTS[0]
+    );
+  };
 
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
@@ -106,7 +109,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
           <InputLabel>Sort</InputLabel>
           <Select
             value={sort.value}
-            onChange={handleSortChange}
+            onChange={(sortValue) => handleSortChange(sortValue)}
           >
             {SORTS.map((sort) => (
               <MenuItem key={sort.value} value={sort.value}>
