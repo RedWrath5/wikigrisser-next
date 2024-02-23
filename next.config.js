@@ -5,6 +5,7 @@ module.exports = {
   //   webpack5: true,
   // },
   // target: "serverless",
+  // output: "standalone",
   // async headers() {
   //   return [
   //     {

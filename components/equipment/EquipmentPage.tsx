@@ -5,6 +5,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
@@ -16,7 +17,6 @@ import {
 import { EquipmentSection } from "./EquipmentSection";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { TransitionGroup } from "react-transition-group";
-import { SelectChangeEvent } from '@mui/material/Select';
 
 export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
   const [filteredAndGroupedEquipment, setFilteredAndGroupedEquipment] =
@@ -92,14 +92,13 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
     setFilteredAndGroupedEquipment(filteredAndGrouped);
   }
 
-  const handleSlotChange = (event: SelectChangeEvent) => {
+  const handleSlotChange = (event: SelectChangeEvent<EquipmentSlot>) => {
     setSlot(event.target.value as EquipmentSlot);
   };
 
-  const handleQualityChange = (event: SelectChangeEvent) => {
+  const handleQualityChange = (event: SelectChangeEvent<EquipmentQuality>) => {
     setQuality(event.target.value as EquipmentQuality);
   };
-  
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
       <h1 className="text-6xl text-center mt-5 mb-10 font-thin text-gray-600">
@@ -123,7 +122,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
             <InputLabel>Slot</InputLabel>
             <Select
               value={slot}
-              onChange={handleSlotChange}
+              onChange={(slotInner) => handleSlotChange(slotInner)}
             >
               {Object.values(EquipmentSlot).map((slotInner) => (
                 <MenuItem key={slotInner} value={slotInner}>
@@ -138,7 +137,7 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
           <InputLabel>Quality</InputLabel>
           <Select
             value={quality}
-            onChange={handleSlotChange}
+            onChange={(slotInner) => handleQualityChange(slotInner)}
           >
             {Object.values(EquipmentQuality).map((qualityInner) => (
               <MenuItem key={qualityInner} value={qualityInner}>
