@@ -39,7 +39,6 @@ export class DBSingleton {
   private equipment = new EquipmentLoader(this.workBook).load();
   private training = new TrainingLoader(this.workBook).load();
   private soldier = new SoldierLoader(this.workBook, this.training).load();
-
   private skillToHeroMap = new SkillToHeroTransformer(this.heroMap).transform();
 
   constructor() {

@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   FormGroup,
   Switch,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useState } from "react";
 import { TransitionGroup } from "react-transition-group";
 import { Img } from "../layout/Img";

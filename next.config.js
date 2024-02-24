@@ -1,10 +1,11 @@
 module.exports = {
   basePath: "",
   assetPrefix: "",
-  future: {
-    webpack5: true,
-  },
-  target: "serverless",
+  // future: {
+  //   webpack5: true,
+  // },
+  // target: "serverless",
+  output: "export",
   // async headers() {
   //   return [
   //     {

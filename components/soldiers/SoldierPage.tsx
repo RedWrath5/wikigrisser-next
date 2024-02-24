@@ -5,12 +5,13 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@material-ui/core";
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Soldier, UnitType } from "../../types/hero";
 import { BoundedColumn } from "../layout/BoundedColumn";
 import { SoldiersGallerySection } from "./SoldierGallerySection";
 import { TransitionGroup } from "react-transition-group";
+import { SelectChangeEvent } from '@mui/material/Select';
 
 const tiers = [
   {
@@ -57,15 +58,13 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
     setFilteredSoldiers(filtered);
   }
 
-  const handleTierChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTier(event.target.value as number);
+  const handleTierChange = (event: SelectChangeEvent) => {
+    setTier(parseInt(event.target.value, 10)); // Use parseInt with radix 10
   };
 
-  const handleSlotChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  const handleSlotChange = (event: SelectChangeEvent) => {
     setType(event.target.value as UnitType);
-  };
+  };  
 
   return (
     <div className="bg-white flex flex-grow justify-center flex-col cursor-auto">
@@ -89,7 +88,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
           <InputLabel>Type</InputLabel>
           <Select
             value={type}
-            onChange={(slotInner) => handleSlotChange(slotInner)}
+            onChange={handleSlotChange}
           >
             {Object.values(UnitType)
               .filter((type) => type !== UnitType.Dragon)
@@ -104,7 +103,7 @@ export function SoldierPage({ soldiers }: { soldiers: Soldier[] }) {
         <div className="ml-4">
           <FormControl>
             <InputLabel>Tier</InputLabel>
-            <Select value={tier} onChange={handleTierChange}>
+            <Select value={tier.toString()} onChange={handleTierChange}>
               {tiers.map((v) => (
                 <MenuItem key={v.name} value={v.value}>
                   {v.name}

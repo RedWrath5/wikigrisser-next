@@ -4,7 +4,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@material-ui/core";
+  SelectChangeEvent,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Factions, Hero } from "../../types/hero";
 import { HeroMap } from "../../util/databaseSingleton";
@@ -79,7 +80,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
   }
 
   const handleSortChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
+    event: SelectChangeEvent<"alphabetically" | "rarity">
   ) => {
     setSort(
       SORTS.find((sort) => sort.value === event.target.value) || SORTS[0]

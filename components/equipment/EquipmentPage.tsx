@@ -5,7 +5,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@material-ui/core";
+  SelectChangeEvent,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   Equipment,
@@ -91,15 +92,11 @@ export function EquipmentPage({ equipment }: { equipment: Equipment[] }) {
     setFilteredAndGroupedEquipment(filteredAndGrouped);
   }
 
-  const handleSlotChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  const handleSlotChange = (event: SelectChangeEvent<EquipmentSlot>) => {
     setSlot(event.target.value as EquipmentSlot);
   };
 
-  const handleQualityChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  const handleQualityChange = (event: SelectChangeEvent<EquipmentQuality>) => {
     setQuality(event.target.value as EquipmentQuality);
   };
   return (

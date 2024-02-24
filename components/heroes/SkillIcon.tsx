@@ -1,4 +1,4 @@
-import { Popover } from "@material-ui/core";
+import { Popover } from "@mui/material";
 import React from "react";
 import { Skill } from "../../types/hero";
 import { addDefaultSrc } from "../../util/addDefaultSrc.fn";
