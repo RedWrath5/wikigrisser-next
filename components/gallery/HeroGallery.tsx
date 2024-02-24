@@ -110,6 +110,7 @@ export function HeroGallery({ heroMap }: { heroMap: HeroMap }) {
           <Select
             value={sort.value}
             onChange={(sortValue) => handleSortChange(sortValue)}
+            className="mt-2"
           >
             {SORTS.map((sort) => (
               <MenuItem key={sort.value} value={sort.value}>
