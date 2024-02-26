@@ -93,4 +93,8 @@ const LINKS = [
     text: "TSdL",
     url: "/tsdl",
   },
+  {
+    text: "Contact",
+    url: "/contact",
+  },
 ];
