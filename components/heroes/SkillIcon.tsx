@@ -51,7 +51,7 @@ export function SkillIcon({ skill }: { skill: Skill }) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <div className="flex flex-row items-center p-2">
+        <div className="flex flex-row items-center p-2 flex-wrap">
           <Img
             src={"/skills/" + skill.name + ".png"}
             className="inline"
