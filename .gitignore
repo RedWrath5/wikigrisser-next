@@ -30,3 +30,17 @@ yarn-error.log*
 # visual studio folder
 /.vs
 /.scannerwork
+
+# Emacs temporary files
+\#*\#
+*~
+.\#*
+
+# Auto-save files
+*#
+
+# Backup files
+*.bak
+
+# Lock files
+.#*
