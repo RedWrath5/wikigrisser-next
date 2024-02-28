@@ -49,7 +49,6 @@ export const HERO_COLUMN_HEADERS = {
   awakeningSkillRange: ["Awakening Skill", "Range"],
   awakeningSkillSpan: ["Awakening Skill", "Span"],
   awakeningSkillEffect: ["Awakening Skill", "Effect"],
-  skinCount: ["Skin Count"],
   inscriptionWeaponStat: ["Inscription", "Inscription Weapon Stat"],
   inscriptionWeapon1: ["Inscription", "Inscription Weapon 1"],
   inscriptionWeapon2: ["Inscription", "Inscription Weapon 2"],

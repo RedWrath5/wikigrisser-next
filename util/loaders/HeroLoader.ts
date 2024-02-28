@@ -186,7 +186,6 @@ export class HeroLoader extends Loader<HeroMap> {
       lvl4: this.getHeroRowValue(rowNumber, hcm.heartBondsLevel4String),
       lvl7: this.getHeroRowValue(rowNumber, hcm.heartBondsLevel7String),
     };
-
     return {
       name,
       prettyName: this.getHeroRowValue(rowNumber, hcm.name),
@@ -199,7 +198,7 @@ export class HeroLoader extends Loader<HeroMap> {
       soldierBonus,
       exclusiveEquipment,
       spClass,
-      skinCount: +this.getHeroRowValue(rowNumber, hcm.skinCount) ?? 0,
+      skinCount: this.skinsMap[name]?.length ?? 0,
       inscription,
       skins: this.skinsMap[name] ?? null,
       heartBond,
