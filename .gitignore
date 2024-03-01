@@ -30,3 +30,14 @@ yarn-error.log*
 # visual studio folder
 /.vs
 /.scannerwork
+
+### Emacs ###
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
