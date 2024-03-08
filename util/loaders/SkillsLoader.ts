@@ -18,8 +18,8 @@ export class SkillsLoader extends Loader<SkillsMap> {
     let notDone = true;
 
     while (notDone) {
-      const skill: Skill = {
-        name: skillsSheat["A" + rowCounter]?.v || null,
+        const skill: Skill = {
+        name: skillsSheat["A" + rowCounter]?.v.toString() || null,
         cost: skillsSheat["C" + rowCounter]?.v || null,
         cd: skillsSheat["D" + rowCounter]?.v || null,
         range: skillsSheat["E" + rowCounter]?.v || null,
