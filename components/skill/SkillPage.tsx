@@ -26,7 +26,7 @@ export function SkillPage({ skills }: { skills: Skill[] }) {
       <div className="flex flex-wrap justify-center text-center mb-5">
         <div className="mr-4">
           <FormControl>
-            <InputLabel>Search</InputLabel>
+          <InputLabel>Search (Name or Description)</InputLabel>
             <Input
               value={searchText}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +37,10 @@ export function SkillPage({ skills }: { skills: Skill[] }) {
         </div>
       </div>
 
-      {/* Skills list */}
+          {/* Skills list */}
+      <div className="flex justify-center w-full">
       <BoundedColumn>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col">
           {filteredSkills.length > 0 ? (
             filteredSkills.map((skill) => (
               <SkillSection key={skill.name} skill={skill} />
@@ -49,6 +50,7 @@ export function SkillPage({ skills }: { skills: Skill[] }) {
           )}
         </div>
       </BoundedColumn>
-    </div>
+          </div>
+          </div>
   );
 }

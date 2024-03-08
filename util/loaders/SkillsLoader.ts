@@ -19,7 +19,7 @@ export class SkillsLoader extends Loader<SkillsMap> {
 
     while (notDone) {
         const skill: Skill = {
-            name: typeof skillsSheat["A" + rowCounter]?.v === 'number' ? skillsSheat["A" + rowCounter]?.v.toString() : skillsSheat["A" + rowCounter]?.v || null,
+        name: skillsSheat["A" + rowCounter]?.v.toString() || null,
         cost: skillsSheat["C" + rowCounter]?.v || null,
         cd: skillsSheat["D" + rowCounter]?.v || null,
         range: skillsSheat["E" + rowCounter]?.v || null,
