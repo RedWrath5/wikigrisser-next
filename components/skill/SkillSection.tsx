@@ -1,13 +1,13 @@
 import React from "react";
-import { Skill } from "../../types/hero"; // Adjust this path according to your actual Skill type location
-import { Img } from "../layout/Img"; // Assuming you have a similar component for images
+import { Skill } from "../../types/hero"; 
+import { Img } from "../layout/Img"; 
 
 export function SkillSection({ skill }: { skill: Skill }) {
   return (
     <div className="grid grid-cols-12 items-center mt-2 mb-2">
       <div className="col-span-12 text-center sm:col-span-1 flex items-center justify-center mr-3">
         <Img
-          src={"/skills/" + skill.name + ".png"} // Adjust the path to where your skill images are stored
+          src={"/skills/" + skill.name + ".png"} 
           className="inline"
           // onError={addDefaultSrc} // If you have a default image handler
         /> 

@@ -17,16 +17,6 @@ export const getStaticProps = async () => {
   const skillsMap = workbook.getSkillsMap();
 
   const skills: Skill[] = Object.values(skillsMap);
-
-
-      // Debugging: Print the type of each skill.name
-  // skills.forEach((skill, index) => {
-  //   console.log(`Skill #${index} name type:`, typeof skill.name);
-  //   // Additional debugging to log the value if it's not a string
-  //   if (typeof skill.name !== 'string') {
-  //     console.log(`Skill #${index} unexpected name value:`, skill.name);
-  //   }
-  // });
     
   return {
     props: {
