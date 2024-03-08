@@ -90,6 +90,10 @@ const LINKS = [
     url: "/soldiers",
   },
   {
+    text: "Skills",
+    url: "/skills",
+  },
+  {
     text: "TSdL",
     url: "/tsdl",
   },
