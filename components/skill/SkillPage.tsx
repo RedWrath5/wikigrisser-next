@@ -40,7 +40,7 @@ export function SkillPage({ skills }: { skills: Skill[] }) {
           {/* Skills list */}
       <div className="flex justify-center w-full">
       <BoundedColumn>
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           {filteredSkills.length > 0 ? (
             filteredSkills.map((skill) => (
               <SkillSection key={skill.name} skill={skill} />

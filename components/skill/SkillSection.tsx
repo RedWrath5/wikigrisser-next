@@ -14,31 +14,31 @@ export function SkillSection({ skill }: { skill: Skill }) {
       </div>
 
       {/* Skill details */}
-      <div className="col-span-12 sm:col-span-11 sm:text-left">
+      <div className="col-span-12 sm:col-span-11 sm:text-left text-center">
         <p className="text-2xl mb-2">{skill.name}</p>
-        <p className="whitespace-pre-line text-lg mb-2">{skill.description || skill.descriptionMarkdown}</p>
-        <div className="mb-2 flex flex-col sm:flex-row font-semibold">
+        <div className="mb-2 flex flex-wrap font-semibold">
           {skill.cost && (
-            <div className="flex items-center mb-1 sm:mb-0 sm:mr-2">
+            <div className="inline mr-1">
               <span className="font-semibold">Cost:</span> {skill.cost}
             </div>
           )}
           {skill.cd && (
-            <div className="flex items-center mb-1 sm:mb-0 sm:mr-2">
+            <div className="inline mr-1 ml-2">
               <span className="font-semibold">Cooldown:</span> {skill.cd}
             </div>
           )}
           {skill.range && (
-            <div className="flex items-center mb-1 sm:mb-0 sm:mr-2">
+            <div className="inline mr-1 ml-2">
               <span className="font-semibold">Range:</span> {skill.range}
             </div>
           )}
           {skill.span && (
-            <div className="flex items-center">
+            <div className="inline mr-1 ml-2">
               <span className="font-semibold">Span:</span> {skill.span}
             </div>
           )}
-        </div>
+      </div>
+          <p className="whitespace-pre-line text-lg mb-2">{skill.description || skill.descriptionMarkdown}</p>
       </div>
     </div>
   );
