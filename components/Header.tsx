@@ -81,6 +81,10 @@ const LINKS = [
     text: "Heroes",
     url: "/heroes/gallery",
   },
+    {
+    text: "Skills",
+    url: "/skills",
+  },
   {
     text: "Equipment",
     url: "/equipment",

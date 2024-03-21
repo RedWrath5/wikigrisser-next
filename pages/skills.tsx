@@ -14,10 +14,23 @@ const SkillGalleryPage = ({
 
 export const getStaticProps = async () => {
   var workbook = DBSingleton.getInstance();
-  const skillsMap = workbook.getSkillsMap();
+  let skillsMap = workbook.getSkillsMap(); // Using let since we might modify skillsMap
 
+  const heroesMap = workbook.getHeroesMap();
+
+  // Iterate over each hero in the heroesMap
+  Object.values(heroesMap).forEach((hero) => {
+    // Check if the hero has a threeCostSkill and if it's not already in the skillsMap
+    if (hero.threeCostSkill && !skillsMap[hero.threeCostSkill.name]) {
+      // Add the threeCostSkill to the skillsMap
+      skillsMap[hero.threeCostSkill.name] = hero.threeCostSkill;
+    }
+  });
+
+  // Convert the skillsMap to an array of skills
   const skills: Skill[] = Object.values(skillsMap);
-    
+
+  // Return the skills, ensuring no duplicates by name
   return {
     props: {
       skills,
